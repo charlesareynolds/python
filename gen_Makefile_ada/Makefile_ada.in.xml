@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE Deliverables SYSTEM "deliverables.dtd" >
+<Release>
+  <Project Path="Main_Programs/Sample_Supervisor/Sample_Supervisor.gpr">
+    <Deliverable Name="sample_app_main">
+      <Platform Name="sparc-solaris"/>
+      <Platform Name="x86-linux"/>
+    </Deliverable>
+    <Deliverable Name="sample_app_client_main">
+      <Platform Name="sparc-solaris"/>
+      <Platform Name="x86-linux"/>
+    </Deliverable>
+  </Project>
+  <Project Path="Main_Programs/Sample_Config_Server/Sample_Config_Server.gpr">
+    <Deliverable Name="sample_config_services_main">
+      <Platform Name="sparc-solaris"/>
+      <Platform Name="x86-linux"/>
+    </Deliverable>
+  </Project>
+  <Project Path="Main_Programs/Sample_FEP/Sample_FEP.gpr">
+    <Deliverable Name="sample_fep_main">
+      <Platform Name="ppc-vxworks"/>
+      <Platform Name="sparc-solaris"/>
+      <Platform Name="x86-linux"/>
+      <Platform Name="x86-windows"/>
+    </Deliverable>
+  </Project>
+</Release>
+
+

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE Deliverables SYSTEM "deliverables.dtd" >
+<Release>
+  <Project Path="Main_Programs/Sample_Supervisor/Sample_Supervisor.gpr">
+    <Deliverable Name="sample_app_main">
+      <Platform Name="sparc-solaris"/>
+    </Deliverable>
+    <Deliverable Name="sample_app_client_main">
+      <Platform Name="sparc-solaris"/>
+    </Deliverable>
+  </Project>
+  <Project Path="Main_Programs/Sample_FEP/Sample_FEP.gpr">
+    <Deliverable Name="sample_fep_main">
+      <Platform Name="ppc-vxworks"/>
+      <Platform Name="sparc-solaris"/>
+    </Deliverable>
+  </Project>
+</Release>

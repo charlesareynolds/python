@@ -1,0 +1,10 @@
+#
+#Main_Programs/Sample_Supervisor/Sample_Supervisor.gpr
+#sample_app_main:		x86-linux,sparc-solaris
+#sample_app_client_main:		x86-linux,sparc-solaris
+#
+#Main_Programs/Sample_Config_Server/Sample_Config_Server.gpr
+#sample_config_services_main:	x86-linux,sparc-solaris
+#
+#Main_Programs/Sample_FEP/Sample_FEP.gpr
+#sample_fep_main:		x86-linux,sparc-solaris,ppc-vxworks,x86-windows

@@ -1,0 +1,61 @@
+# This is an extract from /./src/code/Makefile_ada:
+
+# Makefile_ada.for_releas.in contains the main/project/platorm relationships
+# that get compiled into a 'make'able format in Makefile_ada.for_release
+# and then included to pull in the created dependencies.
+#
+Makefile_ada.for_release: Makefile_ada.for_release.in
+	@${LOGRULE}
+	@${CAT} $< | ${call COMPILE_FOR_RELEASE} > $@
+
+include Makefile_ada.for_release
+
+define COMPILE_FOR_RELEASE
+	  ${PERL} -e '\
+	    my @PLATFORMS = ("sparc-solaris", "x86-linux", "ppc-vxworks", "x86-windows");\
+	    my %map;\
+	    my $$gpr;\
+	    while(<STDIN>){\
+	      s/\\s*#.*$$//;\
+	     SWITCH: {\
+	        (/^\s*(.*\.gpr)\s*$$/) and do {\
+	          $$gpr = $$1;\
+	          last SWITCH;\
+	        };\
+	        (/\s*(.*?)\s*:\s*(.*?)\s*$$/) and do {\
+	          foreach my $$p (split ",",$$2) {\
+	  	  $$map{$$gpr}{$$1}{$$p} = 1;\
+	          }\
+	          last SWITCH;\
+	        };\
+	      };\
+	    }\
+	    print "#".${AUTO_WARNING_MSG}."\n\n";\
+	    print "# Define the rules for each platform.\n";\
+	    foreach my $$p (@PLATFORMS) {\
+	      print ".PHONY: $${p}_for_release\n";\
+	      print "$${p}_for_release :";\
+	      foreach my $$g (keys %map) {\
+	        foreach my $$e (keys %{$$map{$$g}}) {\
+	          print " $$e" if ($$map{$$g}{$$e}{$$p});\
+	        }\
+	      }\
+	      print "\n";\
+	    }\
+	    print "\n";\
+	    print "# Define the rules for each executbable.\n";\
+	    foreach my $$g (keys %map) {\
+	      foreach my $$e (keys %{$$map{$$g}}) {\
+	        print "$$e ";\
+	      }\
+	      print ": $$g\n";\
+	      print "\t@\$${LOGRULE}\n";\
+	      print "\t\$${GNATMAKE} -P\$$< \$${GPRFLAGS} \$${notdir \$${basename \$$@}}\n";\
+	    }\
+	    '
+endef
+
+# This is an extract from /./Makefile.common:
+
+AUTO_WARNING_MSG := "!!!WARNING!!! THIS FILE IS AUTO-GENERATED!!!"
+

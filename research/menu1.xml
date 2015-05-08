@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<!DOCTYPE PyMenuDef SYSTEM "pymenudef.dtd" >
+<!-- If no colors are specified, menu uses parent colors.  Default is white on 
+black. 
+-->
+<document>
+  <menu name="Main">
+    <shellCommand name="ls" command="ls" />
+    <shellCommand name="Dan's ls" command="ls -alrRt" />
+    <menu name="Dev Hosts" foreground="white" background="blue">
+      <menu name="Linux" foreground="white" background="green">
+        <shellCommand name="aa-dev1" command="ssh aa-dev1" />
+        <shellCommand name="aa-dev2" command="ssh aa-dev2" />
+        <shellCommand name="iccs-dev001" command="ssh iccs-dev001" />
+        <shellCommand name="iccs-dev002" command="ssh iccs-dev002" />
+        <shellCommand name="iccsdev0002" command="ssh iccsdev0002" />
+        <shellCommand name="iccsdev0007" command="ssh iccsdev0007" />
+        <shellCommand name="main-frame-dev1" command="ssh main-frame-dev1" />
+        <shellCommand name="main-frame-dev2" command="ssh main-frame-dev2" />
+      </menu>
+      <menu name="Solaris" foreground="white" background="cyan">
+        <shellCommand name="deuce" command="ssh deuce" />
+        <shellCommand name="iccs-v240" command="ssh iccs-v240" />
+        <shellCommand name="iccs-v480" command="ssh iccs-v480" />
+        <shellCommand name="iccsdev0005" command="ssh iccsdev0005" />
+        <shellCommand name="iccsdev0006" command="ssh iccsdev0006" />
+        <shellCommand name="nif-controls-b490" command="ssh nif-controls-b490" />
+        <shellCommand name="nighttrain" command="ssh nighttrain" />
+        <shellCommand name="superglide" command="ssh superglide" />
+      </menu>
+      <shellCommand name="AAAAAAAAAAAAAAAAAAA" command="ssh user@host" />
+      <shellCommand name="Test1" command="ssh user@host" />
+    </menu>
+    <menu name="Sub2" foreground="yellow" background="cyan">
+      <shellCommand name="BBBBBBBBBBBBBBBBBBB" command="ssh user@host" />
+      <shellCommand name="Test2" command="ssh user@host" />
+    </menu>
+    <menu name="Sub3" foreground="white" background="green">
+      <shellCommand name="Test1" command="ssh user@host1" />
+      <shellCommand name="Test2" command="ssh user@host2" />
+      <shellCommand name="Test3" command="ssh user@host3" />
+      <shellCommand name="Test4" command="ssh user@host4" />
+      <shellCommand name="Test5" command="ssh user@host5" />
+      <shellCommand name="Test6" command="ssh user@host6" />
+      <shellCommand name="Test7" command="ssh user@host7" />
+      <shellCommand name="Test8" command="ssh user@host8" />
+      <shellCommand name="Test9" command="ssh user@host9" />
+      <shellCommand name="Test10" command="ssh user@host10" />
+      <shellCommand name="Test11" command="ssh user@host11" />
+    </menu>
+  </menu>
+</document>

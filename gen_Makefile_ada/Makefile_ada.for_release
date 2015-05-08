@@ -1,0 +1,22 @@
+#!!!WARNING!!! THIS FILE IS AUTO-GENERATED!!!
+
+# Define the rules for each platform.
+.PHONY: ppc-vxworks_for_release
+ppc-vxworks_for_release : sample_fep_main
+.PHONY: sparc-solaris_for_release
+sparc-solaris_for_release : sample_app_client_main sample_app_main sample_config_services_main sample_fep_main
+.PHONY: x86-linux_for_release
+x86-linux_for_release : sample_app_client_main sample_app_main sample_config_services_main sample_fep_main
+.PHONY: x86-windows_for_release
+x86-windows_for_release : sample_fep_main
+
+# Define the rules for each executable.
+sample_config_services_main : Main_Programs/Sample_Config_Server/Sample_Config_Server.gpr
+	@${LOGRULE}
+	${GNATMAKE} -P$< ${GPRFLAGS} ${notdir ${basename $@}}
+sample_fep_main : Main_Programs/Sample_FEP/Sample_FEP.gpr
+	@${LOGRULE}
+	${GNATMAKE} -P$< ${GPRFLAGS} ${notdir ${basename $@}}
+sample_app_client_main sample_app_main : Main_Programs/Sample_Supervisor/Sample_Supervisor.gpr
+	@${LOGRULE}
+	${GNATMAKE} -P$< ${GPRFLAGS} ${notdir ${basename $@}}

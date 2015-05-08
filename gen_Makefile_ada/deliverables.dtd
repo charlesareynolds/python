@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!ELEMENT Projects (Project+)>
+<!ELEMENT Project (Deliverable+)>
+<!ATTLIST Project
+	Path CDATA #REQUIRED>
+<!ELEMENT Deliverable (Platform+)>
+<!ATTLIST Deliverable
+	Name CDATA #REQUIRED>
+<!ELEMENT Platform EMPTY>
+<!ATTLIST Platform
+	Name (ppc-vxworks|sparc-solaris|x86-linux|x86-windows) #REQUIRED>
