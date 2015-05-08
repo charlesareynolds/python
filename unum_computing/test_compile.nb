@@ -1,0 +1,1350 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 10.1' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[     63675,       1341]
+NotebookOptionsPosition[     62470,       1296]
+NotebookOutlinePosition[     62814,       1311]
+CellTagsIndexPosition[     62771,       1308]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"cFun", "=", 
+   RowBox[{"Compile", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{"x", ",", "_Real"}], "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{"n", ",", "_Integer"}], "}"}]}], "}"}], ",", 
+     RowBox[{"Module", "[", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{"sum", ",", "inc"}], "}"}], ",", 
+       RowBox[{
+        RowBox[{"sum", "=", "1.0"}], ";", 
+        RowBox[{"inc", "=", "1.0"}], ";", "\[IndentingNewLine]", 
+        RowBox[{"Do", "[", 
+         RowBox[{
+          RowBox[{
+           RowBox[{"inc", "=", 
+            RowBox[{"inc", "*", 
+             RowBox[{"x", "/", "i"}]}]}], ";", 
+           RowBox[{"sum", "=", 
+            RowBox[{"sum", "+", "inc"}]}]}], ",", 
+          RowBox[{"{", 
+           RowBox[{"i", ",", "n"}], "}"}]}], "]"}], ";", "sum"}]}], "]"}]}], 
+    "]"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"fFun", "=", 
+   RowBox[{"Function", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"x", ",", "n"}], "}"}], ",", 
+     RowBox[{"Module", "[", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{"sum", ",", "inc"}], "}"}], ",", 
+       RowBox[{
+        RowBox[{"sum", "=", "1.0"}], ";", 
+        RowBox[{"inc", "=", "1.0"}], ";", "\[IndentingNewLine]", 
+        RowBox[{"Do", "[", 
+         RowBox[{
+          RowBox[{
+           RowBox[{"inc", "=", 
+            RowBox[{"inc", "*", 
+             RowBox[{"x", "/", "i"}]}]}], ";", 
+           RowBox[{"sum", "=", 
+            RowBox[{"sum", "+", "inc"}]}]}], ",", 
+          RowBox[{"{", 
+           RowBox[{"i", ",", "n"}], "}"}]}], "]"}], ";", "sum"}]}], "]"}]}], 
+    "]"}]}], ";"}]}], "Input",
+ CellChangeTimes->{{3.6391656309824524`*^9, 3.6391656343384867`*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"cFun", "[", 
+  RowBox[{"10.5", ",", "10"}], "]"}]], "Input",
+ CellChangeTimes->{{3.6391656021411595`*^9, 3.639165611354252*^9}}],
+
+Cell[BoxData["18910.866894989013`"], "Output",
+ CellChangeTimes->{3.6391656123142614`*^9, 3.6391656553267007`*^9, 
+  3.6391666607016306`*^9, 3.6391667015965405`*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"fFun", "[", 
+  RowBox[{"10.5", ",", "10"}], "]"}]], "Input",
+ CellChangeTimes->{{3.6391656798089495`*^9, 3.639165688296035*^9}}],
+
+Cell[BoxData["18910.866894989013`"], "Output",
+ CellChangeTimes->{3.6391656918700733`*^9, 3.6391666607216287`*^9, 
+  3.6391667016065397`*^9}]
+}, Open  ]],
+
+Cell[BoxData[
+ RowBox[{"Needs", "[", "\"\<CCodeGenerator`\>\"", "]"}]], "Input",
+ CellChangeTimes->{{3.6391657506066685`*^9, 3.639165750636669*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"c", "=", 
+   RowBox[{"Compile", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"{", "x", "}"}], "}"}], ",", 
+     RowBox[{"x", "^", "2"}]}], "]"}]}], ";"}], "\n", 
+ RowBox[{"file", "=", 
+  RowBox[{"CCodeStringGenerate", "[", 
+   RowBox[{"c", ",", "\"\<fun\>\"", ",", 
+    RowBox[{"{", "}"}]}], "]"}]}]}], "Input",
+ CellChangeTimes->{{3.6391657780739503`*^9, 3.63916577808395*^9}, {
+  3.63916657171653*^9, 3.639166576046097*^9}}],
+
+Cell[BoxData["\<\"#include \\\"math.h\\\"\\n\\n#include \
+\\\"WolframRTL.h\\\"\\n\\nstatic WolframCompileLibrary_Functions \
+funStructCompile;\\n\\nstatic mbool initialize = 1;\\n\\n#include \\\"fun.h\\\
+\"\\n\\nDLLEXPORT int Initialize_fun(WolframLibraryData libData)\\n{\\nif( \
+initialize)\\n{\\nfunStructCompile = \
+libData->compileLibraryFunctions;\\ninitialize = 0;\\n}\\nreturn \
+0;\\n}\\n\\nDLLEXPORT void Uninitialize_fun(WolframLibraryData \
+libData)\\n{\\nif( !initialize)\\n{\\ninitialize = 1;\\n}\\n}\\n\\nDLLEXPORT \
+int fun(WolframLibraryData libData, mreal A1, mreal *Res)\\n{\\nmreal \
+R0_0;\\nmreal R0_1;\\nR0_0 = A1;\\nR0_1 = R0_0 * R0_0;\\n*Res = \
+R0_1;\\nfunStructCompile->WolframLibraryData_cleanUp(libData, 1);\\nreturn 0;\
+\\n}\\n\\n\"\>"], "Output",
+ CellChangeTimes->{3.639165780244972*^9, 3.6391665801086907`*^9, 
+  3.6391666607516255`*^9, 3.6391667016365366`*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"setenvc", "=", 
+  RowBox[{"Compile", "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"e", ",", " ", "_Integer"}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"f", ",", " ", "_Integer"}], "}"}]}], "}"}], ",", 
+    "\[IndentingNewLine]", 
+    RowBox[{"Module", "[", 
+     RowBox[{
+      RowBox[{"{", "foo", "}"}], ",", "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"esizesize", ",", "fsizesize"}], "}"}], "=", 
+        RowBox[{"{", 
+         RowBox[{"e", ",", "f"}], "}"}]}], ";", "\[IndentingNewLine]", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"esizemax", ",", "fsizemax"}], "}"}], "=", 
+        SuperscriptBox["2", 
+         RowBox[{"{", 
+          RowBox[{"e", ",", "f"}], "}"}]]}], ";", "\[IndentingNewLine]", 
+       RowBox[{"utagsize", "=", 
+        RowBox[{"1", "+", "f", "+", "e"}]}], ";", "\[IndentingNewLine]", 
+       RowBox[{"maxubits", "=", 
+        RowBox[{"1", "+", "esizemax", "+", "fsizemax", "+", "utagsize"}]}], 
+       ";", "\[IndentingNewLine]", 
+       RowBox[{"ubitmask", "=", 
+        RowBox[{"BitShiftLeft", "[", 
+         RowBox[{"1", ",", 
+          RowBox[{"utagsize", "-", "1"}]}], "]"}]}], ";", 
+       "\[IndentingNewLine]", 
+       RowBox[{"fsizemask", "=", 
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{"BitShiftLeft", "[", 
+           RowBox[{"1", ",", "f"}], "]"}], "-", "1"}], ")"}]}], ";", 
+       "\[IndentingNewLine]", 
+       RowBox[{"esizemask", 
+        StyleBox["=", "Input"], 
+        RowBox[{
+         RowBox[{
+          StyleBox["(", "Input"], " ", 
+          RowBox[{"ubitmask", "-", "1"}], ")"}], "-", "fsizemask"}]}], ";", 
+       "\[IndentingNewLine]", 
+       RowBox[{"efsizemask", "=", 
+        RowBox[{"BitOr", "[", 
+         RowBox[{"esizemask", ",", "fsizemask"}], "]"}]}], ";", 
+       "\[IndentingNewLine]", 
+       RowBox[{"utagmask", "=", 
+        RowBox[{"BitOr", "[", " ", 
+         RowBox[{"ubitmask", ",", "efsizemask"}], "]"}]}], ";", 
+       "\[IndentingNewLine]", 
+       RowBox[{"ulpu", "=", 
+        RowBox[{"BitShiftLeft", "[", 
+         RowBox[{"1", ",", "utagsize"}], "]"}]}], ";", "\[IndentingNewLine]", 
+       RowBox[{"smallsubnormalu", "=", 
+        RowBox[{"efsizemask", "+", "ulpu"}]}], ";", "\[IndentingNewLine]", 
+       RowBox[{"smallnormalu", "=", 
+        RowBox[{"efsizemask", "+", 
+         RowBox[{"BitShiftLeft", "[", 
+          RowBox[{"1", ",", 
+           RowBox[{"maxubits", "-", "1", "-", "esizemax"}]}], "]"}]}]}], ";", 
+       "\[IndentingNewLine]", 
+       RowBox[{"signbigu", "=", 
+        RowBox[{"BitShiftLeft", "[", 
+         RowBox[{"1", ",", 
+          RowBox[{"maxubits", "-", "1"}]}], "]"}]}], ";", 
+       "\[IndentingNewLine]", 
+       RowBox[{"posinfu", "=", 
+        RowBox[{"signbigu", "-", "1", "-", " ", "ubitmask"}]}], ";", 
+       "\[IndentingNewLine]", 
+       RowBox[{"maxrealu", "=", 
+        RowBox[{"posinfu", "-", "ulpu"}]}], ";", "\[IndentingNewLine]", 
+       RowBox[{"minrealu", "=", 
+        RowBox[{"maxrealu", "+", "signbigu"}]}], ";", "\[IndentingNewLine]", 
+       RowBox[{"neginfu", "=", 
+        RowBox[{"posinfu", "+", "signbigu"}]}], ";", "\[IndentingNewLine]", 
+       RowBox[{"negbigu", "=", 
+        RowBox[{"neginfu", "-", "ulpu"}]}], ";", "\[IndentingNewLine]", 
+       RowBox[{"qNaNu", "=", 
+        RowBox[{"posinfu", "+", " ", "ubitmask"}]}], ";", 
+       "\[IndentingNewLine]", 
+       RowBox[{"sNaNu", "=", 
+        RowBox[{"neginfu", "+", " ", "ubitmask"}]}], ";", 
+       "\[IndentingNewLine]", 
+       RowBox[{"negopeninfu", "=", 
+        RowBox[{"If", "[", 
+         RowBox[{
+          RowBox[{"utagsize", "\[Equal]", "1"}], ",", "2^^1101", ",", 
+          RowBox[{"BitShiftLeft", "[", 
+           RowBox[{"2^^1111", ",", 
+            RowBox[{"utagsize", "-", "1"}]}], "]"}]}], "]"}]}], ";", 
+       "\[IndentingNewLine]", 
+       RowBox[{"posopeninfu", "=", 
+        RowBox[{"If", "[", 
+         RowBox[{
+          RowBox[{"utagsize", "\[Equal]", "1"}], ",", "2^^0101", ",", 
+          RowBox[{"BitShiftLeft", "[", 
+           RowBox[{"2^^0111", ",", 
+            RowBox[{"utagsize", "-", "1"}]}], "]"}]}], "]"}]}], ";", 
+       "\[IndentingNewLine]", 
+       RowBox[{"negopenzerou", "=", 
+        RowBox[{"BitShiftLeft", "[", 
+         RowBox[{"2^^1001", ",", 
+          RowBox[{"utagsize", "-", "1"}]}], "]"}]}], ";", 
+       "\[IndentingNewLine]", 
+       RowBox[{"maxreal", "=", 
+        RowBox[{
+         SuperscriptBox["2", 
+          SuperscriptBox["2", 
+           RowBox[{"esizemax", "-", "1"}]]], 
+         FractionBox[
+          RowBox[{"(", 
+           RowBox[{
+            SuperscriptBox["2", "fsizemax"], "-", "1"}], ")"}], 
+          SuperscriptBox["2", 
+           RowBox[{"fsizemax", "-", "1"}]]]}]}], ";", "\[IndentingNewLine]", 
+       RowBox[{"smallsubnormal", "=", 
+        SuperscriptBox["2", 
+         RowBox[{"2", "-", 
+          SuperscriptBox["2", 
+           RowBox[{"esizemax", "-", "1"}]], "-", "fsizemax"}]]}], ";"}]}], 
+     "]"}], ",", 
+    RowBox[{"CompilationTarget", "\[Rule]", "\"\<C\>\""}]}], "]"}]}]], "Input",
+ CellChangeTimes->{{3.6391658718649035`*^9, 3.6391658758249435`*^9}, 
+   3.6391659193363867`*^9, {3.639166063008082*^9, 3.639166096141426*^9}, {
+   3.639166336886058*^9, 3.6391663512089043`*^9}, {3.6391666854621544`*^9, 
+   3.639166686232077*^9}, 3.639223163348321*^9}],
+
+Cell[BoxData[
+ RowBox[{
+  StyleBox[
+   RowBox[{"CreateLibrary", "::", "nocomp"}], "MessageName"], 
+  RowBox[{
+  ":", " "}], "\<\"A C compiler cannot be found on your system. Please \
+consult the documentation to learn how to set up suitable compilers. \
+\\!\\(\\*ButtonBox[\\\"\[RightSkeleton]\\\", ButtonStyle->\\\"Link\\\", \
+ButtonFrame->None, ButtonData:>\\\"paclet:CCompilerDriver/ref/CreateLibrary\\\
+\", ButtonNote -> \\\"CCompilerDriver`CreateLibrary::nocomp\\\"]\\)\"\>"}]], \
+"Message", "MSG",
+ CellChangeTimes->{3.6392231686653748`*^9}],
+
+Cell[BoxData[
+ RowBox[{
+  StyleBox[
+   RowBox[{"Compile", "::", "nogen"}], "MessageName"], 
+  RowBox[{
+  ":", " "}], "\<\"A library could not be generated from the compiled \
+function. \\!\\(\\*ButtonBox[\\\"\[RightSkeleton]\\\", \
+ButtonStyle->\\\"Link\\\", ButtonFrame->None, \
+ButtonData:>\\\"paclet:ref/Compile\\\", ButtonNote -> \\\"Compile::nogen\\\"]\
+\\)\"\>"}]], "Message", "MSG",
+ CellChangeTimes->{3.639223169095379*^9}],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{
+   TagBox["CompiledFunction",
+    "SummaryHead"], "[", 
+   DynamicModuleBox[{Typeset`open$$ = False}, 
+    PanelBox[
+     PaneSelectorBox[{False->GridBox[{
+        {
+         PaneBox[
+          ButtonBox[
+           
+           DynamicBox[FEPrivate`FrontEndResource[
+            "FEBitmaps", "SquarePlusIconMedium"],
+            ImageSizeCache->{12., {0., 12.}}],
+           Appearance->None,
+           ButtonFunction:>(Typeset`open$$ = True),
+           Evaluator->Automatic,
+           Method->"Preemptive"],
+          Alignment->{Center, Center},
+          
+          ImageSize->
+           Dynamic[{
+            Automatic, 3.5 CurrentValue["FontCapHeight"]/AbsoluteCurrentValue[
+             Magnification]}]], 
+         GraphicsBox[
+          {Thickness[0.038461538461538464`], 
+           {FaceForm[{GrayLevel[0.93], Opacity[1.]}], 
+            FilledCurveBox[{{{1, 4, 3}, {0, 1, 0}, {1, 3, 3}, {0, 1, 0}, {1, 
+             3, 3}, {0, 1, 0}, {1, 3, 3}, {0, 1, 0}}}, {{{25.499999999999996`,
+              2.5}, {25.499999999999996`, 1.3953100000000003`}, {
+             24.604699999999998`, 0.49999999999999994`}, {23.5, 
+             0.49999999999999994`}, {2.5, 0.49999999999999994`}, {
+             1.3953100000000003`, 0.49999999999999994`}, {
+             0.49999999999999994`, 1.3953100000000003`}, {
+             0.49999999999999994`, 2.5}, {0.49999999999999994`, 23.5}, {
+             0.49999999999999994`, 24.604699999999998`}, {1.3953100000000003`,
+              25.499999999999996`}, {2.5, 25.499999999999996`}, {23.5, 
+             25.499999999999996`}, {24.604699999999998`, 
+             25.499999999999996`}, {25.499999999999996`, 
+             24.604699999999998`}, {25.499999999999996`, 23.5}, {
+             25.499999999999996`, 2.5}}}]}, 
+           {FaceForm[{RGBColor[0.5, 0.5, 0.5], Opacity[1.]}], 
+            FilledCurveBox[{{{0, 2, 0}, {0, 1, 0}, {0, 1, 0}, {0, 1, 0}, {0, 
+             1, 0}, {0, 1, 0}, {0, 1, 0}}}, {{{20.5426, 
+             19.116799999999998`}, {16.3832, 21.876199999999997`}, {16.3832, 
+             20.021499999999996`}, {6.930469999999999, 20.021499999999996`}, {
+             6.930469999999999, 18.212100000000003`}, {16.3832, 
+             18.212100000000003`}, {16.3832, 16.357399999999995`}, {20.5426, 
+             19.116799999999998`}}}], 
+            FilledCurveBox[{{{0, 2, 0}, {0, 1, 0}, {0, 1, 0}, {0, 1, 0}, {0, 
+             1, 0}, {0, 1, 0}, {0, 1, 0}}}, {{{5.30508, 13.8391}, {9.46445, 
+             11.079700000000003`}, {9.46445, 12.933999999999997`}, {
+             18.917199999999998`, 12.933999999999997`}, {18.917199999999998`, 
+             14.7438}, {9.46445, 14.7438}, {9.46445, 16.598}, {5.30508, 
+             13.8391}}}], 
+            FilledCurveBox[{{{0, 2, 0}, {0, 1, 0}, {0, 1, 0}, {0, 1, 0}, {0, 
+             1, 0}, {0, 1, 0}, {0, 1, 0}, {0, 1, 0}, {0, 1, 0}, {0, 1, 0}, {0,
+              1, 0}, {0, 1, 0}, {0, 1, 0}, {0, 1, 0}, {0, 1, 0}, {0, 1, 0}, {
+             0, 1, 0}, {0, 1, 0}, {0, 1, 0}}}, CompressedData["
+1:eJxTTMoPSmVmYGBgBGIRIGYC4r9qIkoPPog5zJd34+ifoeBwf6HGBfU8aYe0
+2dKXhaMEHT77F2xc1CQH52elHtL/aqrg0KrArnpmjpRDvTCXYEG9gsOOYKuI
+/6tlHZ5WFpRfO4qQn3ww8NOrXYpw/fNmfE3SCFCG8z8EiLwQ7lSF2w82/44y
+nM937b/lmXNKDnK7FuxLZZFwMDfq/3NwgpKDccaL+Q9miDok9Mnt3x6k5FDt
+mbylT0ECwk9QhOuXWfO/eIajPCq/WNYh5kh50jV+CYc1eV/nfGGShZsXte2a
+OGevDNy8ZqG0W/9KpeD60cMLAIwUgfU=
+             "]], 
+            FilledCurveBox[{{{0, 2, 0}, {0, 1, 0}, {0, 1, 0}, {0, 1, 0}, {0, 
+             1, 0}, {0, 1, 0}, {0, 1, 0}}}, {{{12.82453, 5.289294374999999}, {
+             11.960858124999998`, 8.29796625}, {11.080858124999999`, 
+             8.29796625}, {12.417186249999999`, 4.337966249999999}, {
+             13.193201874999998`, 4.337966249999999}, {14.540701874999998`, 
+             8.29796625}, {13.688201874999999`, 8.29796625}, {12.82453, 
+             5.289294374999999}}}], 
+            FilledCurveBox[{{{0, 2, 0}, {0, 1, 0}, {0, 1, 0}, {0, 1, 0}, {0, 
+             1, 0}, {1, 3, 3}, {1, 3, 3}, {0, 1, 0}, {0, 1, 0}, {0, 1, 0}, {1,
+              3, 3}, {1, 3, 3}, {0, 1, 0}, {0, 1, 0}, {0, 1, 0}, {0, 1, 0}, {
+             0, 1, 0}}}, CompressedData["
+1:eJxTTMoPSmVmYGBgBGIpIGYC4qwFP+fsFjB0WFcz7fnBvSIOLFaTza6GGTjM
+l3fj6J+h4GC9PHLBXXc9DH7abOnLwlGCDtPNZKaxndfH4Is8/uOrISAD53uI
+GTRGxyP4O4KtIv6fR/BbFdhVz8TIOqj9FNyfdEbfIejt5Y8zXiL4h7TunbCJ
+koPzweYvkXP4mfT+6PSlBnD7n25Z/mROiSGcr7S/rqPX1AiuHsaHmQfjw+zz
+lubzZjYxgrsHxoe5F8aH+QfGn/B91VROQQQfZr/Ei1viF75j8mHh6eiSdevo
+cUM4Hz0+AG0eosQ=
+             "]]}},
+          AspectRatio->1,
+          Axes->False,
+          Background->GrayLevel[0.93],
+          Frame->True,
+          FrameStyle->Directive[
+            Thickness[Tiny], 
+            GrayLevel[0.7]],
+          FrameTicks->None,
+          ImageSize->{Automatic, 
+            Dynamic[
+            3.5 (CurrentValue["FontCapHeight"]/AbsoluteCurrentValue[
+              Magnification]), ImageSizeCache -> {45., {0., 9.}}]}], GridBox[{
+           {
+            RowBox[{
+             TagBox["\<\"Argument count: \"\>",
+              "SummaryItemAnnotation"], "\[InvisibleSpace]", 
+             TagBox["2",
+              "SummaryItem"]}]},
+           {
+            RowBox[{
+             TagBox["\<\"Argument types: \"\>",
+              "SummaryItemAnnotation"], "\[InvisibleSpace]", 
+             TagBox[
+              StyleBox[
+               PaneBox[
+                RowBox[{"{", 
+                 RowBox[{"_Integer", ",", "_Integer"}], "}"}],
+                BaselinePosition->Baseline,
+                ContentPadding->False,
+                FrameMargins->0,
+                ImageSize->{{1, 300}, Automatic},
+                StripOnInput->True],
+               LineBreakWithin->False],
+              "SummaryItem"]}]}
+          },
+          AutoDelete->False,
+          
+          BaseStyle->{
+           ShowStringCharacters -> False, NumberMarks -> False, 
+            PrintPrecision -> 3, ShowSyntaxStyles -> False},
+          GridBoxAlignment->{"Columns" -> {{Left}}, "Rows" -> {{Automatic}}},
+          
+          GridBoxItemSize->{
+           "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}},
+          GridBoxSpacings->{"Columns" -> {{2}}, "Rows" -> {{Automatic}}}]}
+       },
+       AutoDelete->False,
+       BaselinePosition->{1, 1},
+       GridBoxAlignment->{"Rows" -> {{Top}}},
+       GridBoxItemSize->{
+        "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}], True->GridBox[{
+        {
+         PaneBox[
+          ButtonBox[
+           
+           DynamicBox[FEPrivate`FrontEndResource[
+            "FEBitmaps", "SquareMinusIconMedium"]],
+           Appearance->None,
+           ButtonFunction:>(Typeset`open$$ = False),
+           Evaluator->Automatic,
+           Method->"Preemptive"],
+          Alignment->{Center, Center},
+          
+          ImageSize->
+           Dynamic[{
+            Automatic, 3.5 CurrentValue["FontCapHeight"]/AbsoluteCurrentValue[
+             Magnification]}]], 
+         GraphicsBox[
+          {Thickness[0.038461538461538464`], 
+           {FaceForm[{GrayLevel[0.93], Opacity[1.]}], 
+            FilledCurveBox[{{{1, 4, 3}, {0, 1, 0}, {1, 3, 3}, {0, 1, 0}, {1, 
+             3, 3}, {0, 1, 0}, {1, 3, 3}, {0, 1, 0}}}, {{{25.499999999999996`,
+              2.5}, {25.499999999999996`, 1.3953100000000003`}, {
+             24.604699999999998`, 0.49999999999999994`}, {23.5, 
+             0.49999999999999994`}, {2.5, 0.49999999999999994`}, {
+             1.3953100000000003`, 0.49999999999999994`}, {
+             0.49999999999999994`, 1.3953100000000003`}, {
+             0.49999999999999994`, 2.5}, {0.49999999999999994`, 23.5}, {
+             0.49999999999999994`, 24.604699999999998`}, {1.3953100000000003`,
+              25.499999999999996`}, {2.5, 25.499999999999996`}, {23.5, 
+             25.499999999999996`}, {24.604699999999998`, 
+             25.499999999999996`}, {25.499999999999996`, 
+             24.604699999999998`}, {25.499999999999996`, 23.5}, {
+             25.499999999999996`, 2.5}}}]}, 
+           {FaceForm[{RGBColor[0.5, 0.5, 0.5], Opacity[1.]}], 
+            FilledCurveBox[{{{0, 2, 0}, {0, 1, 0}, {0, 1, 0}, {0, 1, 0}, {0, 
+             1, 0}, {0, 1, 0}, {0, 1, 0}}}, {{{20.5426, 
+             19.116799999999998`}, {16.3832, 21.876199999999997`}, {16.3832, 
+             20.021499999999996`}, {6.930469999999999, 20.021499999999996`}, {
+             6.930469999999999, 18.212100000000003`}, {16.3832, 
+             18.212100000000003`}, {16.3832, 16.357399999999995`}, {20.5426, 
+             19.116799999999998`}}}], 
+            FilledCurveBox[{{{0, 2, 0}, {0, 1, 0}, {0, 1, 0}, {0, 1, 0}, {0, 
+             1, 0}, {0, 1, 0}, {0, 1, 0}}}, {{{5.30508, 13.8391}, {9.46445, 
+             11.079700000000003`}, {9.46445, 12.933999999999997`}, {
+             18.917199999999998`, 12.933999999999997`}, {18.917199999999998`, 
+             14.7438}, {9.46445, 14.7438}, {9.46445, 16.598}, {5.30508, 
+             13.8391}}}], 
+            FilledCurveBox[{{{0, 2, 0}, {0, 1, 0}, {0, 1, 0}, {0, 1, 0}, {0, 
+             1, 0}, {0, 1, 0}, {0, 1, 0}, {0, 1, 0}, {0, 1, 0}, {0, 1, 0}, {0,
+              1, 0}, {0, 1, 0}, {0, 1, 0}, {0, 1, 0}, {0, 1, 0}, {0, 1, 0}, {
+             0, 1, 0}, {0, 1, 0}, {0, 1, 0}}}, CompressedData["
+1:eJxTTMoPSmVmYGBgBGIRIGYC4r9qIkoPPog5zJd34+ifoeBwf6HGBfU8aYe0
+2dKXhaMEHT77F2xc1CQH52elHtL/aqrg0KrArnpmjpRDvTCXYEG9gsOOYKuI
+/6tlHZ5WFpRfO4qQn3ww8NOrXYpw/fNmfE3SCFCG8z8EiLwQ7lSF2w82/44y
+nM937b/lmXNKDnK7FuxLZZFwMDfq/3NwgpKDccaL+Q9miDok9Mnt3x6k5FDt
+mbylT0ECwk9QhOuXWfO/eIajPCq/WNYh5kh50jV+CYc1eV/nfGGShZsXte2a
+OGevDNy8ZqG0W/9KpeD60cMLAIwUgfU=
+             "]], 
+            FilledCurveBox[{{{0, 2, 0}, {0, 1, 0}, {0, 1, 0}, {0, 1, 0}, {0, 
+             1, 0}, {0, 1, 0}, {0, 1, 0}}}, {{{12.82453, 5.289294374999999}, {
+             11.960858124999998`, 8.29796625}, {11.080858124999999`, 
+             8.29796625}, {12.417186249999999`, 4.337966249999999}, {
+             13.193201874999998`, 4.337966249999999}, {14.540701874999998`, 
+             8.29796625}, {13.688201874999999`, 8.29796625}, {12.82453, 
+             5.289294374999999}}}], 
+            FilledCurveBox[{{{0, 2, 0}, {0, 1, 0}, {0, 1, 0}, {0, 1, 0}, {0, 
+             1, 0}, {1, 3, 3}, {1, 3, 3}, {0, 1, 0}, {0, 1, 0}, {0, 1, 0}, {1,
+              3, 3}, {1, 3, 3}, {0, 1, 0}, {0, 1, 0}, {0, 1, 0}, {0, 1, 0}, {
+             0, 1, 0}}}, CompressedData["
+1:eJxTTMoPSmVmYGBgBGIpIGYC4qwFP+fsFjB0WFcz7fnBvSIOLFaTza6GGTjM
+l3fj6J+h4GC9PHLBXXc9DH7abOnLwlGCDtPNZKaxndfH4Is8/uOrISAD53uI
+GTRGxyP4O4KtIv6fR/BbFdhVz8TIOqj9FNyfdEbfIejt5Y8zXiL4h7TunbCJ
+koPzweYvkXP4mfT+6PSlBnD7n25Z/mROiSGcr7S/rqPX1AiuHsaHmQfjw+zz
+lubzZjYxgrsHxoe5F8aH+QfGn/B91VROQQQfZr/Ei1viF75j8mHh6eiSdevo
+cUM4Hz0+AG0eosQ=
+             "]]}},
+          AspectRatio->1,
+          Axes->False,
+          Background->GrayLevel[0.93],
+          Frame->True,
+          FrameStyle->Directive[
+            Thickness[Tiny], 
+            GrayLevel[0.7]],
+          FrameTicks->None,
+          ImageSize->{Automatic, 
+            Dynamic[
+            3.5 (CurrentValue["FontCapHeight"]/AbsoluteCurrentValue[
+              Magnification]), ImageSizeCache -> {45., {0., 9.}}]}], GridBox[{
+           {
+            RowBox[{
+             TagBox["\<\"Argument count: \"\>",
+              "SummaryItemAnnotation"], "\[InvisibleSpace]", 
+             TagBox["2",
+              "SummaryItem"]}]},
+           {
+            RowBox[{
+             TagBox["\<\"Argument types: \"\>",
+              "SummaryItemAnnotation"], "\[InvisibleSpace]", 
+             TagBox[
+              PaneBox[
+               RowBox[{"{", 
+                RowBox[{"_Integer", ",", "_Integer"}], "}"}],
+               BaselinePosition->Baseline,
+               ContentPadding->False,
+               FrameMargins->0,
+               ImageSize->{{1, 500}, Automatic},
+               StripOnInput->True],
+              "SummaryItem"]}]},
+           {
+            RowBox[{
+             TagBox["\<\"Variables: \"\>",
+              "SummaryItemAnnotation"], "\[InvisibleSpace]", 
+             TagBox[
+              RowBox[{"{", 
+               RowBox[{"e", ",", "f"}], "}"}],
+              "SummaryItem"]}]},
+           {
+            RowBox[{
+             TagBox["\<\"Expression: \"\>",
+              "SummaryItemAnnotation"], "\[InvisibleSpace]", 
+             TagBox[
+              PaneBox[
+               RowBox[{"Module", "[", 
+                RowBox[{
+                 RowBox[{"{", "foo", "}"}], ",", 
+                 RowBox[{
+                  RowBox[{
+                   RowBox[{"{", 
+                    RowBox[{"esizesize", ",", "fsizesize"}], "}"}], "=", 
+                   RowBox[{"{", 
+                    RowBox[{"e", ",", "f"}], "}"}]}], ";", 
+                  RowBox[{
+                   RowBox[{"{", 
+                    RowBox[{"esizemax", ",", "fsizemax"}], "}"}], "=", 
+                   SuperscriptBox["2", 
+                    RowBox[{"{", 
+                    RowBox[{"e", ",", "f"}], "}"}]]}], ";", 
+                  RowBox[{"utagsize", "=", 
+                   RowBox[{"1", "+", "f", "+", "e"}]}], ";", 
+                  RowBox[{"maxubits", "=", 
+                   RowBox[{
+                   "1", "+", "esizemax", "+", "fsizemax", "+", "utagsize"}]}],
+                   ";", 
+                  RowBox[{"ubitmask", "=", 
+                   RowBox[{"BitShiftLeft", "[", 
+                    RowBox[{"1", ",", 
+                    RowBox[{"utagsize", "-", "1"}]}], "]"}]}], ";", 
+                  RowBox[{"fsizemask", "=", 
+                   RowBox[{
+                    RowBox[{"BitShiftLeft", "[", 
+                    RowBox[{"1", ",", "f"}], "]"}], "-", "1"}]}], ";", 
+                  RowBox[{"esizemask", "=", 
+                   RowBox[{
+                    RowBox[{"(", 
+                    RowBox[{"ubitmask", "-", "1"}], ")"}], "-", 
+                    "fsizemask"}]}], ";", 
+                  RowBox[{"efsizemask", "=", 
+                   RowBox[{"BitOr", "[", 
+                    RowBox[{"esizemask", ",", "fsizemask"}], "]"}]}], ";", 
+                  RowBox[{"utagmask", "=", 
+                   RowBox[{"BitOr", "[", 
+                    RowBox[{"ubitmask", ",", "efsizemask"}], "]"}]}], ";", 
+                  RowBox[{"ulpu", "=", 
+                   RowBox[{"BitShiftLeft", "[", 
+                    RowBox[{"1", ",", "utagsize"}], "]"}]}], ";", 
+                  RowBox[{"smallsubnormalu", "=", 
+                   RowBox[{"efsizemask", "+", "ulpu"}]}], ";", 
+                  RowBox[{"smallnormalu", "=", 
+                   RowBox[{"efsizemask", "+", 
+                    RowBox[{"BitShiftLeft", "[", 
+                    RowBox[{"1", ",", 
+                    RowBox[{"maxubits", "-", "1", "-", "esizemax"}]}], 
+                    "]"}]}]}], ";", 
+                  RowBox[{"signbigu", "=", 
+                   RowBox[{"BitShiftLeft", "[", 
+                    RowBox[{"1", ",", 
+                    RowBox[{"maxubits", "-", "1"}]}], "]"}]}], ";", 
+                  RowBox[{"posinfu", "=", 
+                   RowBox[{"signbigu", "-", "1", "-", "ubitmask"}]}], ";", 
+                  RowBox[{"maxrealu", "=", 
+                   RowBox[{"posinfu", "-", "ulpu"}]}], ";", 
+                  RowBox[{"minrealu", "=", 
+                   RowBox[{"maxrealu", "+", "signbigu"}]}], ";", 
+                  RowBox[{"neginfu", "=", 
+                   RowBox[{"posinfu", "+", "signbigu"}]}], ";", 
+                  RowBox[{"negbigu", "=", 
+                   RowBox[{"neginfu", "-", "ulpu"}]}], ";", 
+                  RowBox[{"qNaNu", "=", 
+                   RowBox[{"posinfu", "+", "ubitmask"}]}], ";", 
+                  RowBox[{"sNaNu", "=", 
+                   RowBox[{"neginfu", "+", "ubitmask"}]}], ";", 
+                  RowBox[{"negopeninfu", "=", 
+                   RowBox[{"If", "[", 
+                    RowBox[{
+                    RowBox[{"utagsize", "\[Equal]", "1"}], ",", "13", ",", 
+                    RowBox[{"BitShiftLeft", "[", 
+                    RowBox[{"15", ",", 
+                    RowBox[{"utagsize", "-", "1"}]}], "]"}]}], "]"}]}], ";", 
+                  RowBox[{"posopeninfu", "=", 
+                   RowBox[{"If", "[", 
+                    RowBox[{
+                    RowBox[{"utagsize", "\[Equal]", "1"}], ",", "5", ",", 
+                    RowBox[{"BitShiftLeft", "[", 
+                    RowBox[{"7", ",", 
+                    RowBox[{"utagsize", "-", "1"}]}], "]"}]}], "]"}]}], ";", 
+                  RowBox[{"negopenzerou", "=", 
+                   RowBox[{"BitShiftLeft", "[", 
+                    RowBox[{"9", ",", 
+                    RowBox[{"utagsize", "-", "1"}]}], "]"}]}], ";", 
+                  RowBox[{"maxreal", "=", 
+                   FractionBox[
+                    RowBox[{
+                    SuperscriptBox["2", 
+                    SuperscriptBox["2", 
+                    RowBox[{"esizemax", "-", "1"}]]], " ", 
+                    RowBox[{"(", 
+                    RowBox[{
+                    SuperscriptBox["2", "fsizemax"], "-", "1"}], ")"}]}], 
+                    SuperscriptBox["2", 
+                    RowBox[{"fsizemax", "-", "1"}]]]}], ";", 
+                  RowBox[{"smallsubnormal", "=", 
+                   SuperscriptBox["2", 
+                    RowBox[{"2", "-", 
+                    SuperscriptBox["2", 
+                    RowBox[{"esizemax", "-", "1"}]], "-", "fsizemax"}]]}], 
+                  ";"}]}], "]"}],
+               BaselinePosition->Baseline,
+               ContentPadding->False,
+               FrameMargins->0,
+               ImageSize->{{1, 500}, Automatic},
+               StripOnInput->True],
+              "SummaryItem"]}]}
+          },
+          AutoDelete->False,
+          
+          BaseStyle->{
+           ShowStringCharacters -> False, NumberMarks -> False, 
+            PrintPrecision -> 3, ShowSyntaxStyles -> False},
+          GridBoxAlignment->{"Columns" -> {{Left}}, "Rows" -> {{Automatic}}},
+          
+          GridBoxItemSize->{
+           "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}},
+          GridBoxSpacings->{"Columns" -> {{2}}, "Rows" -> {{Automatic}}}]}
+       },
+       AutoDelete->False,
+       BaselinePosition->{1, 1},
+       GridBoxAlignment->{"Rows" -> {{Top}}},
+       GridBoxItemSize->{
+        "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}]}, Dynamic[
+      Typeset`open$$],
+      ImageSize->Automatic],
+     BaselinePosition->Baseline],
+    DynamicModuleValues:>{}], "]"}],
+  CompiledFunction[{10, 10.1, 5468}, {
+    Blank[Integer], 
+    Blank[Integer]}, {{2, 0, 0}, {2, 0, 1}, {6, 0, 
+   187}}, {{33, {2, 0, 10}}, {9, {2, 0, 15}}, {8, {2, 0, 8}}, {
+    13, {2, 0, 11}}, {5, {2, 0, 13}}, {2, {2, 0, 3}}, {-1, {2, 0, 9}}, {
+    15, {2, 0, 12}}, {7, {2, 0, 14}}, {1, {2, 0, 4}}}, {1, 16, 2, 0, 
+   2}, {{34, 1, 2, 0, 1, 2, 0}, {33, 0, 2}, {24, 2, 3, 0}, {32, 0, 0}, {2, 0, 
+    3}, {49}, {3, 1}, {46, 
+     Function[{$CellContext`e, $CellContext`f}, $CellContext`esizesize = 
+      Compile`GetElement[Compile`Variable$18646, 1]], {
+     Compile`Variable$18646, 2, 1, 0, Module}, 2, 0, 0, 2, 0, 1, 6, 0, 17}, {
+    46, 
+     Function[{$CellContext`e, $CellContext`f}, $CellContext`fsizesize = 
+      Compile`GetElement[Compile`Variable$18646, 2]], {
+     Compile`Variable$18646, 2, 1, 0, Module}, 2, 0, 0, 2, 0, 1, 6, 0, 17}, {
+    34, 1, 2, 0, 1, 2, 0}, {41, 263, 2, 0, 3, 2, 1, 0, 2, 1, 1}, {33, 1, 2}, {
+    24, 2, 3, 0}, {32, 0, 0}, {2, 0, 3}, {49}, {3, 1}, {46, 
+     Function[{$CellContext`e, $CellContext`f}, $CellContext`esizemax = 
+      Compile`GetElement[Compile`Variable$18647, 1]], {
+     Compile`Variable$18647, 2, 1, 1, Module}, 2, 0, 0, 2, 0, 1, 6, 0, 17}, {
+    46, 
+     Function[{$CellContext`e, $CellContext`f}, $CellContext`fsizemax = 
+      Compile`GetElement[Compile`Variable$18647, 2]], {
+     Compile`Variable$18647, 2, 1, 1, Module}, 2, 0, 0, 2, 0, 1, 6, 0, 17}, {
+    46, 
+     Function[{$CellContext`e, $CellContext`f}, $CellContext`utagsize = 
+      1 + $CellContext`f + $CellContext`e], 2, 0, 0, 2, 0, 1, 6, 0, 17}, {46, 
+     Function[{$CellContext`e, $CellContext`f}, $CellContext`maxubits = 
+      1 + $CellContext`esizemax + $CellContext`fsizemax + \
+$CellContext`utagsize], 2, 0, 0, 2, 0, 1, 6, 0, 17}, {46, 
+     Function[{$CellContext`e, $CellContext`f}, $CellContext`ubitmask = 
+      BitShiftLeft[1, $CellContext`utagsize - 1]], 2, 0, 0, 2, 0, 1, 6, 0, 
+     17}, {46, 
+     Function[{$CellContext`e, $CellContext`f}, $CellContext`fsizemask = 
+      BitShiftLeft[1, $CellContext`f] - 1], 2, 0, 0, 2, 0, 1, 6, 0, 17}, {46, 
+     Function[{$CellContext`e, $CellContext`f}, $CellContext`esizemask = \
+($CellContext`ubitmask - 1) - $CellContext`fsizemask], 2, 0, 0, 2, 0, 1, 6, 0,
+      17}, {46, 
+     Function[{$CellContext`e, $CellContext`f}, $CellContext`efsizemask = 
+      BitOr[$CellContext`esizemask, $CellContext`fsizemask]], 2, 0, 0, 2, 0, 
+     1, 6, 0, 17}, {46, 
+     Function[{$CellContext`e, $CellContext`f}, $CellContext`utagmask = 
+      BitOr[$CellContext`ubitmask, $CellContext`efsizemask]], 2, 0, 0, 2, 0, 
+     1, 6, 0, 17}, {46, 
+     Function[{$CellContext`e, $CellContext`f}, $CellContext`ulpu = 
+      BitShiftLeft[1, $CellContext`utagsize]], 2, 0, 0, 2, 0, 1, 6, 0, 17}, {
+    46, 
+     Function[{$CellContext`e, $CellContext`f}, $CellContext`smallsubnormalu = \
+$CellContext`efsizemask + $CellContext`ulpu], 2, 0, 0, 2, 0, 1, 6, 0, 17}, {
+    46, 
+     Function[{$CellContext`e, $CellContext`f}, $CellContext`smallnormalu = \
+$CellContext`efsizemask + 
+       BitShiftLeft[1, $CellContext`maxubits - 1 - $CellContext`esizemax]], 2,
+      0, 0, 2, 0, 1, 6, 0, 17}, {46, 
+     Function[{$CellContext`e, $CellContext`f}, $CellContext`signbigu = 
+      BitShiftLeft[1, $CellContext`maxubits - 1]], 2, 0, 0, 2, 0, 1, 6, 0, 
+     17}, {46, 
+     Function[{$CellContext`e, $CellContext`f}, $CellContext`posinfu = \
+$CellContext`signbigu - 1 - $CellContext`ubitmask], 2, 0, 0, 2, 0, 1, 6, 0, 
+     17}, {46, 
+     Function[{$CellContext`e, $CellContext`f}, $CellContext`maxrealu = \
+$CellContext`posinfu - $CellContext`ulpu], 2, 0, 0, 2, 0, 1, 6, 0, 17}, {46, 
+     Function[{$CellContext`e, $CellContext`f}, $CellContext`minrealu = \
+$CellContext`maxrealu + $CellContext`signbigu], 2, 0, 0, 2, 0, 1, 6, 0, 17}, {
+    46, 
+     Function[{$CellContext`e, $CellContext`f}, $CellContext`neginfu = \
+$CellContext`posinfu + $CellContext`signbigu], 2, 0, 0, 2, 0, 1, 6, 0, 17}, {
+    46, 
+     Function[{$CellContext`e, $CellContext`f}, $CellContext`negbigu = \
+$CellContext`neginfu - $CellContext`ulpu], 2, 0, 0, 2, 0, 1, 6, 0, 17}, {46, 
+     Function[{$CellContext`e, $CellContext`f}, $CellContext`qNaNu = \
+$CellContext`posinfu + $CellContext`ubitmask], 2, 0, 0, 2, 0, 1, 6, 0, 17}, {
+    46, 
+     Function[{$CellContext`e, $CellContext`f}, $CellContext`sNaNu = \
+$CellContext`neginfu + $CellContext`ubitmask], 2, 0, 0, 2, 0, 1, 6, 0, 17}, {
+    46, 
+     Function[{$CellContext`e, $CellContext`f}, $CellContext`negopeninfu = 
+      If[$CellContext`utagsize == 1, 13, 
+        BitShiftLeft[15, $CellContext`utagsize - 1]]], 2, 0, 0, 2, 0, 1, 6, 0,
+      17}, {46, 
+     Function[{$CellContext`e, $CellContext`f}, $CellContext`posopeninfu = 
+      If[$CellContext`utagsize == 1, 5, 
+        BitShiftLeft[7, $CellContext`utagsize - 1]]], 2, 0, 0, 2, 0, 1, 6, 0, 
+     17}, {46, 
+     Function[{$CellContext`e, $CellContext`f}, $CellContext`negopenzerou = 
+      BitShiftLeft[9, $CellContext`utagsize - 1]], 2, 0, 0, 2, 0, 1, 6, 0, 
+     17}, {46, 
+     Function[{$CellContext`e, $CellContext`f}, $CellContext`maxreal = 
+      2^(2^($CellContext`esizemax - 1)) ((2^$CellContext`fsizemax - 1)/
+        2^($CellContext`fsizemax - 1))], 2, 0, 0, 2, 0, 1, 6, 0, 17}, {46, 
+     Function[{$CellContext`e, $CellContext`f}, $CellContext`smallsubnormal = 
+      2^(2 - 2^($CellContext`esizemax - 1) - $CellContext`fsizemax)], 2, 0, 0,
+      2, 0, 1, 6, 0, 17}, {1}}, 
+   Function[{$CellContext`e, $CellContext`f}, 
+    Module[{$CellContext`foo}, {$CellContext`esizesize, \
+$CellContext`fsizesize} = {$CellContext`e, $CellContext`f}; \
+{$CellContext`esizemax, $CellContext`fsizemax} = 
+      2^{$CellContext`e, $CellContext`f}; $CellContext`utagsize = 
+      1 + $CellContext`f + $CellContext`e; $CellContext`maxubits = 
+      1 + $CellContext`esizemax + $CellContext`fsizemax + \
+$CellContext`utagsize; $CellContext`ubitmask = 
+      BitShiftLeft[1, $CellContext`utagsize - 1]; $CellContext`fsizemask = 
+      BitShiftLeft[1, $CellContext`f] - 
+       1; $CellContext`esizemask = ($CellContext`ubitmask - 
+        1) - $CellContext`fsizemask; $CellContext`efsizemask = 
+      BitOr[$CellContext`esizemask, $CellContext`fsizemask]; \
+$CellContext`utagmask = 
+      BitOr[$CellContext`ubitmask, $CellContext`efsizemask]; \
+$CellContext`ulpu = 
+      BitShiftLeft[
+       1, $CellContext`utagsize]; $CellContext`smallsubnormalu = \
+$CellContext`efsizemask + $CellContext`ulpu; $CellContext`smallnormalu = \
+$CellContext`efsizemask + 
+       BitShiftLeft[
+        1, $CellContext`maxubits - 
+         1 - $CellContext`esizemax]; $CellContext`signbigu = 
+      BitShiftLeft[
+       1, $CellContext`maxubits - 
+        1]; $CellContext`posinfu = $CellContext`signbigu - 
+       1 - $CellContext`ubitmask; $CellContext`maxrealu = \
+$CellContext`posinfu - $CellContext`ulpu; $CellContext`minrealu = \
+$CellContext`maxrealu + $CellContext`signbigu; $CellContext`neginfu = \
+$CellContext`posinfu + $CellContext`signbigu; $CellContext`negbigu = \
+$CellContext`neginfu - $CellContext`ulpu; $CellContext`qNaNu = \
+$CellContext`posinfu + $CellContext`ubitmask; $CellContext`sNaNu = \
+$CellContext`neginfu + $CellContext`ubitmask; $CellContext`negopeninfu = 
+      If[$CellContext`utagsize == 1, 13, 
+        BitShiftLeft[
+        15, $CellContext`utagsize - 1]]; $CellContext`posopeninfu = 
+      If[$CellContext`utagsize == 1, 5, 
+        BitShiftLeft[
+        7, $CellContext`utagsize - 1]]; $CellContext`negopenzerou = 
+      BitShiftLeft[9, $CellContext`utagsize - 1]; $CellContext`maxreal = 
+      2^(2^($CellContext`esizemax - 1)) ((2^$CellContext`fsizemax - 1)/
+        2^($CellContext`fsizemax - 1)); $CellContext`smallsubnormal = 
+      2^(2 - 2^($CellContext`esizemax - 1) - $CellContext`fsizemax); Null]], 
+   Evaluate],
+  Editable->False,
+  SelectWithContents->True,
+  Selectable->False]], "Output",
+ CellChangeTimes->{3.6391663544819565`*^9, 3.6391666608416166`*^9, 
+  3.6391667016765327`*^9, 3.639223169125379*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"file2", "=", 
+  RowBox[{"CCodeStringGenerate", "[", 
+   RowBox[{"setenvc", ",", "\"\<setenvc\>\"", ",", " ", 
+    RowBox[{"{", "}"}]}], "]"}]}]], "Input",
+ CellChangeTimes->{{3.6391661977753944`*^9, 3.6391662257902718`*^9}, {
+  3.6391663962458477`*^9, 3.6391664523664665`*^9}, {3.6391664857511272`*^9, 
+  3.6391665365190496`*^9}, {3.6391666101086903`*^9, 3.6391666399487057`*^9}, {
+  3.6391666944082594`*^9, 3.639166696328068*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  StyleBox[
+   RowBox[{"CCodeGenerate", "::", "wmreq"}], "MessageName"], 
+  RowBox[{
+  ":", " "}], "\<\"The expression \[NoBreak]\\!\\(Function[\\(\\(\\(\\({e, f, \
+Compile`Variable$13136Compile$1}\\)\\), \
+\\(\\(Block[\\(\\(\\(\\({Compile`Variable$13136 = \
+Compile`Variable$13136Compile$1}\\)\\), \\(\\({\\(\\(esizesize = \
+\\(\\(Compile`GetElement[\\(\\(Compile`Variable$13136, 1\\)\\)]\\)\\)\\)\\), \
+Compile`Variable$13136}\\)\\)\\)\\)]\\)\\)\\)\\)]\\)\[NoBreak] requires \
+Mathematica to be evaluated.   The function will be generated but can be \
+expected to fail with a nonzero error code when executed. \\!\\(\\*ButtonBox[\
+\\\"\[RightSkeleton]\\\", ButtonStyle->\\\"Link\\\", ButtonFrame->None, \
+ButtonData:>\\\"paclet:CCodeGenerator/ref/CCodeGenerate\\\", ButtonNote -> \\\
+\"CCodeGenerator`CCodeGenerate::wmreq\\\"]\\)\"\>"}]], "Message", "MSG",
+ CellChangeTimes->{3.639166701816519*^9}],
+
+Cell[BoxData["\<\"#include \\\"math.h\\\"\\n\\n#include \
+\\\"WolframRTL.h\\\"\\n\\nstatic WolframCompileLibrary_Functions \
+funStructCompile;\\n\\nstatic void * E0 = 0;\\n\\nstatic void * E1 = \
+0;\\n\\nstatic void * E2 = 0;\\n\\nstatic void * E3 = 0;\\n\\nstatic void * \
+E4 = 0;\\n\\nstatic void * E5 = 0;\\n\\nstatic void * E6 = 0;\\n\\nstatic \
+void * E7 = 0;\\n\\nstatic void * E8 = 0;\\n\\nstatic void * E9 = \
+0;\\n\\nstatic void * E10 = 0;\\n\\nstatic void * E11 = 0;\\n\\nstatic void * \
+E12 = 0;\\n\\nstatic void * E13 = 0;\\n\\nstatic void * E14 = 0;\\n\\nstatic \
+void * E15 = 0;\\n\\nstatic void * E16 = 0;\\n\\nstatic void * E17 = \
+0;\\n\\nstatic void * E18 = 0;\\n\\nstatic void * E19 = 0;\\n\\nstatic void * \
+E20 = 0;\\n\\nstatic void * E21 = 0;\\n\\nstatic void * E22 = 0;\\n\\nstatic \
+void * E23 = 0;\\n\\nstatic void * E24 = 0;\\n\\nstatic void * E25 = \
+0;\\n\\nstatic void * E26 = 0;\\n\\n\\nstatic mint I0_3;\\n\\nstatic mint \
+I0_4;\\n\\nstatic mint I0_8;\\n\\nstatic mint I0_9;\\n\\nstatic mint \
+I0_10;\\n\\nstatic mint I0_11;\\n\\nstatic mint I0_12;\\n\\nstatic mint \
+I0_13;\\n\\nstatic mint I0_14;\\n\\nstatic mint I0_15;\\n\\nstatic mbool \
+initialize = 1;\\n\\n#include \\\"setenvc.h\\\"\\n\\nDLLEXPORT int \
+Initialize_setenvc(WolframLibraryData libData)\\n{\\nif( \
+initialize)\\n{\\nfunStructCompile = \
+libData->compileLibraryFunctions;\\nI0_10 = (mint) 33;\\nI0_15 = (mint) \
+9;\\nI0_8 = (mint) 8;\\nI0_11 = (mint) 13;\\nI0_13 = (mint) 5;\\nI0_3 = \
+(mint) 2;\\nI0_9 = (mint) -1;\\nI0_12 = (mint) 15;\\nI0_14 = (mint) 7;\\nI0_4 \
+= (mint) 1;\\n{\\nE0 = \
+funStructCompile->getExpressionFunctionPointer(libData, \
+\\\"Hold[Function[List[e, f, Compile`Variable$13136Compile$1], \
+Block[List[Set[Compile`Variable$13136, Compile`Variable$13136Compile$1]], \
+List[Set[esizesize, Compile`GetElement[Compile`Variable$13136, 1]], \
+Compile`Variable$13136]]]]\\\");\\n}\\nif( E0 == 0)\\n{\\nreturn \
+LIBRARY_FUNCTION_ERROR;\\n}\\n{\\nE1 = \
+funStructCompile->getExpressionFunctionPointer(libData, \
+\\\"Hold[Function[List[e, f, Compile`Variable$13136Compile$2], \
+Block[List[Set[Compile`Variable$13136, Compile`Variable$13136Compile$2]], \
+List[Set[fsizesize, Compile`GetElement[Compile`Variable$13136, 2]], \
+Compile`Variable$13136]]]]\\\");\\n}\\nif( E1 == 0)\\n{\\nreturn \
+LIBRARY_FUNCTION_ERROR;\\n}\\n{\\nE2 = \
+funStructCompile->getExpressionFunctionPointer(libData, \
+\\\"Hold[Function[List[e, f, Compile`Variable$13137Compile$3], \
+Block[List[Set[Compile`Variable$13137, Compile`Variable$13137Compile$3]], \
+List[Set[esizemax, Compile`GetElement[Compile`Variable$13137, 1]], \
+Compile`Variable$13137]]]]\\\");\\n}\\nif( E2 == 0)\\n{\\nreturn \
+LIBRARY_FUNCTION_ERROR;\\n}\\n{\\nE3 = \
+funStructCompile->getExpressionFunctionPointer(libData, \
+\\\"Hold[Function[List[e, f, Compile`Variable$13137Compile$4], \
+Block[List[Set[Compile`Variable$13137, Compile`Variable$13137Compile$4]], \
+List[Set[fsizemax, Compile`GetElement[Compile`Variable$13137, 2]], \
+Compile`Variable$13137]]]]\\\");\\n}\\nif( E3 == 0)\\n{\\nreturn \
+LIBRARY_FUNCTION_ERROR;\\n}\\n{\\nE4 = \
+funStructCompile->getExpressionFunctionPointer(libData, \
+\\\"Hold[Function[List[e, f], Set[utagsize, Plus[1, f, e]]]]\\\");\\n}\\nif( \
+E4 == 0)\\n{\\nreturn LIBRARY_FUNCTION_ERROR;\\n}\\n{\\nE5 = \
+funStructCompile->getExpressionFunctionPointer(libData, \
+\\\"Hold[Function[List[e, f], Set[maxubits, Plus[1, esizemax, fsizemax, \
+utagsize]]]]\\\");\\n}\\nif( E5 == 0)\\n{\\nreturn \
+LIBRARY_FUNCTION_ERROR;\\n}\\n{\\nE6 = \
+funStructCompile->getExpressionFunctionPointer(libData, \
+\\\"Hold[Function[List[e, f], Set[ubitmask, BitShiftLeft[1, Plus[utagsize, \
+-1]]]]]\\\");\\n}\\nif( E6 == 0)\\n{\\nreturn LIBRARY_FUNCTION_ERROR;\\n}\\n{\
+\\nE7 = funStructCompile->getExpressionFunctionPointer(libData, \
+\\\"Hold[Function[List[e, f], Set[fsizemask, Plus[BitShiftLeft[1, f], \
+-1]]]]\\\");\\n}\\nif( E7 == 0)\\n{\\nreturn \
+LIBRARY_FUNCTION_ERROR;\\n}\\n{\\nE8 = \
+funStructCompile->getExpressionFunctionPointer(libData, \
+\\\"Hold[Function[List[e, f], Set[esizemask, Plus[Plus[ubitmask, -1], \
+Times[-1, fsizemask]]]]]\\\");\\n}\\nif( E8 == 0)\\n{\\nreturn \
+LIBRARY_FUNCTION_ERROR;\\n}\\n{\\nE9 = \
+funStructCompile->getExpressionFunctionPointer(libData, \
+\\\"Hold[Function[List[e, f], Set[efsizemask, BitOr[esizemask, \
+fsizemask]]]]\\\");\\n}\\nif( E9 == 0)\\n{\\nreturn \
+LIBRARY_FUNCTION_ERROR;\\n}\\n{\\nE10 = \
+funStructCompile->getExpressionFunctionPointer(libData, \
+\\\"Hold[Function[List[e, f], Set[utagmask, BitOr[ubitmask, \
+efsizemask]]]]\\\");\\n}\\nif( E10 == 0)\\n{\\nreturn LIBRARY_FUNCTION_ERROR;\
+\\n}\\n{\\nE11 = funStructCompile->getExpressionFunctionPointer(libData, \
+\\\"Hold[Function[List[e, f], Set[ulpu, BitShiftLeft[1, \
+utagsize]]]]\\\");\\n}\\nif( E11 == 0)\\n{\\nreturn \
+LIBRARY_FUNCTION_ERROR;\\n}\\n{\\nE12 = \
+funStructCompile->getExpressionFunctionPointer(libData, \
+\\\"Hold[Function[List[e, f], Set[smallsubnormalu, Plus[efsizemask, \
+ulpu]]]]\\\");\\n}\\nif( E12 == 0)\\n{\\nreturn \
+LIBRARY_FUNCTION_ERROR;\\n}\\n{\\nE13 = \
+funStructCompile->getExpressionFunctionPointer(libData, \
+\\\"Hold[Function[List[e, f], Set[smallnormalu, Plus[efsizemask, \
+BitShiftLeft[1, Plus[maxubits, -1, Times[-1, esizemax]]]]]]]\\\");\\n}\\nif( \
+E13 == 0)\\n{\\nreturn LIBRARY_FUNCTION_ERROR;\\n}\\n{\\nE14 = \
+funStructCompile->getExpressionFunctionPointer(libData, \
+\\\"Hold[Function[List[e, f], Set[signbigu, BitShiftLeft[1, Plus[maxubits, \
+-1]]]]]\\\");\\n}\\nif( E14 == 0)\\n{\\nreturn \
+LIBRARY_FUNCTION_ERROR;\\n}\\n{\\nE15 = \
+funStructCompile->getExpressionFunctionPointer(libData, \
+\\\"Hold[Function[List[e, f], Set[posinfu, Plus[signbigu, -1, Times[-1, \
+ubitmask]]]]]\\\");\\n}\\nif( E15 == 0)\\n{\\nreturn \
+LIBRARY_FUNCTION_ERROR;\\n}\\n{\\nE16 = \
+funStructCompile->getExpressionFunctionPointer(libData, \
+\\\"Hold[Function[List[e, f], Set[maxrealu, Plus[posinfu, Times[-1, ulpu]]]]]\
+\\\");\\n}\\nif( E16 == 0)\\n{\\nreturn LIBRARY_FUNCTION_ERROR;\\n}\\n{\\nE17 \
+= funStructCompile->getExpressionFunctionPointer(libData, \
+\\\"Hold[Function[List[e, f], Set[minrealu, Plus[maxrealu, signbigu]]]]\\\");\
+\\n}\\nif( E17 == 0)\\n{\\nreturn LIBRARY_FUNCTION_ERROR;\\n}\\n{\\nE18 = \
+funStructCompile->getExpressionFunctionPointer(libData, \
+\\\"Hold[Function[List[e, f], Set[neginfu, Plus[posinfu, \
+signbigu]]]]\\\");\\n}\\nif( E18 == 0)\\n{\\nreturn \
+LIBRARY_FUNCTION_ERROR;\\n}\\n{\\nE19 = \
+funStructCompile->getExpressionFunctionPointer(libData, \
+\\\"Hold[Function[List[e, f], Set[negbigu, Plus[neginfu, Times[-1, \
+ulpu]]]]]\\\");\\n}\\nif( E19 == 0)\\n{\\nreturn \
+LIBRARY_FUNCTION_ERROR;\\n}\\n{\\nE20 = \
+funStructCompile->getExpressionFunctionPointer(libData, \
+\\\"Hold[Function[List[e, f], Set[qNaNu, Plus[posinfu, ubitmask]]]]\\\");\\n}\
+\\nif( E20 == 0)\\n{\\nreturn LIBRARY_FUNCTION_ERROR;\\n}\\n{\\nE21 = \
+funStructCompile->getExpressionFunctionPointer(libData, \
+\\\"Hold[Function[List[e, f], Set[sNaNu, Plus[neginfu, ubitmask]]]]\\\");\\n}\
+\\nif( E21 == 0)\\n{\\nreturn LIBRARY_FUNCTION_ERROR;\\n}\\n{\\nE22 = \
+funStructCompile->getExpressionFunctionPointer(libData, \
+\\\"Hold[Function[List[e, f], Set[negopeninfu, If[Equal[utagsize, 1], 13, \
+BitShiftLeft[15, Plus[utagsize, -1]]]]]]\\\");\\n}\\nif( E22 == \
+0)\\n{\\nreturn LIBRARY_FUNCTION_ERROR;\\n}\\n{\\nE23 = \
+funStructCompile->getExpressionFunctionPointer(libData, \
+\\\"Hold[Function[List[e, f], Set[posopeninfu, If[Equal[utagsize, 1], 5, \
+BitShiftLeft[7, Plus[utagsize, -1]]]]]]\\\");\\n}\\nif( E23 == \
+0)\\n{\\nreturn LIBRARY_FUNCTION_ERROR;\\n}\\n{\\nE24 = \
+funStructCompile->getExpressionFunctionPointer(libData, \
+\\\"Hold[Function[List[e, f], Set[negopenzerou, BitShiftLeft[9, \
+Plus[utagsize, -1]]]]]\\\");\\n}\\nif( E24 == 0)\\n{\\nreturn \
+LIBRARY_FUNCTION_ERROR;\\n}\\n{\\nE25 = \
+funStructCompile->getExpressionFunctionPointer(libData, \
+\\\"Hold[Function[List[e, f], Set[maxreal, Times[Power[2, Power[2, \
+Plus[esizemax, -1]]], Times[Plus[Power[2, fsizemax], -1], Power[Power[2, \
+Plus[fsizemax, -1]], -1]]]]]]\\\");\\n}\\nif( E25 == 0)\\n{\\nreturn \
+LIBRARY_FUNCTION_ERROR;\\n}\\n{\\nE26 = \
+funStructCompile->getExpressionFunctionPointer(libData, \
+\\\"Hold[Function[List[e, f], Set[smallsubnormal, Power[2, Plus[2, Times[-1, \
+Power[2, Plus[esizemax, -1]]], Times[-1, fsizemax]]]]]]\\\");\\n}\\nif( E26 \
+== 0)\\n{\\nreturn LIBRARY_FUNCTION_ERROR;\\n}\\ninitialize = 0;\\n}\\nreturn \
+0;\\n}\\n\\nDLLEXPORT void Uninitialize_setenvc(WolframLibraryData \
+libData)\\n{\\nif( !initialize)\\n{\\ninitialize = 1;\\n}\\n}\\n\\nDLLEXPORT \
+int setenvc(WolframLibraryData libData, mint A1, mint A2, void \
+*Res)\\n{\\nmbool B0_0;\\nmint I0_0;\\nmint I0_1;\\nmint I0_2;\\nmint \
+I0_5;\\nmint I0_6;\\nmint I0_7;\\nmreal R0_0;\\nmreal R0_1;\\nMTensor* \
+T0_0;\\nMTensor* T0_1;\\nMTensorInitializationData Tinit;\\nmint *P0;\\nmint \
+*D0;\\nmint *D1;\\nint err = 0;\\nTinit = \
+funStructCompile->GetInitializedMTensors(libData, 2);\\nT0_0 = \
+MTensorInitializationData_getTensor(Tinit, 0);\\nT0_1 = \
+MTensorInitializationData_getTensor(Tinit, 1);\\nI0_0 = A1;\\nI0_1 = \
+A2;\\n{\\nmint S0[1] = {2};\\nerr = funStructCompile->MTensor_allocate(T0_0, \
+2, 1, S0);\\nif( err)\\n{\\ngoto error_label;\\n}\\nP0 = \
+MTensor_getIntegerDataMacro(*T0_0);\\nD0 = MTensor_getDimensionsMacro(*T0_0);\
+\\nP0[0] = I0_0;\\nP0[1] = I0_1;\\n}\\nI0_2 = D0[0];\\nB0_0 = I0_2 == \
+I0_3;\\nB0_0 = !B0_0;\\nif( !B0_0)\\n{\\ngoto lab8;\\n}\\nreturn \
+LIBRARY_FUNCTION_ERROR;\\ngoto lab8;\\nlab8:\\n{\\nint S0[3];\\nvoid * S1[3];\
+\\nS0[0] = 2;\\nS1[0] = (void*) (&I0_0);\\nS0[1] = 2;\\nS1[1] = (void*) \
+(&I0_1);\\nS0[2] = 0;\\nS1[2] = (void*) T0_0;\\nerr = \
+funStructCompile->evaluateFunctionExpression(libData, E0, 0, 1, 3, S0, S1, 6, \
+0, 0);\\nif( err)\\n{\\ngoto error_label;\\n}\\nP0 = \
+MTensor_getIntegerDataMacro(*T0_0);\\nD0 = MTensor_getDimensionsMacro(*T0_0);\
+\\n}\\n{\\nint S0[3];\\nvoid * S1[3];\\nS0[0] = 2;\\nS1[0] = (void*) (&I0_0);\
+\\nS0[1] = 2;\\nS1[1] = (void*) (&I0_1);\\nS0[2] = 0;\\nS1[2] = (void*) T0_0;\
+\\nerr = funStructCompile->evaluateFunctionExpression(libData, E1, 0, 1, 3, \
+S0, S1, 6, 0, 0);\\nif( err)\\n{\\ngoto error_label;\\n}\\nP0 = \
+MTensor_getIntegerDataMacro(*T0_0);\\nD0 = MTensor_getDimensionsMacro(*T0_0);\
+\\n}\\n{\\nmint S0[1] = {2};\\nerr = funStructCompile->MTensor_allocate(T0_0, \
+2, 1, S0);\\nif( err)\\n{\\ngoto error_label;\\n}\\nP0 = \
+MTensor_getIntegerDataMacro(*T0_0);\\nD0 = MTensor_getDimensionsMacro(*T0_0);\
+\\nP0[0] = I0_0;\\nP0[1] = I0_1;\\n}\\nerr = funStructCompile->Math_VV_V(263, \
+4, 2, (void*) (&I0_3), 0, (void*) T0_0, 2, (void*) T0_1);\\nif( \
+err)\\n{\\ngoto error_label;\\n}\\nD1 = \
+MTensor_getDimensionsMacro(*T0_1);\\nD1 = \
+MTensor_getDimensionsMacro(*T0_1);\\nI0_2 = D1[0];\\nB0_0 = I0_2 == \
+I0_3;\\nB0_0 = !B0_0;\\nif( !B0_0)\\n{\\ngoto lab18;\\n}\\nreturn \
+LIBRARY_FUNCTION_ERROR;\\ngoto lab18;\\nlab18:\\n{\\nint S0[3];\\nvoid * \
+S1[3];\\nS0[0] = 2;\\nS1[0] = (void*) (&I0_0);\\nS0[1] = 2;\\nS1[1] = (void*) \
+(&I0_1);\\nS0[2] = 0;\\nS1[2] = (void*) T0_1;\\nerr = \
+funStructCompile->evaluateFunctionExpression(libData, E2, 0, 1, 3, S0, S1, 6, \
+0, 0);\\nif( err)\\n{\\ngoto error_label;\\n}\\nD1 = \
+MTensor_getDimensionsMacro(*T0_1);\\n}\\n{\\nint S0[3];\\nvoid * \
+S1[3];\\nS0[0] = 2;\\nS1[0] = (void*) (&I0_0);\\nS0[1] = 2;\\nS1[1] = (void*) \
+(&I0_1);\\nS0[2] = 0;\\nS1[2] = (void*) T0_1;\\nerr = \
+funStructCompile->evaluateFunctionExpression(libData, E3, 0, 1, 3, S0, S1, 6, \
+0, 0);\\nif( err)\\n{\\ngoto error_label;\\n}\\nD1 = \
+MTensor_getDimensionsMacro(*T0_1);\\n}\\n{\\nint S0[2];\\nvoid * \
+S1[2];\\nS0[0] = 2;\\nS1[0] = (void*) (&I0_0);\\nS0[1] = 2;\\nS1[1] = (void*) \
+(&I0_1);\\nerr = funStructCompile->evaluateFunctionExpression(libData, E4, 0, \
+0, 2, S0, S1, 6, 0, 0);\\nif( err)\\n{\\ngoto error_label;\\n}\\n}\\n{\\nint \
+S0[2];\\nvoid * S1[2];\\nS0[0] = 2;\\nS1[0] = (void*) (&I0_0);\\nS0[1] = \
+2;\\nS1[1] = (void*) (&I0_1);\\nerr = \
+funStructCompile->evaluateFunctionExpression(libData, E5, 0, 0, 2, S0, S1, 6, \
+0, 0);\\nif( err)\\n{\\ngoto error_label;\\n}\\n}\\n{\\nint S0[2];\\nvoid * \
+S1[2];\\nS0[0] = 2;\\nS1[0] = (void*) (&I0_0);\\nS0[1] = 2;\\nS1[1] = (void*) \
+(&I0_1);\\nerr = funStructCompile->evaluateFunctionExpression(libData, E6, 0, \
+0, 2, S0, S1, 6, 0, 0);\\nif( err)\\n{\\ngoto error_label;\\n}\\n}\\n{\\nint \
+S0[2];\\nvoid * S1[2];\\nS0[0] = 2;\\nS1[0] = (void*) (&I0_0);\\nS0[1] = \
+2;\\nS1[1] = (void*) (&I0_1);\\nerr = \
+funStructCompile->evaluateFunctionExpression(libData, E7, 0, 0, 2, S0, S1, 6, \
+0, 0);\\nif( err)\\n{\\ngoto error_label;\\n}\\n}\\n{\\nint S0[2];\\nvoid * \
+S1[2];\\nS0[0] = 2;\\nS1[0] = (void*) (&I0_0);\\nS0[1] = 2;\\nS1[1] = (void*) \
+(&I0_1);\\nerr = funStructCompile->evaluateFunctionExpression(libData, E8, 0, \
+0, 2, S0, S1, 6, 0, 0);\\nif( err)\\n{\\ngoto error_label;\\n}\\n}\\n{\\nint \
+S0[2];\\nvoid * S1[2];\\nS0[0] = 2;\\nS1[0] = (void*) (&I0_0);\\nS0[1] = \
+2;\\nS1[1] = (void*) (&I0_1);\\nerr = \
+funStructCompile->evaluateFunctionExpression(libData, E9, 0, 0, 2, S0, S1, 6, \
+0, 0);\\nif( err)\\n{\\ngoto error_label;\\n}\\n}\\n{\\nint S0[2];\\nvoid * \
+S1[2];\\nS0[0] = 2;\\nS1[0] = (void*) (&I0_0);\\nS0[1] = 2;\\nS1[1] = (void*) \
+(&I0_1);\\nerr = funStructCompile->evaluateFunctionExpression(libData, E10, \
+0, 0, 2, S0, S1, 6, 0, 0);\\nif( err)\\n{\\ngoto \
+error_label;\\n}\\n}\\n{\\nint S0[2];\\nvoid * S1[2];\\nS0[0] = 2;\\nS1[0] = \
+(void*) (&I0_0);\\nS0[1] = 2;\\nS1[1] = (void*) (&I0_1);\\nerr = \
+funStructCompile->evaluateFunctionExpression(libData, E11, 0, 0, 2, S0, S1, \
+6, 0, 0);\\nif( err)\\n{\\ngoto error_label;\\n}\\n}\\n{\\nint S0[2];\\nvoid \
+* S1[2];\\nS0[0] = 2;\\nS1[0] = (void*) (&I0_0);\\nS0[1] = 2;\\nS1[1] = \
+(void*) (&I0_1);\\nerr = \
+funStructCompile->evaluateFunctionExpression(libData, E12, 0, 0, 2, S0, S1, \
+6, 0, 0);\\nif( err)\\n{\\ngoto error_label;\\n}\\n}\\n{\\nint S0[2];\\nvoid \
+* S1[2];\\nS0[0] = 2;\\nS1[0] = (void*) (&I0_0);\\nS0[1] = 2;\\nS1[1] = \
+(void*) (&I0_1);\\nerr = \
+funStructCompile->evaluateFunctionExpression(libData, E13, 0, 0, 2, S0, S1, \
+6, 0, 0);\\nif( err)\\n{\\ngoto error_label;\\n}\\n}\\n{\\nint S0[2];\\nvoid \
+* S1[2];\\nS0[0] = 2;\\nS1[0] = (void*) (&I0_0);\\nS0[1] = 2;\\nS1[1] = \
+(void*) (&I0_1);\\nerr = \
+funStructCompile->evaluateFunctionExpression(libData, E14, 0, 0, 2, S0, S1, \
+6, 0, 0);\\nif( err)\\n{\\ngoto error_label;\\n}\\n}\\n{\\nint S0[2];\\nvoid \
+* S1[2];\\nS0[0] = 2;\\nS1[0] = (void*) (&I0_0);\\nS0[1] = 2;\\nS1[1] = \
+(void*) (&I0_1);\\nerr = \
+funStructCompile->evaluateFunctionExpression(libData, E15, 0, 0, 2, S0, S1, \
+6, 0, 0);\\nif( err)\\n{\\ngoto error_label;\\n}\\n}\\n{\\nint S0[2];\\nvoid \
+* S1[2];\\nS0[0] = 2;\\nS1[0] = (void*) (&I0_0);\\nS0[1] = 2;\\nS1[1] = \
+(void*) (&I0_1);\\nerr = \
+funStructCompile->evaluateFunctionExpression(libData, E16, 0, 0, 2, S0, S1, \
+6, 0, 0);\\nif( err)\\n{\\ngoto error_label;\\n}\\n}\\n{\\nint S0[2];\\nvoid \
+* S1[2];\\nS0[0] = 2;\\nS1[0] = (void*) (&I0_0);\\nS0[1] = 2;\\nS1[1] = \
+(void*) (&I0_1);\\nerr = \
+funStructCompile->evaluateFunctionExpression(libData, E17, 0, 0, 2, S0, S1, \
+6, 0, 0);\\nif( err)\\n{\\ngoto error_label;\\n}\\n}\\n{\\nint S0[2];\\nvoid \
+* S1[2];\\nS0[0] = 2;\\nS1[0] = (void*) (&I0_0);\\nS0[1] = 2;\\nS1[1] = \
+(void*) (&I0_1);\\nerr = \
+funStructCompile->evaluateFunctionExpression(libData, E18, 0, 0, 2, S0, S1, \
+6, 0, 0);\\nif( err)\\n{\\ngoto error_label;\\n}\\n}\\n{\\nint S0[2];\\nvoid \
+* S1[2];\\nS0[0] = 2;\\nS1[0] = (void*) (&I0_0);\\nS0[1] = 2;\\nS1[1] = \
+(void*) (&I0_1);\\nerr = \
+funStructCompile->evaluateFunctionExpression(libData, E19, 0, 0, 2, S0, S1, \
+6, 0, 0);\\nif( err)\\n{\\ngoto error_label;\\n}\\n}\\n{\\nint S0[2];\\nvoid \
+* S1[2];\\nS0[0] = 2;\\nS1[0] = (void*) (&I0_0);\\nS0[1] = 2;\\nS1[1] = \
+(void*) (&I0_1);\\nerr = \
+funStructCompile->evaluateFunctionExpression(libData, E20, 0, 0, 2, S0, S1, \
+6, 0, 0);\\nif( err)\\n{\\ngoto error_label;\\n}\\n}\\n{\\nint S0[2];\\nvoid \
+* S1[2];\\nS0[0] = 2;\\nS1[0] = (void*) (&I0_0);\\nS0[1] = 2;\\nS1[1] = \
+(void*) (&I0_1);\\nerr = \
+funStructCompile->evaluateFunctionExpression(libData, E21, 0, 0, 2, S0, S1, \
+6, 0, 0);\\nif( err)\\n{\\ngoto error_label;\\n}\\n}\\n{\\nint S0[2];\\nvoid \
+* S1[2];\\nS0[0] = 2;\\nS1[0] = (void*) (&I0_0);\\nS0[1] = 2;\\nS1[1] = \
+(void*) (&I0_1);\\nerr = \
+funStructCompile->evaluateFunctionExpression(libData, E22, 0, 0, 2, S0, S1, \
+6, 0, 0);\\nif( err)\\n{\\ngoto error_label;\\n}\\n}\\n{\\nint S0[2];\\nvoid \
+* S1[2];\\nS0[0] = 2;\\nS1[0] = (void*) (&I0_0);\\nS0[1] = 2;\\nS1[1] = \
+(void*) (&I0_1);\\nerr = \
+funStructCompile->evaluateFunctionExpression(libData, E23, 0, 0, 2, S0, S1, \
+6, 0, 0);\\nif( err)\\n{\\ngoto error_label;\\n}\\n}\\n{\\nint S0[2];\\nvoid \
+* S1[2];\\nS0[0] = 2;\\nS1[0] = (void*) (&I0_0);\\nS0[1] = 2;\\nS1[1] = \
+(void*) (&I0_1);\\nerr = \
+funStructCompile->evaluateFunctionExpression(libData, E24, 0, 0, 2, S0, S1, \
+6, 0, 0);\\nif( err)\\n{\\ngoto error_label;\\n}\\n}\\n{\\nint S0[2];\\nvoid \
+* S1[2];\\nS0[0] = 2;\\nS1[0] = (void*) (&I0_0);\\nS0[1] = 2;\\nS1[1] = \
+(void*) (&I0_1);\\nerr = \
+funStructCompile->evaluateFunctionExpression(libData, E25, 0, 0, 2, S0, S1, \
+6, 0, 0);\\nif( err)\\n{\\ngoto error_label;\\n}\\n}\\n{\\nint S0[2];\\nvoid \
+* S1[2];\\nS0[0] = 2;\\nS1[0] = (void*) (&I0_0);\\nS0[1] = 2;\\nS1[1] = \
+(void*) (&I0_1);\\nerr = \
+funStructCompile->evaluateFunctionExpression(libData, E26, 0, 0, 2, S0, S1, \
+6, 0, 0);\\nif( err)\\n{\\ngoto \
+error_label;\\n}\\n}\\nerror_label:\\nfunStructCompile->\
+ReleaseInitializedMTensors(Tinit);\\nfunStructCompile->WolframLibraryData_\
+cleanUp(libData, 1);\\nreturn err;\\n}\\n\\n\"\>"], "Output",
+ CellChangeTimes->{{3.6391666428184195`*^9, 3.6391666608716135`*^9}, 
+   3.639166701926508*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"setenv", "[", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"e_Integer", "/;", 
+        RowBox[{"0", "\[LessEqual]", "e", "\[LessEqual]", "4"}]}], ",", 
+       RowBox[{"f_Integer", "/;", 
+        RowBox[{"0", "\[LessEqual]", "f", "\[LessEqual]", "11"}]}]}], "}"}], 
+     "]"}], ":=", 
+    RowBox[{"(", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{"esizesize", ",", "fsizesize"}], "}"}], "=", 
+       RowBox[{"{", 
+        RowBox[{"e", ",", "f"}], "}"}]}], ";", "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{"esizemax", ",", "fsizemax"}], "}"}], "=", 
+       SuperscriptBox["2", 
+        RowBox[{"{", 
+         RowBox[{"e", ",", "f"}], "}"}]]}], ";", "\[IndentingNewLine]", 
+      RowBox[{"utagsize", "=", 
+       RowBox[{"1", "+", "f", "+", "e"}]}], ";", "\[IndentingNewLine]", 
+      RowBox[{"maxubits", "=", 
+       RowBox[{"1", "+", "esizemax", "+", "fsizemax", "+", "utagsize"}]}], 
+      ";", "\[IndentingNewLine]", 
+      RowBox[{"ubitmask", "=", 
+       RowBox[{"BitShiftLeft", "[", 
+        RowBox[{"1", ",", 
+         RowBox[{"utagsize", "-", "1"}]}], "]"}]}], ";", 
+      "\[IndentingNewLine]", 
+      RowBox[{"fsizemask", "=", 
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{"BitShiftLeft", "[", 
+          RowBox[{"1", ",", "f"}], "]"}], "-", "1"}], ")"}]}], ";", 
+      "\[IndentingNewLine]", 
+      RowBox[{"esizemask", 
+       StyleBox["=", "Input"], 
+       RowBox[{
+        RowBox[{
+         StyleBox["(", "Input"], " ", 
+         RowBox[{"ubitmask", "-", "1"}], ")"}], "-", "fsizemask"}]}], ";", 
+      "\[IndentingNewLine]", 
+      RowBox[{"efsizemask", "=", 
+       RowBox[{"BitOr", "[", 
+        RowBox[{"esizemask", ",", "fsizemask"}], "]"}]}], ";", 
+      "\[IndentingNewLine]", 
+      RowBox[{"utagmask", "=", 
+       RowBox[{"BitOr", "[", " ", 
+        RowBox[{"ubitmask", ",", "efsizemask"}], "]"}]}], ";", 
+      "\[IndentingNewLine]", 
+      RowBox[{"ulpu", "=", 
+       RowBox[{"BitShiftLeft", "[", 
+        RowBox[{"1", ",", "utagsize"}], "]"}]}], ";", "\[IndentingNewLine]", 
+      RowBox[{"smallsubnormalu", "=", 
+       RowBox[{"efsizemask", "+", "ulpu"}]}], ";", "\[IndentingNewLine]", 
+      RowBox[{"smallnormalu", "=", 
+       RowBox[{"efsizemask", "+", 
+        RowBox[{"BitShiftLeft", "[", 
+         RowBox[{"1", ",", 
+          RowBox[{"maxubits", "-", "1", "-", "esizemax"}]}], "]"}]}]}], ";", 
+      "\[IndentingNewLine]", 
+      RowBox[{"signbigu", "=", 
+       RowBox[{"BitShiftLeft", "[", 
+        RowBox[{"1", ",", 
+         RowBox[{"maxubits", "-", "1"}]}], "]"}]}], ";", 
+      "\[IndentingNewLine]", 
+      RowBox[{"posinfu", "=", 
+       RowBox[{"signbigu", "-", "1", "-", " ", "ubitmask"}]}], ";", 
+      "\[IndentingNewLine]", 
+      RowBox[{"maxrealu", "=", 
+       RowBox[{"posinfu", "-", "ulpu"}]}], ";", "\[IndentingNewLine]", 
+      RowBox[{"minrealu", "=", 
+       RowBox[{"maxrealu", "+", "signbigu"}]}], ";", "\[IndentingNewLine]", 
+      RowBox[{"neginfu", "=", 
+       RowBox[{"posinfu", "+", "signbigu"}]}], ";", "\[IndentingNewLine]", 
+      RowBox[{"negbigu", "=", 
+       RowBox[{"neginfu", "-", "ulpu"}]}], ";", "\[IndentingNewLine]", 
+      RowBox[{"qNaNu", "=", 
+       RowBox[{"posinfu", "+", " ", "ubitmask"}]}], ";", 
+      "\[IndentingNewLine]", 
+      RowBox[{"sNaNu", "=", 
+       RowBox[{"neginfu", "+", " ", "ubitmask"}]}], ";", 
+      "\[IndentingNewLine]", 
+      RowBox[{"negopeninfu", "=", 
+       RowBox[{"If", "[", 
+        RowBox[{
+         RowBox[{"utagsize", "\[Equal]", "1"}], ",", "2^^1101", ",", 
+         RowBox[{"BitShiftLeft", "[", 
+          RowBox[{"2^^1111", ",", 
+           RowBox[{"utagsize", "-", "1"}]}], "]"}]}], "]"}]}], ";", 
+      "\[IndentingNewLine]", 
+      RowBox[{"posopeninfu", "=", 
+       RowBox[{"If", "[", 
+        RowBox[{
+         RowBox[{"utagsize", "\[Equal]", "1"}], ",", "2^^0101", ",", 
+         RowBox[{"BitShiftLeft", "[", 
+          RowBox[{"2^^0111", ",", 
+           RowBox[{"utagsize", "-", "1"}]}], "]"}]}], "]"}]}], ";", 
+      "\[IndentingNewLine]", 
+      RowBox[{"negopenzerou", "=", 
+       RowBox[{"BitShiftLeft", "[", 
+        RowBox[{"2^^1001", ",", 
+         RowBox[{"utagsize", "-", "1"}]}], "]"}]}], ";", 
+      "\[IndentingNewLine]", 
+      RowBox[{"maxreal", "=", 
+       RowBox[{
+        SuperscriptBox["2", 
+         SuperscriptBox["2", 
+          RowBox[{"esizemax", "-", "1"}]]], 
+        FractionBox[
+         RowBox[{"(", 
+          RowBox[{
+           SuperscriptBox["2", "fsizemax"], "-", "1"}], ")"}], 
+         SuperscriptBox["2", 
+          RowBox[{"fsizemax", "-", "1"}]]]}]}], ";", "\[IndentingNewLine]", 
+      RowBox[{"smallsubnormal", "=", 
+       SuperscriptBox["2", 
+        RowBox[{"2", "-", 
+         SuperscriptBox["2", 
+          RowBox[{"esizemax", "-", "1"}]], "-", "fsizemax"}]]}], ";"}], 
+     ")"}]}], 
+   StyleBox["\[IndentingNewLine]",
+    FontColor->GrayLevel[0.5]]}]}]], "Input",
+ CellChangeTimes->{{3.639222774465354*^9, 3.639222775895368*^9}, {
+  3.639222910026745*^9, 3.6392229428210783`*^9}, {3.639223040122072*^9, 
+  3.639223047813149*^9}}],
+
+Cell["Null", "Output",
+ CellChangeTimes->{{3.6392229282289286`*^9, 3.639222944624097*^9}, 
+   3.639223027840947*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"CForm", "[", 
+  RowBox[{
+   SuperscriptBox["2", 
+    SuperscriptBox["2", 
+     RowBox[{"esizemax", "-", "1"}]]], 
+   FractionBox[
+    RowBox[{"(", 
+     RowBox[{
+      SuperscriptBox["2", "fsizemax"], "-", "1"}], ")"}], 
+    SuperscriptBox["2", 
+     RowBox[{"fsizemax", "-", "1"}]]]}], "]"}]], "Input",
+ CellChangeTimes->{{3.6392229547711987`*^9, 3.6392229957736187`*^9}, {
+  3.63922324520716*^9, 3.639223249261202*^9}}],
+
+Cell["680554349248159857271492153870877982720", "Output",
+ CellChangeTimes->{{3.6392229711923704`*^9, 3.63922299782064*^9}, 
+   3.6392232556242657`*^9}]
+}, Open  ]]
+},
+WindowSize->{714, 836},
+WindowMargins->{{Automatic, 59}, {Automatic, 107}},
+FrontEndVersion->"10.1 for Microsoft Windows (64-bit) (March 23, 2015)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[558, 20, 1750, 53, 152, "Input"],
+Cell[CellGroupData[{
+Cell[2333, 77, 152, 3, 31, "Input"],
+Cell[2488, 82, 165, 2, 31, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[2690, 89, 152, 3, 31, "Input"],
+Cell[2845, 94, 141, 2, 31, "Output"]
+}, Open  ]],
+Cell[3001, 99, 148, 2, 31, "Input"],
+Cell[CellGroupData[{
+Cell[3174, 105, 469, 13, 52, "Input"],
+Cell[3646, 120, 892, 13, 812, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[4575, 138, 5401, 132, 641, "Input"],
+Cell[9979, 272, 547, 11, 39, "Message"],
+Cell[10529, 285, 431, 10, 21, "Message"],
+Cell[10963, 297, 26344, 530, 108, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[37344, 832, 455, 8, 31, "Input"],
+Cell[37802, 842, 924, 16, 90, "Message"],
+Cell[38729, 860, 17768, 271, 16772, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[56534, 1136, 5164, 131, 685, "Input"],
+Cell[61701, 1269, 116, 2, 45, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[61854, 1276, 445, 13, 51, "Input"],
+Cell[62302, 1291, 152, 2, 45, "Output"]
+}, Open  ]]
+}
+]
+*)
+
+(* End of internal cache information *)
