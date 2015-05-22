@@ -3,9 +3,35 @@
 
 import fractions
 import math
-import numbers
 
-# The functions below replace the corresponding built-in Mathematica functions.
+# Declarations that replace built-in Mathematica declarations:
+
+# Classes:
+
+class RGBColor(object):
+
+    def __init__(self, colors):
+        self.r = colors[0]
+        self.g = colors[1]
+        self.b = colors[2]
+        if len(colors) >= 4:
+            self.a = colors[3]
+        else:
+            self.a = 1.0
+
+# END Classes
+
+# Constants:
+
+Bold = dict(FontWeight='Bold')
+Gray = dict(GrayLevel=0.5)
+Infinity = float("inf")
+Magenta = RGBColor((1, 0, 1))
+Red = RGBColor((1, 0, 0))
+NegInfinity = float("-inf")
+NaN = float("nan")
+
+# END Constants
 
 def Abs(x):
     return abs(x)
@@ -31,19 +57,26 @@ def Boole(x):
     return 1 if x else 0
 
 def Ceiling(x):
-    return math.ceil(x)
+    return int(math.ceil(x))
 
 def Denominator(x):
     """ Extract denominator of a rational number
     """
-    return fractions.Fraction(x).Denomiator
+    return fractions.Fraction(x).denominator
 
 def Floor(x):
-    return math.floor(x)
+    return int(math.floor(x))
+
+
+# noinspection PyUnusedLocal
+def Grid(string_style_blocks_2d, Frame):
+    result = ''
+    for block in string_style_blocks_2d:
+        result += Row(block) + '\n'
 
 def IntegerQ(x):
     return isinstance(x, int)
-    #    if x == Infinity or x == NegInfinity or x == NaN, Mathematica returns False
+    #    if x == Infinity or x == NegInfinity or x is NaN, Mathematica returns False
 
 def Log(b, x):
     return math.log(x, b)
@@ -53,47 +86,45 @@ def Max(a, b):
 
 def NumericQ(x):
     return isinstance(x, int) or isinstance(x, float) or isinstance(x, long) or isinstance(x, complex)
-    #    if x == Infinity or x == NegInfinity or x == NaN, Mathematica returns False
+    #    if x == Infinity or x == NegInfinity or x is NaN, Mathematica returns False
 
-# Not implemented:
-def ne(x):
-    # Defined later in Mathematica:
-    raise NotImplementedError
+def Row(string_style_blocks_1d):
+    result = ''
+    for block in string_style_blocks_1d:
+        if block is str:
+            result += block
+        else:
+            result += str(block)
+    return result
 
-def RGBColor(RGB_triplet):
-    assert (len(RGB_triplet) == 3)
-    return RGB_triplet
+def Style(expr, *args, **kwargs):
+    # TODO: implement
+    return str(expr) + str(args) + str(kwargs)
 
-def Style(a,b,c=None):
-    raise NotImplementedError
 
-def IntegerString(a,b,c):
-    raise NotImplementedError
+# noinspection PyUnusedLocal
+# noinspection PyShadowingBuiltins
+def IntegerString(n, b=None, len=None):
+    """ Returns a string consisting of the base b digits in the integer n.
+    Pads the string on the left with zero digits to give a string of length len
+    :param n:   integer
+    :param b:   base
+    :param len:
+    :return:    string
+    """
+    # TODO: base, len
+    # assert n is int
+    return str(n)
 
-def Grid(string_style_blocks, Frame):
-    raise NotImplementedError
-
-def Row (string_style_blocks):
-    raise NotImplementedError
-
-Bold = None
-Gray = None
-Magenta = None
-Red = None
-
-Infinity = float("inf")
-NegInfinity = float("-inf")
-NaN = float("nan")
-
-# END functions replacing built-in Mathematica functions.
+# END Declarations that replace built-in Mathematica declarations
 
 # Environment:
 unset_int = -99
 unset_real = -99.9
 
 esizesize = unset_int
-fsizemax = unset_int
-esizesize = unset_int
+esizemax = unset_int
+fsizesize = unset_int
 fsizemax = unset_int
 utagsize = unset_int
 maxubits = unset_int
@@ -120,11 +151,14 @@ maxreal = unset_real
 smallsubnormal = unset_real
 # END Environment
 
-def setenv(e, f):
+def setenv(ef_seq):
     """ Set the environment variables based on the esizesize and
     fsizesize. In this prototype, the maximum esizesize is 4 and the
     maximum fsizesize is 11.
     """
+    assert(isinstance(ef_seq, (list, tuple)))
+    e = ef_seq[0]
+    f = ef_seq[1]
     assert(0 <= e <= 4)
     assert(0 <= f <= 11)
 
@@ -188,7 +222,7 @@ def setenv(e, f):
     # print(str(globals()).replace(", ", "\n"))
 
 # Make sure values are initialized to something, to start.
-setenv(3, 4)
+setenv((3, 4))
 
 # Local palette definitions.
 gogreen = RGBColor((0, .75, .625)) # Traffic light color
@@ -253,6 +287,7 @@ def esize(u):
     assert unumQ(u)
     return 1 + esizeminus1(u)
 
+# noinspection PyShadowingNames
 def utag(esize, fsize):
     assert isinstance(esize, int)
     assert 1 <= esize <= esizemax
@@ -363,6 +398,7 @@ def big(u):
     return u2f(bigu(u))
 
 # Some synonyms.
+# noinspection PyShadowingBuiltins
 open, closed = True, False
 
 # Test if x is representable as a float. (Including exception values.)
@@ -371,7 +407,7 @@ def floatQ(x):
         return not isinstance(x, complex)
     else:
         # These return False from NumericQ non-numeric, but are representable:
-        if x == Infinity or x == NegInfinity or x == NaN:
+        if x == Infinity or x == NegInfinity or x is NaN:
             return True
         else:
             return False
@@ -380,6 +416,7 @@ def gQ(x):
     """Test for a value being in the form of a general bound.
     """
     # Changed indexes to zero-based:
+    # noinspection PyShadowingNames
     def is2x2(x):
         return (isinstance(x, (list, tuple)) and
             len(x) == 2 and
@@ -388,6 +425,7 @@ def gQ(x):
             isinstance(x[1], (list, tuple)) and
             len(x[1]) == 2)
 
+    # noinspection PyShadowingNames
     def is_2_float_bool_pairs(x):
         return (is2x2(x) and
             type(x[1, 0]) is bool and
@@ -395,12 +433,15 @@ def gQ(x):
             floatQ(x[0, 0]) and
             floatQ(x[0, 1]))
 
+    # noinspection PyShadowingNames
     def contains_NaN(x):
-        return (x[0, 0] == NaN or x[0, 1] == NaN)
+        return x[0, 0] is NaN or x[0, 1] is NaN
 
+    # noinspection PyShadowingNames
     def equal_endpoints(x):
-        return (x[0, 0] == x[0, 1] and not x[1, 0] and not x[1, 1])
+        return x[0, 0] == x[0, 1] and not x[1, 0] and not x[1, 1]
 
+    # noinspection PyShadowingNames
     def lower_higher_endpoints(x):
         return x[0, 0] < x[0, 1]
 
@@ -409,16 +450,18 @@ def gQ(x):
 def uboundQ(x):
     """ Test for a value being in the form of a ubound, with one or two unums. 
     """
+    # noinspection PyShadowingNames
     def is_1_or_2_list(x):
-        return (isinstance(x, (list, tuple)) and len(x)in (1, 2))
+        return isinstance(x, (list, tuple)) and len(x)in (1, 2)
 
     if is_1_or_2_list(x):
         xL = x[0]
         xR = x[-1]
-        if (unumQ(xL) and unumQ(xR)):
-            gL, gR = unum2g(xL), unum2g(xR)
+        if unumQ(xL) and unumQ(xR):
+            gL = unum2g(xL)
+            gR = unum2g(xR)
             return ((len(x) == 1 or xL == qNaNu or xL == sNaNu or xR == qNaNu or xR == sNaNu) or
-                (gL[0, 0] < gR[0, 1] or (gL[0, 0] == gR[0, 1] and exQ(xL) and exQ(xR))))
+                (gL[0][0] < gR[0][1] or (gL[0][0] == gR[0][1] and exQ(xL) and exQ(xR))))
         else:
             return False
     else:
@@ -427,18 +470,18 @@ def uboundQ(x):
 def uboundpairQ(x):
     """ Test for a value being in the form of a ubound with two unums.
     """
-    return (uboundQ(x) and len(x) == 2)
+    return uboundQ(x) and len(x) == 2
 
 def uQ(x):
     """ Test for a value being in the u-layer: unum or ubound.
     """
-    return (unumQ(x) or uboundQ(x))
+    return unumQ(x) or uboundQ(x)
 
 def f2g(x):
     """Trivial expression of a floatable value in the form of a general interval.
     """
     assert floatQ(x)
-    if x == NaN:
+    if x is NaN:
         return [[NaN, NaN],
                 [open, open]]
     else:
@@ -483,15 +526,14 @@ def ubound2g(ub):
                 [open, open]]
     else:
         gL, gR = (unum2g(uL), unum2g(uR))
-        return [[gL[0,0], gR[0,1]],
-                [gL[1,0], gR[1,1]]]
+        return [[gL[0][0], gR[0][1]],
+                [gL[1][0], gR[1][1]]]
 
 def u2g(u):
     """ Conversion of a unum or ubound to a general interval.
     """
     assert uQ(u)
     if unumQ(u):
-        return unum2g(u)
         return unum2g(u)
     else:
         return ubound2g(u)
@@ -503,7 +545,7 @@ def x2u(x):
     """
     assert floatQ(x)
     # Exceptional nonnumeric values:
-    if x == NaN:
+    if x is NaN:
         return qNaNu
     elif x == Infinity:
         return posinfu
@@ -525,7 +567,7 @@ def x2u(x):
         y = Abs(x)/smallsubnormal
         y = ((signbigu if x < 0 else 0) + efsizemask +
              (ubitmask if y != Floor(y) else 0) +
-             BitShiftLeft (int(Floor(y)), utagsize))
+             BitShiftLeft (Floor(y), utagsize))
         while BitAnd(BitShiftLeft(3, utagsize - 1), y) == 0:
             y = (y - BitAnd(efsizemask, y)) / 2 + BitAnd(efsizemask, y) - 1
         return y
@@ -546,6 +588,7 @@ def x2u(x):
                 + BitShiftLeft(ne(x) - 1, fsizesize)
                 # Significant bits after hidden bit, fits left of the unum tag bits...
                 + (0 if n == 0 else BitShiftLeft(Floor(y) - 2**scale(y), utagsize))
+                # + (0 if n == 0 else BitShiftLeft(Floor(y) - 2**scale(y), utagsize))
                 # Value of exponent bits, adjusted for bias...
                 + BitShiftLeft(scale(x) + 2**(ne(x) - 1) - 1,
                                utagsize + n + Boole(n == 0))
@@ -554,8 +597,8 @@ def x2u(x):
             # If a number is more concise as a subnormal, make it one.
             z = Log(2, 1 - Log(2, Abs(x)))
             if IntegerQ(z) and z >= 0:
-                return (BitShiftLeft(z, fsizesize) + ulpu +
-                        Boole(x < 0) * signmask(BitShiftLeft(z, fsizesize)))
+                return (BitShiftLeft(int(z), fsizesize) + ulpu +
+                        Boole(x < 0) * signmask(BitShiftLeft(int(z), fsizesize)))
             else:
                 return y
         else:
@@ -585,20 +628,22 @@ OverHat = x2u
 def autoN(x):
     """ View a float as a decimal, using as many digits as needed to be exact.
     """
-    if x == NaN or x == 0 or x == Infinity:
-        return x
-    elif x < 0:
-        return Row(("-", autoN(-x)))
-    else:
-        y = Log(2, Denominator(x))
-        if y == 0:
-            return IntegerString(x, 10, 1 + Floor(Log(10, x)))
-        if isinstance(x, numbers.Rational) and y == Floor(y):
-           y = x - Floor(x)
-           z = Floor(Log(2, Denominator(y)))
-           return Row((Floor(x), ".", IntegerString(y*10^z, 10, z)))
-        else:
-            return "?"
+    return str(x)
+    # if x is NaN or x == 0 or x == Infinity:
+    #     return x
+    # elif x < 0:
+    #     return Row(("-", autoN(-x)))
+    # else:
+    #     y = Log(2, Denominator(x))
+    #     if y == 0:
+    #         return IntegerString(x, 10, 1 + Floor(Log(10, x)))
+    #     if isinstance(x, numbers.Rational) and y == Floor(y):
+    #        y = x - Floor(x)
+    #        z = Floor(Log(2, Denominator(y)))
+    #        return Row((Floor(x), ".", IntegerString(y*10^z, 10, z)))
+    #     else:
+    #         print ('type(x): %s; y: %s; Floor(y): %s' % (type(x), y, Floor(y)))
+    #         return "?"
 
 # def unumview(u):
 #     """ Display a unum with color-coding and annotation. Warning: there are some negative spaces in the StringForm
@@ -684,17 +729,21 @@ def autoN(x):
 
 
 
-# later:
 def scale (x):
     """ Helper function for conversion; find the scale factor, with exceptions.
     """
-    assert floatQ(x) and x != Infinity and x != NaN
-    return (0 if x == 0 else Floor(Log(2, Abs(x))))
+    assert floatQ(x) and x != Infinity and x is not NaN
+    if x == 0:
+        return 0
+    else:
+        return Floor(Log(2, Abs(x)))
 
 def ne(x):
     """ Find a concise number of exponent bits, accounting for subnormals.
     """
-    assert floatQ(x) and x != Infinity and x != NaN
-    return (1 if x == 0 or scale(x) == 1 else
-            Ceiling(Log(2, 1 + Abs(scale(x) - 1))) + 1)
+    assert floatQ(x) and x != Infinity and x is not NaN
+    if x == 0 or scale(x) == 1:
+        return 1
+    else:
+        return Ceiling(Log(2, 1 + Abs(scale(x) - 1))) + 1
 
