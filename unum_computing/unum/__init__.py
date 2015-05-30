@@ -67,7 +67,6 @@ def Denominator(x):
 def Floor(x):
     return int(math.floor(x))
 
-
 # noinspection PyUnusedLocal
 def Grid(string_style_blocks_2d, Frame):
     result = ''
@@ -79,7 +78,10 @@ def IntegerQ(x):
     #    if x == Infinity or x == NegInfinity or x is NaN, Mathematica returns False
 
 def Log(b, x):
-    return math.log(x, b)
+    print ('Log(b=%s, x=%s)' %(b,x))
+    result =  math.log(x, b)
+    print ('result = %s' % result)
+    return result
 
 def Max(a, b):
     return max(a, b)
@@ -99,8 +101,12 @@ def Row(string_style_blocks_1d):
 
 def Style(expr, *args, **kwargs):
     # TODO: implement
-    return str(expr) + str(args) + str(kwargs)
-
+    result =  'expr: "%s"' % expr
+    if len(args) > 0:
+        result += 'args : "%s"' % args
+    if len(kwargs) > 0:
+        result += 'kwargs : "%s"' % kwargs
+    return result
 
 # noinspection PyUnusedLocal
 # noinspection PyShadowingBuiltins
@@ -543,6 +549,7 @@ def x2u(x):
     annotation. Most of the complexity stems from seeking the shortest 
     possible bit string. 
     """
+    print ('x2u(%s)' % x)
     assert floatQ(x)
     # Exceptional nonnumeric values:
     if x is NaN:
