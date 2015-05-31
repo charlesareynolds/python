@@ -11,6 +11,7 @@ import math
 class RGBColor(object):
 
     def __init__(self, colors):
+        assert 3 <= len(colors) <= 4
         self.r = colors[0]
         self.g = colors[1]
         self.b = colors[2]
@@ -48,8 +49,8 @@ def BitShiftLeft(b, s):
 def BitShiftRight(b, s):
     return b >> s
 
-def BitXor(b, s):
-    return b ^ s
+def BitXor(x, y):
+    return x ^ y
 
 def Boole(x):
     """ Explicitly turn a boolean into an integer.
@@ -74,20 +75,20 @@ def Grid(string_style_blocks_2d, Frame):
         result += Row(block) + '\n'
 
 def IntegerQ(x):
-    return isinstance(x, int)
+    return isinstance(x, (int, long))
     #    if x == Infinity or x == NegInfinity or x is NaN, Mathematica returns False
 
 def Log(b, x):
-    print ('Log(b=%s, x=%s)' %(b,x))
-    result =  math.log(x, b)
-    print ('result = %s' % result)
-    return result
+    try:
+        return math.log(x, b)
+    except ValueError as e:
+        raise ValueError('(%s) raised by math.log(%s, %s)' %(e, x, b))
 
 def Max(a, b):
     return max(a, b)
 
 def NumericQ(x):
-    return isinstance(x, int) or isinstance(x, float) or isinstance(x, long) or isinstance(x, complex)
+    return IntegerQ(x) or isinstance(x, float) or isinstance(x, complex)
     #    if x == Infinity or x == NegInfinity or x is NaN, Mathematica returns False
 
 def Row(string_style_blocks_1d):
@@ -272,8 +273,7 @@ def utagview(u):
 
 # Test if a value is a legitimate unum. (Must be integer, and in-range.)
 def unumQ(x):
-    return isinstance(x, int) and 0 <= x <= sNaNu
-
+    return IntegerQ(x) and 0 <= x <= sNaNu
 
 # Values and bit masks for taking apart a unum bit string.
 # Independent of the contents of the utag.
@@ -578,7 +578,6 @@ def x2u(x):
         while BitAnd(BitShiftLeft(3, utagsize - 1), y) == 0:
             y = (y - BitAnd(efsizemask, y)) / 2 + BitAnd(efsizemask, y) - 1
         return y
-
     # All remaining cases are in the normalized range.
     else:
         y = Abs(x)/2**scale(x)
@@ -586,26 +585,28 @@ def x2u(x):
         while Floor(y) != y and n < fsizemax:
             n += 1
             y *= 2
-        if y == Floor(y):
-            # then the value is representable exactly.
-            # Fill in fields from right to left:
-            # Size of fraction field, fits in the rightmost fsizesize bits...
+        if y == Floor(y): # then the value is representable
+            # exactly. Fill in fields from right to left:
+            # Size of fraction field,
+            # fits in the rightmost fsizesize bits...
             y = (n - Boole(n > 0)
-                # Size of exponent field minus 1, fits in the esizesize bits...
+                # Size of exponent field minus 1,
+                # fits in the esizesize bits...
                 + BitShiftLeft(ne(x) - 1, fsizesize)
-                # Significant bits after hidden bit, fits left of the unum tag bits...
+                # Significant bits after hidden bit,
+                # fits left of the unum tag bits...
                 + (0 if n == 0 else BitShiftLeft(Floor(y) - 2**scale(y), utagsize))
-                # + (0 if n == 0 else BitShiftLeft(Floor(y) - 2**scale(y), utagsize))
                 # Value of exponent bits, adjusted for bias...
                 + BitShiftLeft(scale(x) + 2**(ne(x) - 1) - 1,
                                utagsize + n + Boole(n == 0))
                 # If negative, add the sign bit
                 + (BitShiftLeft(1, utagsize + n + Boole(n == 0) + ne(x)) if x < 0 else 0))
             # If a number is more concise as a subnormal, make it one.
-            z = Log(2, 1 - Log(2, Abs(x)))
+            z1 =  Log(2, Abs(x))
+            z = Log(2, 1 - z1)
             if IntegerQ(z) and z >= 0:
-                return (BitShiftLeft(int(z), fsizesize) + ulpu +
-                        Boole(x < 0) * signmask(BitShiftLeft(int(z), fsizesize)))
+                return (BitShiftLeft(z, fsizesize) + ulpu +
+                        Boole(x < 0) * signmask(BitShiftLeft(z, fsizesize)))
             else:
                 return y
         else:

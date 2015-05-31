@@ -89,6 +89,8 @@ class TestX2u(unittest.TestCase):
 
     def test_5_fsizeminus1(self):
         unum.setenv((3, 4))
+        for x in range(31):
+            u= unum.x2u(x)
         self.assertEqual (unum.fsizeminus1(unum.x2u(30.0)),1)
         self.assertEqual (unum.fsizeminus1(unum.x2u(31.0)),1)
 
