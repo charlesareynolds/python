@@ -293,7 +293,6 @@ def esize(u):
     assert unumQ(u)
     return 1 + esizeminus1(u)
 
-# noinspection PyShadowingNames
 def utag(esize, fsize):
     assert isinstance(esize, int)
     assert 1 <= esize <= esizemax
@@ -422,7 +421,6 @@ def gQ(x):
     """Test for a value being in the form of a general bound.
     """
     # Changed indexes to zero-based:
-    # noinspection PyShadowingNames
     def is2x2(x):
         return (isinstance(x, (list, tuple)) and
             len(x) == 2 and
@@ -431,7 +429,6 @@ def gQ(x):
             isinstance(x[1], (list, tuple)) and
             len(x[1]) == 2)
 
-    # noinspection PyShadowingNames
     def is_2_float_bool_pairs(x):
         return (is2x2(x) and
             type(x[1, 0]) is bool and
@@ -439,15 +436,12 @@ def gQ(x):
             floatQ(x[0, 0]) and
             floatQ(x[0, 1]))
 
-    # noinspection PyShadowingNames
     def contains_NaN(x):
         return x[0, 0] is NaN or x[0, 1] is NaN
 
-    # noinspection PyShadowingNames
     def equal_endpoints(x):
         return x[0, 0] == x[0, 1] and not x[1, 0] and not x[1, 1]
 
-    # noinspection PyShadowingNames
     def lower_higher_endpoints(x):
         return x[0, 0] < x[0, 1]
 
@@ -456,7 +450,6 @@ def gQ(x):
 def uboundQ(x):
     """ Test for a value being in the form of a ubound, with one or two unums. 
     """
-    # noinspection PyShadowingNames
     def is_1_or_2_list(x):
         return isinstance(x, (list, tuple)) and len(x)in (1, 2)
 
