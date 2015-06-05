@@ -10,10 +10,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       157,          7]
-NotebookDataLength[    626039,      15704]
-NotebookOptionsPosition[    620810,      15554]
-NotebookOutlinePosition[    623927,      15642]
-CellTagsIndexPosition[    623884,      15639]
+NotebookDataLength[    681778,      17091]
+NotebookOptionsPosition[    673400,      16862]
+NotebookOutlinePosition[    676516,      16950]
+CellTagsIndexPosition[    676473,      16947]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
@@ -15416,14 +15416,19 @@ Cell[BoxData[
   RowBox[{
    RowBox[{"setenv", "[", 
     RowBox[{"{", 
-     RowBox[{"2", ",", "3"}], "}"}], "]"}], "\n", 
+     RowBox[{"3", ",", "4"}], "}"}], "]"}], "\[IndentingNewLine]", 
+   RowBox[{"fsizeminus1", "[", 
+    RowBox[{"x2u", "[", "31", "]"}], "]"}], "\n", "maxreal", 
+   "\[IndentingNewLine]", 
    RowBox[{"x2u", "[", "0.0", "]"}], "\[IndentingNewLine]", 
    RowBox[{"x2u", "[", "1.0", "]"}], "\[IndentingNewLine]", 
    RowBox[{"x2u", "[", "1.5", "]"}], "\[IndentingNewLine]", 
    RowBox[{"x2u", "[", "2.0", "]"}], "\[IndentingNewLine]", 
    RowBox[{"x2u", "[", "3.0", "]"}], "\[IndentingNewLine]", 
    RowBox[{"x2u", "[", "10.0", "]"}], "\[IndentingNewLine]", 
-   RowBox[{"x2u", "[", "100.0", "]"}]}]}]], "Input",
+   RowBox[{"x2u", "[", "100.0", "]"}], "\[IndentingNewLine]", 
+   RowBox[{"x2u", "[", "1000.0", "]"}], "\[IndentingNewLine]", 
+   RowBox[{"x2u", "[", "10000.0", "]"}], "\[IndentingNewLine]"}]}]], "Input",
  CellFrame->{{0, 0}, {0, 3}},
  CellChangeTimes->{{3.642449469909878*^9, 3.642449507767823*^9}, 
    3.64244954900464*^9, {3.642449795731256*^9, 3.642449831311908*^9}, {
@@ -15432,56 +15437,146 @@ Cell[BoxData[
    3.642451238528844*^9, 3.642451238869164*^9}, {3.642451269037006*^9, 
    3.642451302466847*^9}, {3.642451353995562*^9, 3.64245138566009*^9}, {
    3.6424514384512873`*^9, 3.6424514397865763`*^9}, {3.642451471374202*^9, 
-   3.642451471784255*^9}}],
+   3.642451471784255*^9}, {3.642489473891563*^9, 3.64248947431153*^9}, {
+   3.642489709558682*^9, 3.64248979265853*^9}, {3.642489892521027*^9, 
+   3.6424898929515667`*^9}, {3.64248993259984*^9, 3.6424899370065737`*^9}, {
+   3.6424899689472723`*^9, 3.642489977476493*^9}, {3.642490084842605*^9, 
+   3.642490085152749*^9}, {3.642490315401079*^9, 3.6424903158301373`*^9}, {
+   3.642490352254046*^9, 3.642490395293885*^9}, {3.6424904748252773`*^9, 
+   3.642490475410091*^9}, {3.64249051049889*^9, 3.64249051740809*^9}, {
+   3.642491860521473*^9, 3.642491917783687*^9}}],
+
+Cell[BoxData["3"], "Output",
+ CellChangeTimes->{
+  3.642449817010754*^9, 3.6424510890207787`*^9, 3.642451138265733*^9, 
+   3.6424512073187313`*^9, 3.642451240689179*^9, {3.642451274573812*^9, 
+   3.642451303611745*^9}, 3.642451359040905*^9, 3.6424513911054287`*^9, 
+   3.642451441186469*^9, 3.642451474975638*^9, 3.642489478127657*^9, {
+   3.642489777979607*^9, 3.642489795616598*^9}, 3.642489896119985*^9, 
+   3.642489942165079*^9, {3.642489980729148*^9, 3.6424899999758663`*^9}, 
+   3.642490059125939*^9, 3.6424900943968267`*^9, 3.6424903207782717`*^9, {
+   3.642490355249878*^9, 3.6424903991003513`*^9}, {3.642490491162486*^9, 
+   3.6424905204986963`*^9}, {3.642491906240347*^9, 3.6424919210431547`*^9}}],
+
+Cell[BoxData["680554349248159857271492153870877982720"], "Output",
+ CellChangeTimes->{
+  3.642449817010754*^9, 3.6424510890207787`*^9, 3.642451138265733*^9, 
+   3.6424512073187313`*^9, 3.642451240689179*^9, {3.642451274573812*^9, 
+   3.642451303611745*^9}, 3.642451359040905*^9, 3.6424513911054287`*^9, 
+   3.642451441186469*^9, 3.642451474975638*^9, 3.642489478127657*^9, {
+   3.642489777979607*^9, 3.642489795616598*^9}, 3.642489896119985*^9, 
+   3.642489942165079*^9, {3.642489980729148*^9, 3.6424899999758663`*^9}, 
+   3.642490059125939*^9, 3.6424900943968267`*^9, 3.6424903207782717`*^9, {
+   3.642490355249878*^9, 3.6424903991003513`*^9}, {3.642490491162486*^9, 
+   3.6424905204986963`*^9}, {3.642491906240347*^9, 3.6424919210569983`*^9}}],
 
 Cell[BoxData["0"], "Output",
  CellChangeTimes->{
   3.642449817010754*^9, 3.6424510890207787`*^9, 3.642451138265733*^9, 
    3.6424512073187313`*^9, 3.642451240689179*^9, {3.642451274573812*^9, 
    3.642451303611745*^9}, 3.642451359040905*^9, 3.6424513911054287`*^9, 
-   3.642451441186469*^9, 3.642451474975638*^9}],
+   3.642451441186469*^9, 3.642451474975638*^9, 3.642489478127657*^9, {
+   3.642489777979607*^9, 3.642489795616598*^9}, 3.642489896119985*^9, 
+   3.642489942165079*^9, {3.642489980729148*^9, 3.6424899999758663`*^9}, 
+   3.642490059125939*^9, 3.6424900943968267`*^9, 3.6424903207782717`*^9, {
+   3.642490355249878*^9, 3.6424903991003513`*^9}, {3.642490491162486*^9, 
+   3.6424905204986963`*^9}, {3.642491906240347*^9, 3.6424919210714808`*^9}}],
 
-Cell[BoxData["136"], "Output",
+Cell[BoxData["528"], "Output",
  CellChangeTimes->{
   3.642449817010754*^9, 3.6424510890207787`*^9, 3.642451138265733*^9, 
    3.6424512073187313`*^9, 3.642451240689179*^9, {3.642451274573812*^9, 
    3.642451303611745*^9}, 3.642451359040905*^9, 3.6424513911054287`*^9, 
-   3.642451441186469*^9, 3.6424514749852324`*^9}],
+   3.642451441186469*^9, 3.642451474975638*^9, 3.642489478127657*^9, {
+   3.642489777979607*^9, 3.642489795616598*^9}, 3.642489896119985*^9, 
+   3.642489942165079*^9, {3.642489980729148*^9, 3.6424899999758663`*^9}, 
+   3.642490059125939*^9, 3.6424900943968267`*^9, 3.6424903207782717`*^9, {
+   3.642490355249878*^9, 3.6424903991003513`*^9}, {3.642490491162486*^9, 
+   3.6424905204986963`*^9}, {3.642491906240347*^9, 3.642491921084639*^9}}],
 
-Cell[BoxData["200"], "Output",
+Cell[BoxData["784"], "Output",
  CellChangeTimes->{
   3.642449817010754*^9, 3.6424510890207787`*^9, 3.642451138265733*^9, 
    3.6424512073187313`*^9, 3.642451240689179*^9, {3.642451274573812*^9, 
    3.642451303611745*^9}, 3.642451359040905*^9, 3.6424513911054287`*^9, 
-   3.642451441186469*^9, 3.642451474994585*^9}],
+   3.642451441186469*^9, 3.642451474975638*^9, 3.642489478127657*^9, {
+   3.642489777979607*^9, 3.642489795616598*^9}, 3.642489896119985*^9, 
+   3.642489942165079*^9, {3.642489980729148*^9, 3.6424899999758663`*^9}, 
+   3.642490059125939*^9, 3.6424900943968267`*^9, 3.6424903207782717`*^9, {
+   3.642490355249878*^9, 3.6424903991003513`*^9}, {3.642490491162486*^9, 
+   3.6424905204986963`*^9}, {3.642491906240347*^9, 3.6424919210968037`*^9}}],
 
-Cell[BoxData["128"], "Output",
+Cell[BoxData["512"], "Output",
  CellChangeTimes->{
   3.642449817010754*^9, 3.6424510890207787`*^9, 3.642451138265733*^9, 
    3.6424512073187313`*^9, 3.642451240689179*^9, {3.642451274573812*^9, 
    3.642451303611745*^9}, 3.642451359040905*^9, 3.6424513911054287`*^9, 
-   3.642451441186469*^9, 3.642451475004011*^9}],
+   3.642451441186469*^9, 3.642451474975638*^9, 3.642489478127657*^9, {
+   3.642489777979607*^9, 3.642489795616598*^9}, 3.642489896119985*^9, 
+   3.642489942165079*^9, {3.642489980729148*^9, 3.6424899999758663`*^9}, 
+   3.642490059125939*^9, 3.6424900943968267`*^9, 3.6424903207782717`*^9, {
+   3.642490355249878*^9, 3.6424903991003513`*^9}, {3.642490491162486*^9, 
+   3.6424905204986963`*^9}, {3.642491906240347*^9, 3.642491921109326*^9}}],
 
-Cell[BoxData["192"], "Output",
+Cell[BoxData["768"], "Output",
  CellChangeTimes->{
   3.642449817010754*^9, 3.6424510890207787`*^9, 3.642451138265733*^9, 
    3.6424512073187313`*^9, 3.642451240689179*^9, {3.642451274573812*^9, 
    3.642451303611745*^9}, 3.642451359040905*^9, 3.6424513911054287`*^9, 
-   3.642451441186469*^9, 3.64245147501331*^9}],
+   3.642451441186469*^9, 3.642451474975638*^9, 3.642489478127657*^9, {
+   3.642489777979607*^9, 3.642489795616598*^9}, 3.642489896119985*^9, 
+   3.642489942165079*^9, {3.642489980729148*^9, 3.6424899999758663`*^9}, 
+   3.642490059125939*^9, 3.6424900943968267`*^9, 3.6424903207782717`*^9, {
+   3.642490355249878*^9, 3.6424903991003513`*^9}, {3.642490491162486*^9, 
+   3.6424905204986963`*^9}, {3.642491906240347*^9, 3.642491921122085*^9}}],
 
-Cell[BoxData["1617"], "Output",
+Cell[BoxData["6433"], "Output",
  CellChangeTimes->{
   3.642449817010754*^9, 3.6424510890207787`*^9, 3.642451138265733*^9, 
    3.6424512073187313`*^9, 3.642451240689179*^9, {3.642451274573812*^9, 
    3.642451303611745*^9}, 3.642451359040905*^9, 3.6424513911054287`*^9, 
-   3.642451441186469*^9, 3.642451475022544*^9}],
+   3.642451441186469*^9, 3.642451474975638*^9, 3.642489478127657*^9, {
+   3.642489777979607*^9, 3.642489795616598*^9}, 3.642489896119985*^9, 
+   3.642489942165079*^9, {3.642489980729148*^9, 3.6424899999758663`*^9}, 
+   3.642490059125939*^9, 3.6424900943968267`*^9, 3.6424903207782717`*^9, {
+   3.642490355249878*^9, 3.6424903991003513`*^9}, {3.642490491162486*^9, 
+   3.6424905204986963`*^9}, {3.642491906240347*^9, 3.642491921135274*^9}}],
 
-Cell[BoxData["13915"], "Output",
+Cell[BoxData["55603"], "Output",
  CellChangeTimes->{
   3.642449817010754*^9, 3.6424510890207787`*^9, 3.642451138265733*^9, 
    3.6424512073187313`*^9, 3.642451240689179*^9, {3.642451274573812*^9, 
    3.642451303611745*^9}, 3.642451359040905*^9, 3.6424513911054287`*^9, 
-   3.642451441186469*^9, 3.642451475031714*^9}]
+   3.642451441186469*^9, 3.642451474975638*^9, 3.642489478127657*^9, {
+   3.642489777979607*^9, 3.642489795616598*^9}, 3.642489896119985*^9, 
+   3.642489942165079*^9, {3.642489980729148*^9, 3.6424899999758663`*^9}, 
+   3.642490059125939*^9, 3.6424900943968267`*^9, 3.6424903207782717`*^9, {
+   3.642490355249878*^9, 3.6424903991003513`*^9}, {3.642490491162486*^9, 
+   3.6424905204986963`*^9}, {3.642491906240347*^9, 3.6424919211481457`*^9}}],
+
+Cell[BoxData["408901"], "Output",
+ CellChangeTimes->{
+  3.642449817010754*^9, 3.6424510890207787`*^9, 3.642451138265733*^9, 
+   3.6424512073187313`*^9, 3.642451240689179*^9, {3.642451274573812*^9, 
+   3.642451303611745*^9}, 3.642451359040905*^9, 3.6424513911054287`*^9, 
+   3.642451441186469*^9, 3.642451474975638*^9, 3.642489478127657*^9, {
+   3.642489777979607*^9, 3.642489795616598*^9}, 3.642489896119985*^9, 
+   3.642489942165079*^9, {3.642489980729148*^9, 3.6424899999758663`*^9}, 
+   3.642490059125939*^9, 3.6424900943968267`*^9, 3.6424903207782717`*^9, {
+   3.642490355249878*^9, 3.6424903991003513`*^9}, {3.642490491162486*^9, 
+   3.6424905204986963`*^9}, {3.642491906240347*^9, 3.642491921161975*^9}}],
+
+Cell[BoxData["3699016"], "Output",
+ CellChangeTimes->{
+  3.642449817010754*^9, 3.6424510890207787`*^9, 3.642451138265733*^9, 
+   3.6424512073187313`*^9, 3.642451240689179*^9, {3.642451274573812*^9, 
+   3.642451303611745*^9}, 3.642451359040905*^9, 3.6424513911054287`*^9, 
+   3.642451441186469*^9, 3.642451474975638*^9, 3.642489478127657*^9, {
+   3.642489777979607*^9, 3.642489795616598*^9}, 3.642489896119985*^9, 
+   3.642489942165079*^9, {3.642489980729148*^9, 3.6424899999758663`*^9}, 
+   3.642490059125939*^9, 3.6424900943968267`*^9, 3.6424903207782717`*^9, {
+   3.642490355249878*^9, 3.6424903991003513`*^9}, {3.642490491162486*^9, 
+   3.6424905204986963`*^9}, {3.642491906240347*^9, 3.642491921175002*^9}}]
 }, Open  ]],
 
 Cell[CellGroupData[{
@@ -15550,11 +15645,1224 @@ Cell[BoxData["8"], "Output",
   3.642451752263055*^9, 3.642451800453108*^9, 3.642451846865953*^9, {
    3.6424518879174223`*^9, 3.6424519341170483`*^9}, 3.6424520486851397`*^9, 
    3.642452231256*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{"setenv", "[", 
+  RowBox[{"{", 
+   RowBox[{"0", ",", "0"}], "}"}], "]"}], "\[IndentingNewLine]", 
+ RowBox[{"utagview", "[", 
+  RowBox[{"x2u", "[", "0", "]"}], "]"}], "\[IndentingNewLine]", 
+ RowBox[{"utagview", "[", 
+  RowBox[{"x2u", "[", "0.5", "]"}], "]"}], "\[IndentingNewLine]", 
+ RowBox[{"utagview", "[", 
+  RowBox[{"x2u", "[", "1", "]"}], "]"}], "\[IndentingNewLine]", 
+ RowBox[{"utagview", "[", 
+  RowBox[{"x2u", "[", "1.5", "]"}], "]"}], "\[IndentingNewLine]", 
+ RowBox[{"utagview", "[", 
+  RowBox[{"x2u", "[", "2", "]"}], "]"}], "\[IndentingNewLine]", 
+ RowBox[{"utagview", "[", 
+  RowBox[{"x2u", "[", "3", "]"}], "]"}], "\[IndentingNewLine]", 
+ RowBox[{"utagview", "[", 
+  RowBox[{"x2u", "[", "Infinity", "]"}], "]"}], "\[IndentingNewLine]", 
+ RowBox[{"utagview", "[", 
+  RowBox[{"x2u", "[", "NaN", "]"}], "]"}], "\[IndentingNewLine]", 
+ RowBox[{"utagview", "[", 
+  RowBox[{"x2u", "[", 
+   RowBox[{"-", "0.5"}], "]"}], "]"}], "\[IndentingNewLine]", 
+ RowBox[{"utagview", "[", 
+  RowBox[{"x2u", "[", 
+   RowBox[{"-", "1"}], "]"}], "]"}], "\[IndentingNewLine]", 
+ RowBox[{"utagview", "[", 
+  RowBox[{"x2u", "[", 
+   RowBox[{"-", "1.5"}], "]"}], "]"}], "\[IndentingNewLine]", 
+ RowBox[{"utagview", "[", 
+  RowBox[{"x2u", "[", 
+   RowBox[{"-", "2"}], "]"}], "]"}], "\[IndentingNewLine]", 
+ RowBox[{"utagview", "[", 
+  RowBox[{"x2u", "[", 
+   RowBox[{"-", "3"}], "]"}], "]"}], "\[IndentingNewLine]", 
+ RowBox[{"utagview", "[", 
+  RowBox[{"x2u", "[", 
+   RowBox[{"-", "Infinity"}], "]"}], "]"}]}], "Input",
+ CellChangeTimes->{{3.642462213318226*^9, 3.642462292627473*^9}, {
+  3.642462325490961*^9, 3.64246240367301*^9}, {3.6424624522012*^9, 
+  3.642462463353073*^9}, {3.642462496882758*^9, 3.642462673068845*^9}, {
+  3.6424627294191027`*^9, 3.64246274521572*^9}, {3.642462775926036*^9, 
+  3.642462783540101*^9}, {3.642462866613699*^9, 3.642462868725717*^9}, {
+  3.642462922004218*^9, 3.6424629223575478`*^9}, {3.642462992290922*^9, 
+  3.642462992877301*^9}, {3.642472530747913*^9, 3.642472538524481*^9}, {
+  3.642476808787148*^9, 3.642476810644487*^9}, {3.642476997120311*^9, 
+  3.6424770161882677`*^9}}],
+
+Cell[BoxData[
+ TagBox[GridBox[{
+    {
+     StyleBox["0", "Input",
+      StripOnInput->False,
+      LineColor->RGBColor[1, 0, 1],
+      FrontFaceColor->RGBColor[1, 0, 1],
+      BackFaceColor->RGBColor[1, 0, 1],
+      GraphicsColor->RGBColor[1, 0, 1],
+      FontColor->RGBColor[1, 0, 1]], 
+     StyleBox["\<\"\"\>", "Input",
+      StripOnInput->False,
+      LineColor->RGBColor[0, 0.75, 0],
+      FrontFaceColor->RGBColor[0, 0.75, 0],
+      BackFaceColor->RGBColor[0, 0.75, 0],
+      GraphicsColor->RGBColor[0, 0.75, 0],
+      FontColor->RGBColor[0, 0.75, 0]], 
+     StyleBox["\<\"\"\>", "Input",
+      StripOnInput->False,
+      FontColor->GrayLevel[0.5]]},
+    {"\<\"\[DownArrow]\"\>", 
+     StyleBox["1", "Text",
+      StripOnInput->False], 
+     StyleBox["1", "Text",
+      StripOnInput->False]}
+   },
+   AutoDelete->False,
+   GridBoxFrame->{
+    "Columns" -> None, "Rows" -> None, 
+     "ItemsIndexed" -> {{1, 1} -> True, {1, 2} -> True, {1, 3} -> True}},
+   GridBoxItemSize->{"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}],
+  "Grid"]], "Output",
+ CellChangeTimes->{
+  3.6424622992148542`*^9, 3.642462407326976*^9, 3.642462466637463*^9, {
+   3.642462510548081*^9, 3.6424625323739243`*^9}, {3.642462628724101*^9, 
+   3.642462677698246*^9}, 3.642462749045497*^9, 3.6424627877727537`*^9, 
+   3.6424628710628357`*^9, 3.642462924553959*^9, 3.6424629952604733`*^9, 
+   3.642472541941721*^9, 3.6424768159968033`*^9, 3.64247705561405*^9}],
+
+Cell[BoxData[
+ TagBox[GridBox[{
+    {
+     StyleBox["1", "Input",
+      StripOnInput->False,
+      LineColor->RGBColor[1, 0, 1],
+      FrontFaceColor->RGBColor[1, 0, 1],
+      BackFaceColor->RGBColor[1, 0, 1],
+      GraphicsColor->RGBColor[1, 0, 1],
+      FontColor->RGBColor[1, 0, 1]], 
+     StyleBox["\<\"\"\>", "Input",
+      StripOnInput->False,
+      LineColor->RGBColor[0, 0.75, 0],
+      FrontFaceColor->RGBColor[0, 0.75, 0],
+      BackFaceColor->RGBColor[0, 0.75, 0],
+      GraphicsColor->RGBColor[0, 0.75, 0],
+      FontColor->RGBColor[0, 0.75, 0]], 
+     StyleBox["\<\"\"\>", "Input",
+      StripOnInput->False,
+      FontColor->GrayLevel[0.5]]},
+    {"\<\"\[NegativeThinSpace]\[CenterEllipsis]\"\>", 
+     StyleBox["1", "Text",
+      StripOnInput->False], 
+     StyleBox["1", "Text",
+      StripOnInput->False]}
+   },
+   AutoDelete->False,
+   GridBoxFrame->{
+    "Columns" -> None, "Rows" -> None, 
+     "ItemsIndexed" -> {{1, 1} -> True, {1, 2} -> True, {1, 3} -> True}},
+   GridBoxItemSize->{"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}],
+  "Grid"]], "Output",
+ CellChangeTimes->{
+  3.6424622992148542`*^9, 3.642462407326976*^9, 3.642462466637463*^9, {
+   3.642462510548081*^9, 3.6424625323739243`*^9}, {3.642462628724101*^9, 
+   3.642462677698246*^9}, 3.642462749045497*^9, 3.6424627877727537`*^9, 
+   3.6424628710628357`*^9, 3.642462924553959*^9, 3.6424629952604733`*^9, 
+   3.642472541941721*^9, 3.6424768159968033`*^9, 3.6424770556345177`*^9}],
+
+Cell[BoxData[
+ TagBox[GridBox[{
+    {
+     StyleBox["2", "Input",
+      StripOnInput->False,
+      LineColor->RGBColor[1, 0, 1],
+      FrontFaceColor->RGBColor[1, 0, 1],
+      BackFaceColor->RGBColor[1, 0, 1],
+      GraphicsColor->RGBColor[1, 0, 1],
+      FontColor->RGBColor[1, 0, 1]], 
+     StyleBox["\<\"\"\>", "Input",
+      StripOnInput->False,
+      LineColor->RGBColor[0, 0.75, 0],
+      FrontFaceColor->RGBColor[0, 0.75, 0],
+      BackFaceColor->RGBColor[0, 0.75, 0],
+      GraphicsColor->RGBColor[0, 0.75, 0],
+      FontColor->RGBColor[0, 0.75, 0]], 
+     StyleBox["\<\"\"\>", "Input",
+      StripOnInput->False,
+      FontColor->GrayLevel[0.5]]},
+    {"\<\"\[DownArrow]\"\>", 
+     StyleBox["1", "Text",
+      StripOnInput->False], 
+     StyleBox["1", "Text",
+      StripOnInput->False]}
+   },
+   AutoDelete->False,
+   GridBoxFrame->{
+    "Columns" -> None, "Rows" -> None, 
+     "ItemsIndexed" -> {{1, 1} -> True, {1, 2} -> True, {1, 3} -> True}},
+   GridBoxItemSize->{"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}],
+  "Grid"]], "Output",
+ CellChangeTimes->{
+  3.6424622992148542`*^9, 3.642462407326976*^9, 3.642462466637463*^9, {
+   3.642462510548081*^9, 3.6424625323739243`*^9}, {3.642462628724101*^9, 
+   3.642462677698246*^9}, 3.642462749045497*^9, 3.6424627877727537`*^9, 
+   3.6424628710628357`*^9, 3.642462924553959*^9, 3.6424629952604733`*^9, 
+   3.642472541941721*^9, 3.6424768159968033`*^9, 3.64247705565382*^9}],
+
+Cell[BoxData[
+ TagBox[GridBox[{
+    {
+     StyleBox["3", "Input",
+      StripOnInput->False,
+      LineColor->RGBColor[1, 0, 1],
+      FrontFaceColor->RGBColor[1, 0, 1],
+      BackFaceColor->RGBColor[1, 0, 1],
+      GraphicsColor->RGBColor[1, 0, 1],
+      FontColor->RGBColor[1, 0, 1]], 
+     StyleBox["\<\"\"\>", "Input",
+      StripOnInput->False,
+      LineColor->RGBColor[0, 0.75, 0],
+      FrontFaceColor->RGBColor[0, 0.75, 0],
+      BackFaceColor->RGBColor[0, 0.75, 0],
+      GraphicsColor->RGBColor[0, 0.75, 0],
+      FontColor->RGBColor[0, 0.75, 0]], 
+     StyleBox["\<\"\"\>", "Input",
+      StripOnInput->False,
+      FontColor->GrayLevel[0.5]]},
+    {"\<\"\[DownArrow]\"\>", 
+     StyleBox["1", "Text",
+      StripOnInput->False], 
+     StyleBox["1", "Text",
+      StripOnInput->False]}
+   },
+   AutoDelete->False,
+   GridBoxFrame->{
+    "Columns" -> None, "Rows" -> None, 
+     "ItemsIndexed" -> {{1, 1} -> True, {1, 2} -> True, {1, 3} -> True}},
+   GridBoxItemSize->{"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}],
+  "Grid"]], "Output",
+ CellChangeTimes->{
+  3.6424622992148542`*^9, 3.642462407326976*^9, 3.642462466637463*^9, {
+   3.642462510548081*^9, 3.6424625323739243`*^9}, {3.642462628724101*^9, 
+   3.642462677698246*^9}, 3.642462749045497*^9, 3.6424627877727537`*^9, 
+   3.6424628710628357`*^9, 3.642462924553959*^9, 3.6424629952604733`*^9, 
+   3.642472541941721*^9, 3.6424768159968033`*^9, 3.642477055673657*^9}],
+
+Cell[BoxData[
+ TagBox[GridBox[{
+    {
+     StyleBox["4", "Input",
+      StripOnInput->False,
+      LineColor->RGBColor[1, 0, 1],
+      FrontFaceColor->RGBColor[1, 0, 1],
+      BackFaceColor->RGBColor[1, 0, 1],
+      GraphicsColor->RGBColor[1, 0, 1],
+      FontColor->RGBColor[1, 0, 1]], 
+     StyleBox["\<\"\"\>", "Input",
+      StripOnInput->False,
+      LineColor->RGBColor[0, 0.75, 0],
+      FrontFaceColor->RGBColor[0, 0.75, 0],
+      BackFaceColor->RGBColor[0, 0.75, 0],
+      GraphicsColor->RGBColor[0, 0.75, 0],
+      FontColor->RGBColor[0, 0.75, 0]], 
+     StyleBox["\<\"\"\>", "Input",
+      StripOnInput->False,
+      FontColor->GrayLevel[0.5]]},
+    {"\<\"\[DownArrow]\"\>", 
+     StyleBox["1", "Text",
+      StripOnInput->False], 
+     StyleBox["1", "Text",
+      StripOnInput->False]}
+   },
+   AutoDelete->False,
+   GridBoxFrame->{
+    "Columns" -> None, "Rows" -> None, 
+     "ItemsIndexed" -> {{1, 1} -> True, {1, 2} -> True, {1, 3} -> True}},
+   GridBoxItemSize->{"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}],
+  "Grid"]], "Output",
+ CellChangeTimes->{
+  3.6424622992148542`*^9, 3.642462407326976*^9, 3.642462466637463*^9, {
+   3.642462510548081*^9, 3.6424625323739243`*^9}, {3.642462628724101*^9, 
+   3.642462677698246*^9}, 3.642462749045497*^9, 3.6424627877727537`*^9, 
+   3.6424628710628357`*^9, 3.642462924553959*^9, 3.6424629952604733`*^9, 
+   3.642472541941721*^9, 3.6424768159968033`*^9, 3.642477055693466*^9}],
+
+Cell[BoxData[
+ TagBox[GridBox[{
+    {
+     StyleBox["5", "Input",
+      StripOnInput->False,
+      LineColor->RGBColor[1, 0, 1],
+      FrontFaceColor->RGBColor[1, 0, 1],
+      BackFaceColor->RGBColor[1, 0, 1],
+      GraphicsColor->RGBColor[1, 0, 1],
+      FontColor->RGBColor[1, 0, 1]], 
+     StyleBox["\<\"\"\>", "Input",
+      StripOnInput->False,
+      LineColor->RGBColor[0, 0.75, 0],
+      FrontFaceColor->RGBColor[0, 0.75, 0],
+      BackFaceColor->RGBColor[0, 0.75, 0],
+      GraphicsColor->RGBColor[0, 0.75, 0],
+      FontColor->RGBColor[0, 0.75, 0]], 
+     StyleBox["\<\"\"\>", "Input",
+      StripOnInput->False,
+      FontColor->GrayLevel[0.5]]},
+    {"\<\"\[DownArrow]\"\>", 
+     StyleBox["1", "Text",
+      StripOnInput->False], 
+     StyleBox["1", "Text",
+      StripOnInput->False]}
+   },
+   AutoDelete->False,
+   GridBoxFrame->{
+    "Columns" -> None, "Rows" -> None, 
+     "ItemsIndexed" -> {{1, 1} -> True, {1, 2} -> True, {1, 3} -> True}},
+   GridBoxItemSize->{"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}],
+  "Grid"]], "Output",
+ CellChangeTimes->{
+  3.6424622992148542`*^9, 3.642462407326976*^9, 3.642462466637463*^9, {
+   3.642462510548081*^9, 3.6424625323739243`*^9}, {3.642462628724101*^9, 
+   3.642462677698246*^9}, 3.642462749045497*^9, 3.6424627877727537`*^9, 
+   3.6424628710628357`*^9, 3.642462924553959*^9, 3.6424629952604733`*^9, 
+   3.642472541941721*^9, 3.6424768159968033`*^9, 3.642477055711997*^9}],
+
+Cell[BoxData[
+ TagBox[GridBox[{
+    {
+     StyleBox["6", "Input",
+      StripOnInput->False,
+      LineColor->RGBColor[1, 0, 1],
+      FrontFaceColor->RGBColor[1, 0, 1],
+      BackFaceColor->RGBColor[1, 0, 1],
+      GraphicsColor->RGBColor[1, 0, 1],
+      FontColor->RGBColor[1, 0, 1]], 
+     StyleBox["\<\"\"\>", "Input",
+      StripOnInput->False,
+      LineColor->RGBColor[0, 0.75, 0],
+      FrontFaceColor->RGBColor[0, 0.75, 0],
+      BackFaceColor->RGBColor[0, 0.75, 0],
+      GraphicsColor->RGBColor[0, 0.75, 0],
+      FontColor->RGBColor[0, 0.75, 0]], 
+     StyleBox["\<\"\"\>", "Input",
+      StripOnInput->False,
+      FontColor->GrayLevel[0.5]]},
+    {"\<\"\[DownArrow]\"\>", 
+     StyleBox["1", "Text",
+      StripOnInput->False], 
+     StyleBox["1", "Text",
+      StripOnInput->False]}
+   },
+   AutoDelete->False,
+   GridBoxFrame->{
+    "Columns" -> None, "Rows" -> None, 
+     "ItemsIndexed" -> {{1, 1} -> True, {1, 2} -> True, {1, 3} -> True}},
+   GridBoxItemSize->{"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}],
+  "Grid"]], "Output",
+ CellChangeTimes->{
+  3.6424622992148542`*^9, 3.642462407326976*^9, 3.642462466637463*^9, {
+   3.642462510548081*^9, 3.6424625323739243`*^9}, {3.642462628724101*^9, 
+   3.642462677698246*^9}, 3.642462749045497*^9, 3.6424627877727537`*^9, 
+   3.6424628710628357`*^9, 3.642462924553959*^9, 3.6424629952604733`*^9, 
+   3.642472541941721*^9, 3.6424768159968033`*^9, 3.642477055729691*^9}],
+
+Cell[BoxData[
+ TagBox[GridBox[{
+    {
+     StyleBox["7", "Input",
+      StripOnInput->False,
+      LineColor->RGBColor[1, 0, 1],
+      FrontFaceColor->RGBColor[1, 0, 1],
+      BackFaceColor->RGBColor[1, 0, 1],
+      GraphicsColor->RGBColor[1, 0, 1],
+      FontColor->RGBColor[1, 0, 1]], 
+     StyleBox["\<\"\"\>", "Input",
+      StripOnInput->False,
+      LineColor->RGBColor[0, 0.75, 0],
+      FrontFaceColor->RGBColor[0, 0.75, 0],
+      BackFaceColor->RGBColor[0, 0.75, 0],
+      GraphicsColor->RGBColor[0, 0.75, 0],
+      FontColor->RGBColor[0, 0.75, 0]], 
+     StyleBox["\<\"\"\>", "Input",
+      StripOnInput->False,
+      FontColor->GrayLevel[0.5]]},
+    {"\<\"\[DownArrow]\"\>", 
+     StyleBox["1", "Text",
+      StripOnInput->False], 
+     StyleBox["1", "Text",
+      StripOnInput->False]}
+   },
+   AutoDelete->False,
+   GridBoxFrame->{
+    "Columns" -> None, "Rows" -> None, 
+     "ItemsIndexed" -> {{1, 1} -> True, {1, 2} -> True, {1, 3} -> True}},
+   GridBoxItemSize->{"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}],
+  "Grid"]], "Output",
+ CellChangeTimes->{
+  3.6424622992148542`*^9, 3.642462407326976*^9, 3.642462466637463*^9, {
+   3.642462510548081*^9, 3.6424625323739243`*^9}, {3.642462628724101*^9, 
+   3.642462677698246*^9}, 3.642462749045497*^9, 3.6424627877727537`*^9, 
+   3.6424628710628357`*^9, 3.642462924553959*^9, 3.6424629952604733`*^9, 
+   3.642472541941721*^9, 3.6424768159968033`*^9, 3.642477055747836*^9}],
+
+Cell[BoxData[
+ TagBox[GridBox[{
+    {
+     StyleBox["9", "Input",
+      StripOnInput->False,
+      LineColor->RGBColor[1, 0, 1],
+      FrontFaceColor->RGBColor[1, 0, 1],
+      BackFaceColor->RGBColor[1, 0, 1],
+      GraphicsColor->RGBColor[1, 0, 1],
+      FontColor->RGBColor[1, 0, 1]], 
+     StyleBox["\<\"\"\>", "Input",
+      StripOnInput->False,
+      LineColor->RGBColor[0, 0.75, 0],
+      FrontFaceColor->RGBColor[0, 0.75, 0],
+      BackFaceColor->RGBColor[0, 0.75, 0],
+      GraphicsColor->RGBColor[0, 0.75, 0],
+      FontColor->RGBColor[0, 0.75, 0]], 
+     StyleBox["\<\"\"\>", "Input",
+      StripOnInput->False,
+      FontColor->GrayLevel[0.5]]},
+    {"\<\"\[DownArrow]\"\>", 
+     StyleBox["1", "Text",
+      StripOnInput->False], 
+     StyleBox["1", "Text",
+      StripOnInput->False]}
+   },
+   AutoDelete->False,
+   GridBoxFrame->{
+    "Columns" -> None, "Rows" -> None, 
+     "ItemsIndexed" -> {{1, 1} -> True, {1, 2} -> True, {1, 3} -> True}},
+   GridBoxItemSize->{"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}],
+  "Grid"]], "Output",
+ CellChangeTimes->{
+  3.6424622992148542`*^9, 3.642462407326976*^9, 3.642462466637463*^9, {
+   3.642462510548081*^9, 3.6424625323739243`*^9}, {3.642462628724101*^9, 
+   3.642462677698246*^9}, 3.642462749045497*^9, 3.6424627877727537`*^9, 
+   3.6424628710628357`*^9, 3.642462924553959*^9, 3.6424629952604733`*^9, 
+   3.642472541941721*^9, 3.6424768159968033`*^9, 3.642477055809369*^9}],
+
+Cell[BoxData[
+ TagBox[GridBox[{
+    {
+     StyleBox["10", "Input",
+      StripOnInput->False,
+      LineColor->RGBColor[1, 0, 1],
+      FrontFaceColor->RGBColor[1, 0, 1],
+      BackFaceColor->RGBColor[1, 0, 1],
+      GraphicsColor->RGBColor[1, 0, 1],
+      FontColor->RGBColor[1, 0, 1]], 
+     StyleBox["\<\"\"\>", "Input",
+      StripOnInput->False,
+      LineColor->RGBColor[0, 0.75, 0],
+      FrontFaceColor->RGBColor[0, 0.75, 0],
+      BackFaceColor->RGBColor[0, 0.75, 0],
+      GraphicsColor->RGBColor[0, 0.75, 0],
+      FontColor->RGBColor[0, 0.75, 0]], 
+     StyleBox["\<\"\"\>", "Input",
+      StripOnInput->False,
+      FontColor->GrayLevel[0.5]]},
+    {"\<\"\[DownArrow]\"\>", 
+     StyleBox["1", "Text",
+      StripOnInput->False], 
+     StyleBox["1", "Text",
+      StripOnInput->False]}
+   },
+   AutoDelete->False,
+   GridBoxFrame->{
+    "Columns" -> None, "Rows" -> None, 
+     "ItemsIndexed" -> {{1, 1} -> True, {1, 2} -> True, {1, 3} -> True}},
+   GridBoxItemSize->{"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}],
+  "Grid"]], "Output",
+ CellChangeTimes->{
+  3.6424622992148542`*^9, 3.642462407326976*^9, 3.642462466637463*^9, {
+   3.642462510548081*^9, 3.6424625323739243`*^9}, {3.642462628724101*^9, 
+   3.642462677698246*^9}, 3.642462749045497*^9, 3.6424627877727537`*^9, 
+   3.6424628710628357`*^9, 3.642462924553959*^9, 3.6424629952604733`*^9, 
+   3.642472541941721*^9, 3.6424768159968033`*^9, 3.64247705583009*^9}],
+
+Cell[BoxData[
+ TagBox[GridBox[{
+    {
+     StyleBox["11", "Input",
+      StripOnInput->False,
+      LineColor->RGBColor[1, 0, 1],
+      FrontFaceColor->RGBColor[1, 0, 1],
+      BackFaceColor->RGBColor[1, 0, 1],
+      GraphicsColor->RGBColor[1, 0, 1],
+      FontColor->RGBColor[1, 0, 1]], 
+     StyleBox["\<\"\"\>", "Input",
+      StripOnInput->False,
+      LineColor->RGBColor[0, 0.75, 0],
+      FrontFaceColor->RGBColor[0, 0.75, 0],
+      BackFaceColor->RGBColor[0, 0.75, 0],
+      GraphicsColor->RGBColor[0, 0.75, 0],
+      FontColor->RGBColor[0, 0.75, 0]], 
+     StyleBox["\<\"\"\>", "Input",
+      StripOnInput->False,
+      FontColor->GrayLevel[0.5]]},
+    {"\<\"\[DownArrow]\"\>", 
+     StyleBox["1", "Text",
+      StripOnInput->False], 
+     StyleBox["1", "Text",
+      StripOnInput->False]}
+   },
+   AutoDelete->False,
+   GridBoxFrame->{
+    "Columns" -> None, "Rows" -> None, 
+     "ItemsIndexed" -> {{1, 1} -> True, {1, 2} -> True, {1, 3} -> True}},
+   GridBoxItemSize->{"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}],
+  "Grid"]], "Output",
+ CellChangeTimes->{
+  3.6424622992148542`*^9, 3.642462407326976*^9, 3.642462466637463*^9, {
+   3.642462510548081*^9, 3.6424625323739243`*^9}, {3.642462628724101*^9, 
+   3.642462677698246*^9}, 3.642462749045497*^9, 3.6424627877727537`*^9, 
+   3.6424628710628357`*^9, 3.642462924553959*^9, 3.6424629952604733`*^9, 
+   3.642472541941721*^9, 3.6424768159968033`*^9, 3.642477055859254*^9}],
+
+Cell[BoxData[
+ TagBox[GridBox[{
+    {
+     StyleBox["12", "Input",
+      StripOnInput->False,
+      LineColor->RGBColor[1, 0, 1],
+      FrontFaceColor->RGBColor[1, 0, 1],
+      BackFaceColor->RGBColor[1, 0, 1],
+      GraphicsColor->RGBColor[1, 0, 1],
+      FontColor->RGBColor[1, 0, 1]], 
+     StyleBox["\<\"\"\>", "Input",
+      StripOnInput->False,
+      LineColor->RGBColor[0, 0.75, 0],
+      FrontFaceColor->RGBColor[0, 0.75, 0],
+      BackFaceColor->RGBColor[0, 0.75, 0],
+      GraphicsColor->RGBColor[0, 0.75, 0],
+      FontColor->RGBColor[0, 0.75, 0]], 
+     StyleBox["\<\"\"\>", "Input",
+      StripOnInput->False,
+      FontColor->GrayLevel[0.5]]},
+    {"\<\"\[DownArrow]\"\>", 
+     StyleBox["1", "Text",
+      StripOnInput->False], 
+     StyleBox["1", "Text",
+      StripOnInput->False]}
+   },
+   AutoDelete->False,
+   GridBoxFrame->{
+    "Columns" -> None, "Rows" -> None, 
+     "ItemsIndexed" -> {{1, 1} -> True, {1, 2} -> True, {1, 3} -> True}},
+   GridBoxItemSize->{"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}],
+  "Grid"]], "Output",
+ CellChangeTimes->{
+  3.6424622992148542`*^9, 3.642462407326976*^9, 3.642462466637463*^9, {
+   3.642462510548081*^9, 3.6424625323739243`*^9}, {3.642462628724101*^9, 
+   3.642462677698246*^9}, 3.642462749045497*^9, 3.6424627877727537`*^9, 
+   3.6424628710628357`*^9, 3.642462924553959*^9, 3.6424629952604733`*^9, 
+   3.642472541941721*^9, 3.6424768159968033`*^9, 3.642477055874123*^9}],
+
+Cell[BoxData[
+ TagBox[GridBox[{
+    {
+     StyleBox["13", "Input",
+      StripOnInput->False,
+      LineColor->RGBColor[1, 0, 1],
+      FrontFaceColor->RGBColor[1, 0, 1],
+      BackFaceColor->RGBColor[1, 0, 1],
+      GraphicsColor->RGBColor[1, 0, 1],
+      FontColor->RGBColor[1, 0, 1]], 
+     StyleBox["\<\"\"\>", "Input",
+      StripOnInput->False,
+      LineColor->RGBColor[0, 0.75, 0],
+      FrontFaceColor->RGBColor[0, 0.75, 0],
+      BackFaceColor->RGBColor[0, 0.75, 0],
+      GraphicsColor->RGBColor[0, 0.75, 0],
+      FontColor->RGBColor[0, 0.75, 0]], 
+     StyleBox["\<\"\"\>", "Input",
+      StripOnInput->False,
+      FontColor->GrayLevel[0.5]]},
+    {"\<\"\[DownArrow]\"\>", 
+     StyleBox["1", "Text",
+      StripOnInput->False], 
+     StyleBox["1", "Text",
+      StripOnInput->False]}
+   },
+   AutoDelete->False,
+   GridBoxFrame->{
+    "Columns" -> None, "Rows" -> None, 
+     "ItemsIndexed" -> {{1, 1} -> True, {1, 2} -> True, {1, 3} -> True}},
+   GridBoxItemSize->{"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}],
+  "Grid"]], "Output",
+ CellChangeTimes->{
+  3.6424622992148542`*^9, 3.642462407326976*^9, 3.642462466637463*^9, {
+   3.642462510548081*^9, 3.6424625323739243`*^9}, {3.642462628724101*^9, 
+   3.642462677698246*^9}, 3.642462749045497*^9, 3.6424627877727537`*^9, 
+   3.6424628710628357`*^9, 3.642462924553959*^9, 3.6424629952604733`*^9, 
+   3.642472541941721*^9, 3.6424768159968033`*^9, 3.642477055887918*^9}],
+
+Cell[BoxData[
+ TagBox[GridBox[{
+    {
+     StyleBox["14", "Input",
+      StripOnInput->False,
+      LineColor->RGBColor[1, 0, 1],
+      FrontFaceColor->RGBColor[1, 0, 1],
+      BackFaceColor->RGBColor[1, 0, 1],
+      GraphicsColor->RGBColor[1, 0, 1],
+      FontColor->RGBColor[1, 0, 1]], 
+     StyleBox["\<\"\"\>", "Input",
+      StripOnInput->False,
+      LineColor->RGBColor[0, 0.75, 0],
+      FrontFaceColor->RGBColor[0, 0.75, 0],
+      BackFaceColor->RGBColor[0, 0.75, 0],
+      GraphicsColor->RGBColor[0, 0.75, 0],
+      FontColor->RGBColor[0, 0.75, 0]], 
+     StyleBox["\<\"\"\>", "Input",
+      StripOnInput->False,
+      FontColor->GrayLevel[0.5]]},
+    {"\<\"\[DownArrow]\"\>", 
+     StyleBox["1", "Text",
+      StripOnInput->False], 
+     StyleBox["1", "Text",
+      StripOnInput->False]}
+   },
+   AutoDelete->False,
+   GridBoxFrame->{
+    "Columns" -> None, "Rows" -> None, 
+     "ItemsIndexed" -> {{1, 1} -> True, {1, 2} -> True, {1, 3} -> True}},
+   GridBoxItemSize->{"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}],
+  "Grid"]], "Output",
+ CellChangeTimes->{
+  3.6424622992148542`*^9, 3.642462407326976*^9, 3.642462466637463*^9, {
+   3.642462510548081*^9, 3.6424625323739243`*^9}, {3.642462628724101*^9, 
+   3.642462677698246*^9}, 3.642462749045497*^9, 3.6424627877727537`*^9, 
+   3.6424628710628357`*^9, 3.642462924553959*^9, 3.6424629952604733`*^9, 
+   3.642472541941721*^9, 3.6424768159968033`*^9, 3.642477055901582*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{"setenv", " ", "[", 
+  RowBox[{"{", 
+   RowBox[{"2", ",", "0"}], "}"}], "]"}], "\[IndentingNewLine]", 
+ RowBox[{"For", " ", "[", 
+  RowBox[{
+   RowBox[{"x", "=", "0.0"}], ",", " ", 
+   RowBox[{"x", "<", " ", "13.0"}], ",", " ", 
+   RowBox[{"x", "+=", "1.0"}], ",", "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"Print", "[", 
+     RowBox[{
+     "\"\<x2u[\>\"", ",", " ", "x", ",", " ", "\"\<] = \>\"", ",", " ", 
+      RowBox[{"x2u", "[", "x", "]"}]}], "]"}], ";"}]}], 
+  "]"}], "\[IndentingNewLine]", 
+ RowBox[{"setenv", " ", "[", 
+  RowBox[{"{", 
+   RowBox[{"1", ",", " ", "1"}], "}"}], "]"}], "\[IndentingNewLine]", 
+ RowBox[{"For", " ", "[", 
+  RowBox[{
+   RowBox[{"u", "=", "0"}], ",", " ", 
+   RowBox[{"u", "<", "32"}], ",", " ", 
+   RowBox[{"u", "++"}], ",", "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"Print", "[", 
+     RowBox[{"\"\<u2f[\>\"", ",", "u", ",", "\"\<] = \>\"", ",", " ", 
+      RowBox[{"u2f", "[", "u", "]"}]}], "]"}], ";"}]}], 
+  "]"}], "\[IndentingNewLine]"}], "Input",
+ CellChangeTimes->{{3.642477107172858*^9, 3.642477206031227*^9}, {
+   3.6424772374943123`*^9, 3.642477316249835*^9}, {3.6424894076840553`*^9, 
+   3.642489407911868*^9}, {3.642492462311141*^9, 3.6424924678801947`*^9}, {
+   3.642492624071477*^9, 3.642492677895157*^9}, {3.64249276371318*^9, 
+   3.642492802726974*^9}, {3.6424929182072563`*^9, 3.642492921422084*^9}, {
+   3.6424929896377697`*^9, 3.642493013067461*^9}, {3.642493138925954*^9, 
+   3.642493159256572*^9}, 3.642493201495064*^9, {3.64249325366188*^9, 
+   3.642493270457983*^9}, {3.642493923189581*^9, 3.6424939263208437`*^9}, {
+   3.642494080260519*^9, 3.642494080824044*^9}, {3.642494692572694*^9, 
+   3.6424948579138947`*^9}, {3.642494983544382*^9, 3.642494995440884*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"x2u[\"\>", "\[InvisibleSpace]", "0.`", 
+   "\[InvisibleSpace]", "\<\"] = \"\>", "\[InvisibleSpace]", "0"}],
+  SequenceForm["x2u[", 0., "] = ", 0],
+  Editable->False]], "Print",
+ CellChangeTimes->{
+  3.642493041325746*^9, 3.642493172248159*^9, 3.642493235834643*^9, 
+   3.642493929119155*^9, 3.6424940830932217`*^9, 3.642494867938789*^9, {
+   3.6424949873663197`*^9, 3.642494999118946*^9}}],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"x2u[\"\>", "\[InvisibleSpace]", "1.`", 
+   "\[InvisibleSpace]", "\<\"] = \"\>", "\[InvisibleSpace]", "17"}],
+  SequenceForm["x2u[", 1., "] = ", 17],
+  Editable->False]], "Print",
+ CellChangeTimes->{
+  3.642493041325746*^9, 3.642493172248159*^9, 3.642493235834643*^9, 
+   3.642493929119155*^9, 3.6424940830932217`*^9, 3.642494867938789*^9, {
+   3.6424949873663197`*^9, 3.642494999205261*^9}}],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"x2u[\"\>", "\[InvisibleSpace]", "2.`", 
+   "\[InvisibleSpace]", "\<\"] = \"\>", "\[InvisibleSpace]", "16"}],
+  SequenceForm["x2u[", 2., "] = ", 16],
+  Editable->False]], "Print",
+ CellChangeTimes->{
+  3.642493041325746*^9, 3.642493172248159*^9, 3.642493235834643*^9, 
+   3.642493929119155*^9, 3.6424940830932217`*^9, 3.642494867938789*^9, {
+   3.6424949873663197`*^9, 3.642494999218072*^9}}],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"x2u[\"\>", "\[InvisibleSpace]", "3.`", 
+   "\[InvisibleSpace]", "\<\"] = \"\>", "\[InvisibleSpace]", "24"}],
+  SequenceForm["x2u[", 3., "] = ", 24],
+  Editable->False]], "Print",
+ CellChangeTimes->{
+  3.642493041325746*^9, 3.642493172248159*^9, 3.642493235834643*^9, 
+   3.642493929119155*^9, 3.6424940830932217`*^9, 3.642494867938789*^9, {
+   3.6424949873663197`*^9, 3.642494999231297*^9}}],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"x2u[\"\>", "\[InvisibleSpace]", "4.`", 
+   "\[InvisibleSpace]", "\<\"] = \"\>", "\[InvisibleSpace]", "49"}],
+  SequenceForm["x2u[", 4., "] = ", 49],
+  Editable->False]], "Print",
+ CellChangeTimes->{
+  3.642493041325746*^9, 3.642493172248159*^9, 3.642493235834643*^9, 
+   3.642493929119155*^9, 3.6424940830932217`*^9, 3.642494867938789*^9, {
+   3.6424949873663197`*^9, 3.642494999245083*^9}}],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"x2u[\"\>", "\[InvisibleSpace]", "5.`", 
+   "\[InvisibleSpace]", "\<\"] = \"\>", "\[InvisibleSpace]", "53"}],
+  SequenceForm["x2u[", 5., "] = ", 53],
+  Editable->False]], "Print",
+ CellChangeTimes->{
+  3.642493041325746*^9, 3.642493172248159*^9, 3.642493235834643*^9, 
+   3.642493929119155*^9, 3.6424940830932217`*^9, 3.642494867938789*^9, {
+   3.6424949873663197`*^9, 3.642494999258466*^9}}],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"x2u[\"\>", "\[InvisibleSpace]", "6.`", 
+   "\[InvisibleSpace]", "\<\"] = \"\>", "\[InvisibleSpace]", "57"}],
+  SequenceForm["x2u[", 6., "] = ", 57],
+  Editable->False]], "Print",
+ CellChangeTimes->{
+  3.642493041325746*^9, 3.642493172248159*^9, 3.642493235834643*^9, 
+   3.642493929119155*^9, 3.6424940830932217`*^9, 3.642494867938789*^9, {
+   3.6424949873663197`*^9, 3.642494999270886*^9}}],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"x2u[\"\>", "\[InvisibleSpace]", "7.`", 
+   "\[InvisibleSpace]", "\<\"] = \"\>", "\[InvisibleSpace]", "94"}],
+  SequenceForm["x2u[", 7., "] = ", 94],
+  Editable->False]], "Print",
+ CellChangeTimes->{
+  3.642493041325746*^9, 3.642493172248159*^9, 3.642493235834643*^9, 
+   3.642493929119155*^9, 3.6424940830932217`*^9, 3.642494867938789*^9, {
+   3.6424949873663197`*^9, 3.642494999282337*^9}}],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"x2u[\"\>", "\[InvisibleSpace]", "8.`", 
+   "\[InvisibleSpace]", "\<\"] = \"\>", "\[InvisibleSpace]", "98"}],
+  SequenceForm["x2u[", 8., "] = ", 98],
+  Editable->False]], "Print",
+ CellChangeTimes->{
+  3.642493041325746*^9, 3.642493172248159*^9, 3.642493235834643*^9, 
+   3.642493929119155*^9, 3.6424940830932217`*^9, 3.642494867938789*^9, {
+   3.6424949873663197`*^9, 3.642494999294038*^9}}],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"x2u[\"\>", "\[InvisibleSpace]", "9.`", 
+   "\[InvisibleSpace]", "\<\"] = \"\>", "\[InvisibleSpace]", "102"}],
+  SequenceForm["x2u[", 9., "] = ", 102],
+  Editable->False]], "Print",
+ CellChangeTimes->{
+  3.642493041325746*^9, 3.642493172248159*^9, 3.642493235834643*^9, 
+   3.642493929119155*^9, 3.6424940830932217`*^9, 3.642494867938789*^9, {
+   3.6424949873663197`*^9, 3.6424949993064823`*^9}}],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"x2u[\"\>", "\[InvisibleSpace]", "10.`", 
+   "\[InvisibleSpace]", "\<\"] = \"\>", "\[InvisibleSpace]", "102"}],
+  SequenceForm["x2u[", 10., "] = ", 102],
+  Editable->False]], "Print",
+ CellChangeTimes->{
+  3.642493041325746*^9, 3.642493172248159*^9, 3.642493235834643*^9, 
+   3.642493929119155*^9, 3.6424940830932217`*^9, 3.642494867938789*^9, {
+   3.6424949873663197`*^9, 3.642494999318678*^9}}],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"x2u[\"\>", "\[InvisibleSpace]", "11.`", 
+   "\[InvisibleSpace]", "\<\"] = \"\>", "\[InvisibleSpace]", "102"}],
+  SequenceForm["x2u[", 11., "] = ", 102],
+  Editable->False]], "Print",
+ CellChangeTimes->{
+  3.642493041325746*^9, 3.642493172248159*^9, 3.642493235834643*^9, 
+   3.642493929119155*^9, 3.6424940830932217`*^9, 3.642494867938789*^9, {
+   3.6424949873663197`*^9, 3.642494999330089*^9}}],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"x2u[\"\>", "\[InvisibleSpace]", "12.`", 
+   "\[InvisibleSpace]", "\<\"] = \"\>", "\[InvisibleSpace]", "106"}],
+  SequenceForm["x2u[", 12., "] = ", 106],
+  Editable->False]], "Print",
+ CellChangeTimes->{
+  3.642493041325746*^9, 3.642493172248159*^9, 3.642493235834643*^9, 
+   3.642493929119155*^9, 3.6424940830932217`*^9, 3.642494867938789*^9, {
+   3.6424949873663197`*^9, 3.6424949993417463`*^9}}],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"u2f[\"\>", "\[InvisibleSpace]", "0", 
+   "\[InvisibleSpace]", "\<\"] = \"\>", "\[InvisibleSpace]", "0"}],
+  SequenceForm["u2f[", 0, "] = ", 0],
+  Editable->False]], "Print",
+ CellChangeTimes->{
+  3.642493041325746*^9, 3.642493172248159*^9, 3.642493235834643*^9, 
+   3.642493929119155*^9, 3.6424940830932217`*^9, 3.642494867938789*^9, {
+   3.6424949873663197`*^9, 3.642494999353623*^9}}],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"u2f[\"\>", "\[InvisibleSpace]", "1", 
+   "\[InvisibleSpace]", "\<\"] = \"\>", "\[InvisibleSpace]", "0"}],
+  SequenceForm["u2f[", 1, "] = ", 0],
+  Editable->False]], "Print",
+ CellChangeTimes->{
+  3.642493041325746*^9, 3.642493172248159*^9, 3.642493235834643*^9, 
+   3.642493929119155*^9, 3.6424940830932217`*^9, 3.642494867938789*^9, {
+   3.6424949873663197`*^9, 3.642494999365562*^9}}],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"u2f[\"\>", "\[InvisibleSpace]", "2", 
+   "\[InvisibleSpace]", "\<\"] = \"\>", "\[InvisibleSpace]", "0"}],
+  SequenceForm["u2f[", 2, "] = ", 0],
+  Editable->False]], "Print",
+ CellChangeTimes->{
+  3.642493041325746*^9, 3.642493172248159*^9, 3.642493235834643*^9, 
+   3.642493929119155*^9, 3.6424940830932217`*^9, 3.642494867938789*^9, {
+   3.6424949873663197`*^9, 3.642494999378366*^9}}],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"u2f[\"\>", "\[InvisibleSpace]", "3", 
+   "\[InvisibleSpace]", "\<\"] = \"\>", "\[InvisibleSpace]", "0"}],
+  SequenceForm["u2f[", 3, "] = ", 0],
+  Editable->False]], "Print",
+ CellChangeTimes->{
+  3.642493041325746*^9, 3.642493172248159*^9, 3.642493235834643*^9, 
+   3.642493929119155*^9, 3.6424940830932217`*^9, 3.642494867938789*^9, {
+   3.6424949873663197`*^9, 3.6424949997395773`*^9}}],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"u2f[\"\>", "\[InvisibleSpace]", "4", 
+   "\[InvisibleSpace]", "\<\"] = \"\>", "\[InvisibleSpace]", 
+   RowBox[{"u2f", "[", "4", "]"}]}],
+  SequenceForm["u2f[", 4, "] = ", 
+   $CellContext`u2f[4]],
+  Editable->False]], "Print",
+ CellChangeTimes->{
+  3.642493041325746*^9, 3.642493172248159*^9, 3.642493235834643*^9, 
+   3.642493929119155*^9, 3.6424940830932217`*^9, 3.642494867938789*^9, {
+   3.6424949873663197`*^9, 3.642494999754402*^9}}],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"u2f[\"\>", "\[InvisibleSpace]", "5", 
+   "\[InvisibleSpace]", "\<\"] = \"\>", "\[InvisibleSpace]", 
+   RowBox[{"u2f", "[", "5", "]"}]}],
+  SequenceForm["u2f[", 5, "] = ", 
+   $CellContext`u2f[5]],
+  Editable->False]], "Print",
+ CellChangeTimes->{
+  3.642493041325746*^9, 3.642493172248159*^9, 3.642493235834643*^9, 
+   3.642493929119155*^9, 3.6424940830932217`*^9, 3.642494867938789*^9, {
+   3.6424949873663197`*^9, 3.642494999764627*^9}}],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"u2f[\"\>", "\[InvisibleSpace]", "6", 
+   "\[InvisibleSpace]", "\<\"] = \"\>", "\[InvisibleSpace]", 
+   RowBox[{"u2f", "[", "6", "]"}]}],
+  SequenceForm["u2f[", 6, "] = ", 
+   $CellContext`u2f[6]],
+  Editable->False]], "Print",
+ CellChangeTimes->{
+  3.642493041325746*^9, 3.642493172248159*^9, 3.642493235834643*^9, 
+   3.642493929119155*^9, 3.6424940830932217`*^9, 3.642494867938789*^9, {
+   3.6424949873663197`*^9, 3.64249499977423*^9}}],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"u2f[\"\>", "\[InvisibleSpace]", "7", 
+   "\[InvisibleSpace]", "\<\"] = \"\>", "\[InvisibleSpace]", 
+   RowBox[{"u2f", "[", "7", "]"}]}],
+  SequenceForm["u2f[", 7, "] = ", 
+   $CellContext`u2f[7]],
+  Editable->False]], "Print",
+ CellChangeTimes->{
+  3.642493041325746*^9, 3.642493172248159*^9, 3.642493235834643*^9, 
+   3.642493929119155*^9, 3.6424940830932217`*^9, 3.642494867938789*^9, {
+   3.6424949873663197`*^9, 3.64249499978417*^9}}],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"u2f[\"\>", "\[InvisibleSpace]", "8", 
+   "\[InvisibleSpace]", "\<\"] = \"\>", "\[InvisibleSpace]", "1"}],
+  SequenceForm["u2f[", 8, "] = ", 1],
+  Editable->False]], "Print",
+ CellChangeTimes->{
+  3.642493041325746*^9, 3.642493172248159*^9, 3.642493235834643*^9, 
+   3.642493929119155*^9, 3.6424940830932217`*^9, 3.642494867938789*^9, {
+   3.6424949873663197`*^9, 3.64249499979447*^9}}],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"u2f[\"\>", "\[InvisibleSpace]", "9", 
+   "\[InvisibleSpace]", "\<\"] = \"\>", "\[InvisibleSpace]", 
+   FractionBox["1", "2"]}],
+  SequenceForm["u2f[", 9, "] = ", 
+   Rational[1, 2]],
+  Editable->False]], "Print",
+ CellChangeTimes->{
+  3.642493041325746*^9, 3.642493172248159*^9, 3.642493235834643*^9, 
+   3.642493929119155*^9, 3.6424940830932217`*^9, 3.642494867938789*^9, {
+   3.6424949873663197`*^9, 3.6424949998053207`*^9}}],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"u2f[\"\>", "\[InvisibleSpace]", "10", 
+   "\[InvisibleSpace]", "\<\"] = \"\>", "\[InvisibleSpace]", 
+   FractionBox["1", "2"]}],
+  SequenceForm["u2f[", 10, "] = ", 
+   Rational[1, 2]],
+  Editable->False]], "Print",
+ CellChangeTimes->{
+  3.642493041325746*^9, 3.642493172248159*^9, 3.642493235834643*^9, 
+   3.642493929119155*^9, 3.6424940830932217`*^9, 3.642494867938789*^9, {
+   3.6424949873663197`*^9, 3.642494999815929*^9}}],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"u2f[\"\>", "\[InvisibleSpace]", "11", 
+   "\[InvisibleSpace]", "\<\"] = \"\>", "\[InvisibleSpace]", 
+   FractionBox["1", "4"]}],
+  SequenceForm["u2f[", 11, "] = ", 
+   Rational[1, 4]],
+  Editable->False]], "Print",
+ CellChangeTimes->{
+  3.642493041325746*^9, 3.642493172248159*^9, 3.642493235834643*^9, 
+   3.642493929119155*^9, 3.6424940830932217`*^9, 3.642494867938789*^9, {
+   3.6424949873663197`*^9, 3.642494999826199*^9}}],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"u2f[\"\>", "\[InvisibleSpace]", "12", 
+   "\[InvisibleSpace]", "\<\"] = \"\>", "\[InvisibleSpace]", 
+   RowBox[{"u2f", "[", "12", "]"}]}],
+  SequenceForm["u2f[", 12, "] = ", 
+   $CellContext`u2f[12]],
+  Editable->False]], "Print",
+ CellChangeTimes->{
+  3.642493041325746*^9, 3.642493172248159*^9, 3.642493235834643*^9, 
+   3.642493929119155*^9, 3.6424940830932217`*^9, 3.642494867938789*^9, {
+   3.6424949873663197`*^9, 3.64249499983661*^9}}],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"u2f[\"\>", "\[InvisibleSpace]", "13", 
+   "\[InvisibleSpace]", "\<\"] = \"\>", "\[InvisibleSpace]", 
+   RowBox[{"u2f", "[", "13", "]"}]}],
+  SequenceForm["u2f[", 13, "] = ", 
+   $CellContext`u2f[13]],
+  Editable->False]], "Print",
+ CellChangeTimes->{
+  3.642493041325746*^9, 3.642493172248159*^9, 3.642493235834643*^9, 
+   3.642493929119155*^9, 3.6424940830932217`*^9, 3.642494867938789*^9, {
+   3.6424949873663197`*^9, 3.642494999847005*^9}}],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"u2f[\"\>", "\[InvisibleSpace]", "14", 
+   "\[InvisibleSpace]", "\<\"] = \"\>", "\[InvisibleSpace]", 
+   RowBox[{"u2f", "[", "14", "]"}]}],
+  SequenceForm["u2f[", 14, "] = ", 
+   $CellContext`u2f[14]],
+  Editable->False]], "Print",
+ CellChangeTimes->{
+  3.642493041325746*^9, 3.642493172248159*^9, 3.642493235834643*^9, 
+   3.642493929119155*^9, 3.6424940830932217`*^9, 3.642494867938789*^9, {
+   3.6424949873663197`*^9, 3.6424949999023113`*^9}}],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"u2f[\"\>", "\[InvisibleSpace]", "15", 
+   "\[InvisibleSpace]", "\<\"] = \"\>", "\[InvisibleSpace]", 
+   RowBox[{"u2f", "[", "15", "]"}]}],
+  SequenceForm["u2f[", 15, "] = ", 
+   $CellContext`u2f[15]],
+  Editable->False]], "Print",
+ CellChangeTimes->{
+  3.642493041325746*^9, 3.642493172248159*^9, 3.642493235834643*^9, 
+   3.642493929119155*^9, 3.6424940830932217`*^9, 3.642494867938789*^9, {
+   3.6424949873663197`*^9, 3.642494999916787*^9}}],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"u2f[\"\>", "\[InvisibleSpace]", "16", 
+   "\[InvisibleSpace]", "\<\"] = \"\>", "\[InvisibleSpace]", "2"}],
+  SequenceForm["u2f[", 16, "] = ", 2],
+  Editable->False]], "Print",
+ CellChangeTimes->{
+  3.642493041325746*^9, 3.642493172248159*^9, 3.642493235834643*^9, 
+   3.642493929119155*^9, 3.6424940830932217`*^9, 3.642494867938789*^9, {
+   3.6424949873663197`*^9, 3.6424949999309597`*^9}}],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"u2f[\"\>", "\[InvisibleSpace]", "17", 
+   "\[InvisibleSpace]", "\<\"] = \"\>", "\[InvisibleSpace]", "1"}],
+  SequenceForm["u2f[", 17, "] = ", 1],
+  Editable->False]], "Print",
+ CellChangeTimes->{
+  3.642493041325746*^9, 3.642493172248159*^9, 3.642493235834643*^9, 
+   3.642493929119155*^9, 3.6424940830932217`*^9, 3.642494867938789*^9, {
+   3.6424949873663197`*^9, 3.642494999943061*^9}}],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"u2f[\"\>", "\[InvisibleSpace]", "18", 
+   "\[InvisibleSpace]", "\<\"] = \"\>", "\[InvisibleSpace]", "1"}],
+  SequenceForm["u2f[", 18, "] = ", 1],
+  Editable->False]], "Print",
+ CellChangeTimes->{
+  3.642493041325746*^9, 3.642493172248159*^9, 3.642493235834643*^9, 
+   3.642493929119155*^9, 3.6424940830932217`*^9, 3.642494867938789*^9, {
+   3.6424949873663197`*^9, 3.642494999954269*^9}}],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"u2f[\"\>", "\[InvisibleSpace]", "19", 
+   "\[InvisibleSpace]", "\<\"] = \"\>", "\[InvisibleSpace]", 
+   FractionBox["1", "2"]}],
+  SequenceForm["u2f[", 19, "] = ", 
+   Rational[1, 2]],
+  Editable->False]], "Print",
+ CellChangeTimes->{
+  3.642493041325746*^9, 3.642493172248159*^9, 3.642493235834643*^9, 
+   3.642493929119155*^9, 3.6424940830932217`*^9, 3.642494867938789*^9, {
+   3.6424949873663197`*^9, 3.64249499996563*^9}}],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"u2f[\"\>", "\[InvisibleSpace]", "20", 
+   "\[InvisibleSpace]", "\<\"] = \"\>", "\[InvisibleSpace]", 
+   RowBox[{"u2f", "[", "20", "]"}]}],
+  SequenceForm["u2f[", 20, "] = ", 
+   $CellContext`u2f[20]],
+  Editable->False]], "Print",
+ CellChangeTimes->{
+  3.642493041325746*^9, 3.642493172248159*^9, 3.642493235834643*^9, 
+   3.642493929119155*^9, 3.6424940830932217`*^9, 3.642494867938789*^9, {
+   3.6424949873663197`*^9, 3.642494999977429*^9}}],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"u2f[\"\>", "\[InvisibleSpace]", "21", 
+   "\[InvisibleSpace]", "\<\"] = \"\>", "\[InvisibleSpace]", 
+   RowBox[{"u2f", "[", "21", "]"}]}],
+  SequenceForm["u2f[", 21, "] = ", 
+   $CellContext`u2f[21]],
+  Editable->False]], "Print",
+ CellChangeTimes->{
+  3.642493041325746*^9, 3.642493172248159*^9, 3.642493235834643*^9, 
+   3.642493929119155*^9, 3.6424940830932217`*^9, 3.642494867938789*^9, {
+   3.6424949873663197`*^9, 3.64249499998885*^9}}],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"u2f[\"\>", "\[InvisibleSpace]", "22", 
+   "\[InvisibleSpace]", "\<\"] = \"\>", "\[InvisibleSpace]", 
+   RowBox[{"u2f", "[", "22", "]"}]}],
+  SequenceForm["u2f[", 22, "] = ", 
+   $CellContext`u2f[22]],
+  Editable->False]], "Print",
+ CellChangeTimes->{
+  3.642493041325746*^9, 3.642493172248159*^9, 3.642493235834643*^9, 
+   3.642493929119155*^9, 3.6424940830932217`*^9, 3.642494867938789*^9, {
+   3.6424949873663197`*^9, 3.6424950000004387`*^9}}],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"u2f[\"\>", "\[InvisibleSpace]", "23", 
+   "\[InvisibleSpace]", "\<\"] = \"\>", "\[InvisibleSpace]", 
+   RowBox[{"u2f", "[", "23", "]"}]}],
+  SequenceForm["u2f[", 23, "] = ", 
+   $CellContext`u2f[23]],
+  Editable->False]], "Print",
+ CellChangeTimes->{
+  3.642493041325746*^9, 3.642493172248159*^9, 3.642493235834643*^9, 
+   3.642493929119155*^9, 3.6424940830932217`*^9, 3.642494867938789*^9, {
+   3.6424949873663197`*^9, 3.6424950000160093`*^9}}],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"u2f[\"\>", "\[InvisibleSpace]", "24", 
+   "\[InvisibleSpace]", "\<\"] = \"\>", "\[InvisibleSpace]", "3"}],
+  SequenceForm["u2f[", 24, "] = ", 3],
+  Editable->False]], "Print",
+ CellChangeTimes->{
+  3.642493041325746*^9, 3.642493172248159*^9, 3.642493235834643*^9, 
+   3.642493929119155*^9, 3.6424940830932217`*^9, 3.642494867938789*^9, {
+   3.6424949873663197`*^9, 3.642495000027766*^9}}],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"u2f[\"\>", "\[InvisibleSpace]", "25", 
+   "\[InvisibleSpace]", "\<\"] = \"\>", "\[InvisibleSpace]", 
+   FractionBox["3", "2"]}],
+  SequenceForm["u2f[", 25, "] = ", 
+   Rational[3, 2]],
+  Editable->False]], "Print",
+ CellChangeTimes->{
+  3.642493041325746*^9, 3.642493172248159*^9, 3.642493235834643*^9, 
+   3.642493929119155*^9, 3.6424940830932217`*^9, 3.642494867938789*^9, {
+   3.6424949873663197`*^9, 3.642495000039515*^9}}],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"u2f[\"\>", "\[InvisibleSpace]", "26", 
+   "\[InvisibleSpace]", "\<\"] = \"\>", "\[InvisibleSpace]", 
+   FractionBox["3", "2"]}],
+  SequenceForm["u2f[", 26, "] = ", 
+   Rational[3, 2]],
+  Editable->False]], "Print",
+ CellChangeTimes->{
+  3.642493041325746*^9, 3.642493172248159*^9, 3.642493235834643*^9, 
+   3.642493929119155*^9, 3.6424940830932217`*^9, 3.642494867938789*^9, {
+   3.6424949873663197`*^9, 3.642495000050568*^9}}],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"u2f[\"\>", "\[InvisibleSpace]", "27", 
+   "\[InvisibleSpace]", "\<\"] = \"\>", "\[InvisibleSpace]", 
+   FractionBox["3", "4"]}],
+  SequenceForm["u2f[", 27, "] = ", 
+   Rational[3, 4]],
+  Editable->False]], "Print",
+ CellChangeTimes->{
+  3.642493041325746*^9, 3.642493172248159*^9, 3.642493235834643*^9, 
+   3.642493929119155*^9, 3.6424940830932217`*^9, 3.642494867938789*^9, {
+   3.6424949873663197`*^9, 3.6424950000713253`*^9}}],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"u2f[\"\>", "\[InvisibleSpace]", "28", 
+   "\[InvisibleSpace]", "\<\"] = \"\>", "\[InvisibleSpace]", 
+   RowBox[{"u2f", "[", "28", "]"}]}],
+  SequenceForm["u2f[", 28, "] = ", 
+   $CellContext`u2f[28]],
+  Editable->False]], "Print",
+ CellChangeTimes->{
+  3.642493041325746*^9, 3.642493172248159*^9, 3.642493235834643*^9, 
+   3.642493929119155*^9, 3.6424940830932217`*^9, 3.642494867938789*^9, {
+   3.6424949873663197`*^9, 3.6424950000820417`*^9}}],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"u2f[\"\>", "\[InvisibleSpace]", "29", 
+   "\[InvisibleSpace]", "\<\"] = \"\>", "\[InvisibleSpace]", 
+   RowBox[{"u2f", "[", "29", "]"}]}],
+  SequenceForm["u2f[", 29, "] = ", 
+   $CellContext`u2f[29]],
+  Editable->False]], "Print",
+ CellChangeTimes->{
+  3.642493041325746*^9, 3.642493172248159*^9, 3.642493235834643*^9, 
+   3.642493929119155*^9, 3.6424940830932217`*^9, 3.642494867938789*^9, {
+   3.6424949873663197`*^9, 3.642495000093028*^9}}],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"u2f[\"\>", "\[InvisibleSpace]", "30", 
+   "\[InvisibleSpace]", "\<\"] = \"\>", "\[InvisibleSpace]", 
+   RowBox[{"u2f", "[", "30", "]"}]}],
+  SequenceForm["u2f[", 30, "] = ", 
+   $CellContext`u2f[30]],
+  Editable->False]], "Print",
+ CellChangeTimes->{
+  3.642493041325746*^9, 3.642493172248159*^9, 3.642493235834643*^9, 
+   3.642493929119155*^9, 3.6424940830932217`*^9, 3.642494867938789*^9, {
+   3.6424949873663197`*^9, 3.6424950001054277`*^9}}],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"u2f[\"\>", "\[InvisibleSpace]", "31", 
+   "\[InvisibleSpace]", "\<\"] = \"\>", "\[InvisibleSpace]", 
+   RowBox[{"u2f", "[", "31", "]"}]}],
+  SequenceForm["u2f[", 31, "] = ", 
+   $CellContext`u2f[31]],
+  Editable->False]], "Print",
+ CellChangeTimes->{
+  3.642493041325746*^9, 3.642493172248159*^9, 3.642493235834643*^9, 
+   3.642493929119155*^9, 3.6424940830932217`*^9, 3.642494867938789*^9, {
+   3.6424949873663197`*^9, 3.642495000117428*^9}}]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Log", " ", "[", 
+  RowBox[{"2", ",", 
+   RowBox[{"-", "1"}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.642479672744933*^9, 3.6424796832713327`*^9}, {
+  3.6424797161446238`*^9, 3.642479717012027*^9}, {3.6424799384275208`*^9, 
+  3.642479943420864*^9}, {3.642480057158016*^9, 3.642480071200987*^9}}],
+
+Cell[BoxData[
+ FractionBox[
+  RowBox[{"\[ImaginaryI]", " ", "\[Pi]"}], 
+  RowBox[{"Log", "[", "2", "]"}]]], "Output",
+ CellChangeTimes->{
+  3.6424796869262743`*^9, 3.642479720880332*^9, {3.642480060746505*^9, 
+   3.642480083133813*^9}}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"scale", "[", "3.9", "]"}], "\[IndentingNewLine]"}]], "Input",
+ CellChangeTimes->{{3.642487096588613*^9, 3.642487125308448*^9}}],
+
+Cell[BoxData["1"], "Output",
+ CellChangeTimes->{{3.642487106276435*^9, 3.642487127826953*^9}}]
 }, Open  ]]
 },
 ScreenStyleEnvironment->"Printout",
-WindowSize->{714, 836},
-WindowMargins->{{100, Automatic}, {12, Automatic}},
+WindowSize->{778, 983},
+WindowMargins->{{19, Automatic}, {Automatic, 18}},
 PrintingCopies->1,
 PrintingStartingPageNumber->1,
 PrintingPageRange->{45, 46},
@@ -15686,29 +16994,107 @@ Cell[613605, 15384, 130, 2, 29, "Output"],
 Cell[613738, 15388, 963, 20, 158, "Output"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[614738, 15413, 1139, 21, 223, "Input"],
-Cell[615880, 15436, 313, 5, 29, "Output"],
-Cell[616196, 15443, 317, 5, 29, "Output"],
-Cell[616516, 15450, 315, 5, 29, "Output"],
-Cell[616834, 15457, 315, 5, 29, "Output"],
-Cell[617152, 15464, 314, 5, 29, "Output"],
-Cell[617469, 15471, 316, 5, 29, "Output"],
-Cell[617788, 15478, 317, 5, 29, "Output"]
+Cell[614738, 15413, 1968, 33, 336, "Input"],
+Cell[616709, 15448, 707, 10, 29, "Output"],
+Cell[617419, 15460, 745, 10, 29, "Output"],
+Cell[618167, 15472, 707, 10, 29, "Output"],
+Cell[618877, 15484, 707, 10, 29, "Output"],
+Cell[619587, 15496, 709, 10, 29, "Output"],
+Cell[620299, 15508, 707, 10, 29, "Output"],
+Cell[621009, 15520, 707, 10, 29, "Output"],
+Cell[621719, 15532, 708, 10, 29, "Output"],
+Cell[622430, 15544, 711, 10, 29, "Output"],
+Cell[623144, 15556, 710, 10, 29, "Output"],
+Cell[623857, 15568, 711, 10, 29, "Output"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[618142, 15488, 856, 15, 211, "Input"],
-Cell[619001, 15505, 223, 4, 29, "Output"],
-Cell[619227, 15511, 221, 4, 62, "Output"],
-Cell[619451, 15517, 223, 4, 29, "Output"],
-Cell[619677, 15523, 224, 4, 29, "Output"],
-Cell[619904, 15529, 221, 4, 29, "Output"],
-Cell[620128, 15535, 221, 4, 29, "Output"],
-Cell[620352, 15541, 221, 4, 29, "Output"],
-Cell[620576, 15547, 218, 4, 29, "Output"]
+Cell[624605, 15583, 856, 15, 211, "Input"],
+Cell[625464, 15600, 223, 4, 29, "Output"],
+Cell[625690, 15606, 221, 4, 29, "Output"],
+Cell[625914, 15612, 223, 4, 29, "Output"],
+Cell[626140, 15618, 224, 4, 29, "Output"],
+Cell[626367, 15624, 221, 4, 29, "Output"],
+Cell[626591, 15630, 221, 4, 29, "Output"],
+Cell[626815, 15636, 221, 4, 29, "Output"],
+Cell[627039, 15642, 218, 4, 29, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[627294, 15651, 2132, 46, 346, "Input"],
+Cell[629429, 15699, 1440, 37, 52, "Output"],
+Cell[630872, 15738, 1468, 37, 52, "Output"],
+Cell[632343, 15777, 1440, 37, 52, "Output"],
+Cell[633786, 15816, 1441, 37, 52, "Output"],
+Cell[635230, 15855, 1441, 37, 52, "Output"],
+Cell[636674, 15894, 1441, 37, 52, "Output"],
+Cell[638118, 15933, 1441, 37, 52, "Output"],
+Cell[639562, 15972, 1441, 37, 52, "Output"],
+Cell[641006, 16011, 1441, 37, 52, "Output"],
+Cell[642450, 16050, 1441, 37, 52, "Output"],
+Cell[643894, 16089, 1442, 37, 52, "Output"],
+Cell[645339, 16128, 1442, 37, 52, "Output"],
+Cell[646784, 16167, 1442, 37, 52, "Output"],
+Cell[648229, 16206, 1442, 37, 52, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[649708, 16248, 1759, 37, 166, "Input"],
+Cell[CellGroupData[{
+Cell[651492, 16289, 438, 9, 25, "Print"],
+Cell[651933, 16300, 440, 9, 25, "Print"],
+Cell[652376, 16311, 440, 9, 25, "Print"],
+Cell[652819, 16322, 440, 9, 25, "Print"],
+Cell[653262, 16333, 440, 9, 25, "Print"],
+Cell[653705, 16344, 440, 9, 25, "Print"],
+Cell[654148, 16355, 440, 9, 25, "Print"],
+Cell[654591, 16366, 440, 9, 25, "Print"],
+Cell[655034, 16377, 440, 9, 25, "Print"],
+Cell[655477, 16388, 444, 9, 25, "Print"],
+Cell[655924, 16399, 444, 9, 25, "Print"],
+Cell[656371, 16410, 444, 9, 25, "Print"],
+Cell[656818, 16421, 446, 9, 25, "Print"],
+Cell[657267, 16432, 435, 9, 25, "Print"],
+Cell[657705, 16443, 435, 9, 25, "Print"],
+Cell[658143, 16454, 435, 9, 25, "Print"],
+Cell[658581, 16465, 437, 9, 25, "Print"],
+Cell[659021, 16476, 488, 11, 25, "Print"],
+Cell[659512, 16489, 488, 11, 25, "Print"],
+Cell[660003, 16502, 487, 11, 25, "Print"],
+Cell[660493, 16515, 487, 11, 25, "Print"],
+Cell[660983, 16528, 434, 9, 25, "Print"],
+Cell[661420, 16539, 476, 11, 39, "Print"],
+Cell[661899, 16552, 476, 11, 39, "Print"],
+Cell[662378, 16565, 476, 11, 39, "Print"],
+Cell[662857, 16578, 491, 11, 25, "Print"],
+Cell[663351, 16591, 492, 11, 25, "Print"],
+Cell[663846, 16604, 494, 11, 25, "Print"],
+Cell[664343, 16617, 492, 11, 25, "Print"],
+Cell[664838, 16630, 439, 9, 25, "Print"],
+Cell[665280, 16641, 437, 9, 25, "Print"],
+Cell[665720, 16652, 437, 9, 25, "Print"],
+Cell[666160, 16663, 475, 11, 39, "Print"],
+Cell[666638, 16676, 492, 11, 25, "Print"],
+Cell[667133, 16689, 491, 11, 25, "Print"],
+Cell[667627, 16702, 494, 11, 25, "Print"],
+Cell[668124, 16715, 494, 11, 25, "Print"],
+Cell[668621, 16728, 437, 9, 25, "Print"],
+Cell[669061, 16739, 476, 11, 39, "Print"],
+Cell[669540, 16752, 476, 11, 39, "Print"],
+Cell[670019, 16765, 478, 11, 39, "Print"],
+Cell[670500, 16778, 494, 11, 25, "Print"],
+Cell[670997, 16791, 492, 11, 25, "Print"],
+Cell[671492, 16804, 494, 11, 25, "Print"],
+Cell[671989, 16817, 492, 11, 25, "Print"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[672530, 16834, 319, 6, 30, "Input"],
+Cell[672852, 16842, 236, 6, 49, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[673125, 16853, 162, 3, 54, "Input"],
+Cell[673290, 16858, 94, 1, 29, "Output"]
 }, Open  ]]
 }
 ]
 *)
 
 (* End of internal cache information *)
-

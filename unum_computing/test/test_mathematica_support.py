@@ -199,12 +199,17 @@ class MyTestCase(unittest.TestCase):
         # self.assertEqual(unum.Floor(-100000000000000000000.1), -100000000000000000001)
 
     def test_Grid(self):
-        self.assertEquals(unum.Grid(((1,2), (3,4))), '1 2\n3 4')
-        self.assertEquals(unum.Grid(((1,2),)), '1 2')
-        self.assertEquals(unum.Grid(((1,), (3,))), '1\n3')
-        self.assertEquals(unum.Grid((1, 3)), '1\n3')
-        self.assertEquals(unum.Grid('foo'), 'foo')
-        self.assertEquals(unum.Grid(('foo', 'bar')), 'foo\nbar')
+        self.assertEquals(unum.Grid(((1,2), (3,4))), ' 1  2 \n 3  4 ')
+        self.assertEquals(unum.Grid(((1,2),)), ' 1  2 ')
+        self.assertEquals(unum.Grid(((1,), (3,))), ' 1 \n 3 ')
+        with self.assertRaises(RuntimeError):
+            x = self.assertEquals(unum.Grid((1, 3)), ' 1 \n 3 ')
+        with self.assertRaises(RuntimeError):
+            x = self.assertEquals(unum.Grid('foo'), 'foo')
+        with self.assertRaises(RuntimeError):
+            x = self.assertEquals(unum.Grid(('foo', 'bar')), ' foo \n bar ')
+        self.assertEquals(unum.Grid(((1,2), (3,4)),
+                                    Frame=(None, None, {(1,1): True})), '|1| 2 \n 3  4 ')
 
     def test_integerQ(self):
         self.assertTrue(unum.IntegerQ(0))
@@ -228,12 +233,10 @@ class MyTestCase(unittest.TestCase):
         self.assertAlmostEquals(unum.Log(2, 2**0.5), 0.5)
         self.assertEquals(unum.Log(10, 100), 2)
         self.assertEquals(unum.Log(3, 27), 3)
-        with self.assertRaises(ValueError):
-            x = unum.Log(2, 0)
+        self.assertEquals(unum.Log(2, 0), unum.NegInfinity)
+        self.assertEquals(unum.Log(10, 0), unum.NegInfinity)
         with self.assertRaises(ValueError):
             x = unum.Log(2, -1)
-        with self.assertRaises(ValueError):
-            x = unum.Log(10, 0)
 
     def test_Max(self):
         self.assertEquals(unum.Max(1, 2), 2)
@@ -253,12 +256,28 @@ class MyTestCase(unittest.TestCase):
 
     def test_Row(self):
         self.assertEquals(unum.Row((1,2,3)), '123')
+        self.assertEquals(unum.Row((1,2,3), ' '), '1 2 3')
         self.assertEquals(unum.Row('a'), 'a')
+        self.assertEquals(unum.Row('abc', ' '), 'abc')
 
     def test_Style(self):
         self.assertEquals(unum.Style(1), '1')
         self.assertEquals(unum.Style(1, 'bold'), '1')
         self.assertEquals(unum.Style('1'), '1')
+
+    def test_IntegerString(self):
+        self.assertEquals(unum.IntegerString(1), '1')
+        self.assertEquals(unum.IntegerString(-100), '-100')
+        self.assertEquals(unum.IntegerString(4, 10), '4')
+        self.assertEquals(unum.IntegerString(4, 2), '100')
+        self.assertEquals(unum.IntegerString(4, 10, 3), '004')
+        self.assertEquals(unum.IntegerString(-4, 10, 4), '-004')
+        self.assertEquals(unum.IntegerString(-4, 10, 3), '-04')
+
+        self.assertEquals(unum.IntegerString(123, 10, 3), '123')
+        self.assertEquals(unum.IntegerString(123, 10, 2), '23')
+        self.assertEquals(unum.IntegerString(123, 10, 0), ' ')
+        # self.assertEquals(unum.IntegerString(123, 10, 0), '')
 
 if __name__ == '__main__':
     unittest.main()

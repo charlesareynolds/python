@@ -81,30 +81,35 @@ def Grid(items_2d, **kwargs):
     """ Return one or more lines.
     If called with ((1,2)(3,4)), return '1 2\n3 4'
     If called with ((1,)(3,)), return '1\n3'
-    If called with ((1,3)), return '1 3'
-    If called with (1,3), return '1\n3'
+    If called with ((1,3)), raise exception
+    If called with (1,3), raise exception
+    For any cell such that Frame[3][(row, col)] is true, give it a border:
+    If called with ((1,2)(3,4), Frame=(None, None, {(1,1): True})), return '|1| 2 \n 3  4 '
     """
-    if isinstance(items_2d, (tuple, list)):
-        result = ''
-        first_line = True
-        for items_1d in items_2d:
-            if first_line:
-                first_line = False
-            else:
-                result += '\n'
-            if isinstance(items_1d, (tuple, list)):
-                first_item = True
-                for item in items_1d:
-                    if first_item:
-                        first_item = False
-                    else:
-                        result += ' '
-                    result += str(item)
-            else:
-                result += str(items_1d)
-        return result
+    if not isinstance(items_2d, (tuple, list)):
+        raise RuntimeError, 'items_2d must be a tuple or a list, not %s' % items_2d
+    if 'Frame' in kwargs:
+        frame = kwargs['Frame']
+        cells = frame[2]
     else:
-        return str(items_2d)
+        cells = None
+    result = ''
+    row_no = 1
+    for items_1d in items_2d:
+        if not isinstance(items_1d, (tuple, list)):
+            raise RuntimeError, 'items_1d at row %s must be a tuple or a list, not %s' % (row_no, items_1d)
+        if row_no > 1:
+            result += '\n'
+        col_no = 1
+        for item in items_1d:
+            if cells is not None and (row_no, col_no) in cells and cells[(row_no, col_no)]:
+                border = '|'
+            else:
+                border = ' '
+            result += border + str(item) + border
+            col_no += 1
+        row_no += 1
+    return result
 
     # TODO: implement options
     # if len(kwargs) > 0:
@@ -115,6 +120,10 @@ def IntegerQ(x):
     #    if x == Infinity or x == NegInfinity or x is NaN, Mathematica returns False
 
 def Log(b, x):
+    """ Mathematica Log handles 0 and negative values for x
+    """
+    if x == 0:
+        return NegInfinity
     try:
         return math.log(x, b)
     except ValueError as e:
@@ -127,23 +136,25 @@ def NumericQ(x):
     return IntegerQ(x) or isinstance(x, float) or isinstance(x, complex)
     #    if x == Infinity or x == NegInfinity or x is NaN, Mathematica returns False
 
-def Row(string_style_blocks_1d):
-    result = ''
-    for block in string_style_blocks_1d:
-        if block is str:
-            result += block
-        else:
-            result += str(block)
+def Row(exprs, separator=''):
+    if isinstance(exprs, (list, tuple)):
+        result = ''
+        first_expr = True
+        for expr in exprs:
+            if first_expr:
+                first_expr = False
+            else:
+                result += separator
+            result += str(expr)
+    else:
+        result = str(exprs)
     return result
 
 def Style(expr, *args, **kwargs):
     """ Returns expr as a displayable object (string for now) formatted with the
     options named or specified in args or kwargs (ignored for now)
     """
-    if expr is str:
-        return expr
-    else:
-        return str (expr)
+    return str (expr)
     # TODO: implement options
     # result =  'expr: "%s"' % expr
     # if len(args) > 0:
@@ -154,19 +165,49 @@ def Style(expr, *args, **kwargs):
 
 # noinspection PyUnusedLocal
 # noinspection PyShadowingBuiltins
-def IntegerString(n, b=None, len=None):
+def IntegerString(n, b=None, length=None):
     """ Returns a string consisting of the base b digits in the integer n.
-    Pads the string on the left with zero digits to give a string of length len
+    Pads the string on the left with zero digits to give a string of length len.
+    Returns a string with max length len.
+    Max base in Mathematica is 36.
     :param n:   integer
     :param b:   base
     :param len:
     :return:    string
     """
-    # TODO: base, len
-    # assert n is int
-    return str(n)
+    assert IntegerQ(n)
+    if b is None:
+        b_string = ''
+    else:
+        assert IntegerQ(b)
+        if b == 2:
+            b_string = 'b'
+        elif b == 8:
+            b_string = 'o'
+        elif b == 10:
+            b_string = '' # or 'd'
+        elif b == 16:
+            b_string = 'X' # or 'x'
+        else:
+            raise RuntimeError, 'Base %s not supported' % b
+    if length is None:
+        length_string = ''
+    else:
+        assert IntegerQ(length)
+        length_string = str(length)
+    format_string = '{0:0=-' + length_string + b_string + '}'
+    result = format_string.format(n)
+    if length is not None and length < len(result):
+        result = result[len(result) - length:]
+    #TODO: fix this in Grid, not here:
+    if len(result) == 0:
+        result = ' '
+    return result
 
 # END Declarations that replace built-in Mathematica declarations
+
+_UBIT_OFF_SYMBOL = '.'  # Exact
+_UBIT_ON_SYMBOL = '_'  # Somewhere between this number and the next
 
 # Environment:
 unset_int = -99
@@ -245,11 +286,13 @@ def setenv(ef_seq):
     esizemax, fsizemax = 2**e, 2**f
     utagsize = 1 + f + e
     maxubits = 1 + esizemax + fsizemax + utagsize
+
     ubitmask = BitShiftLeft(1, (utagsize - 1))
     fsizemask = (1 << f) - 1
     esizemask = (ubitmask - 1) - fsizemask
     efsizemask = BitOr(esizemask, fsizemask)
     utagmask = BitOr(ubitmask, efsizemask)
+
     ulpu = BitShiftLeft(1, utagsize)
     smallsubnormalu = efsizemask + ulpu
     smallnormalu = efsizemask + BitShiftLeft(1, maxubits - 1 - esizemax)
@@ -264,6 +307,10 @@ def setenv(ef_seq):
     negopeninfu = 0b1101 if utagsize == 1 else BitShiftLeft(0b1111, utagsize - 1)
     posopeninfu = 0b0101 if utagsize == 1 else  BitShiftLeft(0b0111, utagsize - 1)
     negopenzerou = BitShiftLeft(0b1001, utagsize - 1)
+
+    # Can't use float (2) bbelow otherwise we get:
+    #   OverflowError: (34, 'Numerical result out of range')
+    # on the bigger (e.g. (4, 11)) environments:
     maxreal = 2**2**(esizemax - 1) * (2**fsizemax - 1)/2**(fsizemax - 1)
     smallsubnormal = 2**(2 - 2**(esizemax - 1) - fsizemax)
 
@@ -293,15 +340,15 @@ def utagview(u):
     f = BitAnd(u, fsizemask)
     i = BitShiftRight(u, utagsize - 1)
 
-    Grid(
+    result = Grid(
         (
             (Style(i, Magenta, "Input"),
              Style(IntegerString(e, 2, esizesize), sanegreen, "Input"),
              Style(IntegerString(f, 2, fsizesize), Gray, "Input")
              ),
-            (("\(NegativeThinSpace)\(CenterEllipsis)"
+            ((_UBIT_ON_SYMBOL
              if i == 1 else
-             "\(DownArrow)"),
+             _UBIT_OFF_SYMBOL),
              Style(e + 1, "Text"),
              Style(f + 1, "Text")
              )
@@ -313,6 +360,7 @@ def utagview(u):
                 (1, 3): True}
                )
     )
+    return result
 
 # Test if a value is a legitimate unum. (Must be integer, and in-range.)
 def unumQ(x):
@@ -322,90 +370,109 @@ def unumQ(x):
 # Independent of the contents of the utag.
 def fsizeminus1(u):
     assert unumQ(u)
-    return BitAnd(u, fsizemask)
+    result = BitAnd(u, fsizemask)
+    return result
 
 def fsize(u):
     assert unumQ(u)
-    return 1 + fsizeminus1(u)
+    result = 1 + fsizeminus1(u)
+    return result
 
 def esizeminus1(u):
     assert unumQ(u)
-    return BitShiftRight(BitAnd(u, esizemask), fsizesize)
+    result = BitShiftRight(BitAnd(u, esizemask), fsizesize)
+    return result
 
 def esize(u):
     assert unumQ(u)
-    return 1 + esizeminus1(u)
+    result = 1 + esizeminus1(u)
+    return result
 
 def utag(esize, fsize):
     assert isinstance(esize, int)
     assert 1 <= esize <= esizemax
     assert isinstance(fsize, int)
     assert 1 <= fsize <= fsizemax
-    return BitOr(fsize - 1, BitShiftLeft(esize - 1, fsizesize))
+    result = BitOr(fsize - 1, BitShiftLeft(esize - 1, fsizesize))
+    return result
 
 def numbits(u):
     assert unumQ(u)
-    return 1 + esize(u) + fsize(u) + utagsize
+    result = 1 + esize(u) + fsize(u) + utagsize
+    return result
 
 def signmask(u):
     assert unumQ(u)
-    return BitShiftLeft(1, numbits(u) - 1)
+    result = BitShiftLeft(1, numbits(u) - 1)
+    return result
 
 def hiddenmask(u):
     assert unumQ(u)
-    return BitShiftLeft(1, fsize(u) + utagsize)
+    result = BitShiftLeft(1, fsize(u) + utagsize)
+    return result
 
 def fracmask(u):
     assert unumQ(u)
-    return BitShiftLeft(BitShiftLeft(1, fsize(u)) - 1, utagsize)
+    result = BitShiftLeft(BitShiftLeft(1, fsize(u)) - 1, utagsize)
+    return result
 
 def expomask(u):
     assert unumQ(u)
-    return BitShiftLeft(BitShiftLeft(1, esize(u)) - 1, fsize(u) + utagsize)
+    result = BitShiftLeft(BitShiftLeft(1, esize(u)) - 1, fsize(u) + utagsize)
+    return result
 
 def floatmask(u):
     assert unumQ(u)
-    return signmask(u) + expomask(u) + fracmask(u)
+    result = signmask(u) + expomask(u) + fracmask(u)
+    return result
 
 
 # Values and bit masks that depend on what is stored in the utag. 
 def bias(u):
     assert unumQ(u)
-    return 2^esizeminus1(u) - 1
+    result = 2**esizeminus1(u) - 1
+    return result
 
 def sign(u):
     assert unumQ(u)
-    return Boole(BitAnd(u, signmask(u)) > 0)
+    result = Boole(BitAnd(u, signmask(u)) > 0)
+    return result
 
 def expo(u):
     assert unumQ(u)
-    return BitShiftRight(BitAnd(u, expomask(u)), utagsize + fsize(u))
+    result = BitShiftRight(BitAnd(u, expomask(u)), utagsize + fsize(u))
+    return result
 
 def hidden(u):
     assert unumQ(u)
-    return Boole(expo(u) > 0)
+    result = Boole(expo(u) > 0)
+    return result
 
 def frac(u):
     assert unumQ(u)
-    return BitShiftRight(BitAnd(u, fracmask(u)), utagsize)
+    result = BitShiftRight(BitAnd(u, fracmask(u)), utagsize)
+    return result
 
 def inexQ(u):
     assert unumQ(u)
-    return BitAnd(ubitmask, u) > 0
+    result = BitAnd(ubitmask, u) > 0
+    return result
 
 def exQ(u):
     assert unumQ(u)
-    return BitAnd(ubitmask, u) == 0
+    result = BitAnd(ubitmask, u) == 0
+    return result
 
 def exact(u):
     assert unumQ(u)
-    return BitXor(u, ubitmask) if inexQ(u) else u
+    result = BitXor(u, ubitmask) if inexQ(u) else u
+    return result
 
 def colorcode(u):
     """Display the six fields of a unum bit string, color-coded and spaced.
     """
     assert unumQ(u)
-    return Row(
+    result = Row(
         (Style(sign(u), Red, Bold),
          " ",
          Style(IntegerString(expo(u), 2, esize(u)), brightblue, Bold),
@@ -417,33 +484,44 @@ def colorcode(u):
          Style(IntegerString(esizeminus1(u), 2, esizesize), sanegreen),
          " ",
          Style(IntegerString(fsizeminus1(u), 2, fsizesize), Gray)))
+    return result
 
 # Numerical value meant by exponent bits; helper function for u2f:
 def expovalue(u):
     assert unumQ(u)
-    return expo(u) - bias(u) + 1 - hidden(u)
+    result = expo(u) - bias(u) + 1 - hidden(u)
+    return result
 
 # Convert an exact unum to its float value.
 def u2f(u):
     assert unumQ(u)
     assert exQ(u)
     if u == posinfu:
-        return Infinity
+        result = Infinity
     elif u == neginfu:
-        return NegInfinity
+        result = NegInfinity
     else:
-        return (-1)**sign(u) * 2**expovalue(u) * (hidden(u) + frac(u)/2**fsize(u))
+        # signn = (-1)**sign(u)
+        # exponentt = 2**expovalue(u)
+        # hiddenn = hidden(u)
+        # fracc = frac(u)
+        # fsizee = fsize(u)
+        # result = signn * exponentt * (hiddenn + fracc/float(2)**fsizee)
+        result = (-1)**sign(u) * 2**expovalue(u) * (hidden(u) + frac(u)/float(2)**fsize(u))
+    return float(result)
 
 # Biggest unum possible with identical utag contents.
 def bigu(u):
     assert unumQ(u)
-    return expomask(u) + fracmask(u) + BitAnd(efsizemask, u) \
+    result = expomask(u) + fracmask(u) + BitAnd(efsizemask, u) \
         - ulpu * Boole(BitAnd(u, efsizemask) == efsizemask)
+    return result
 
 # Biggest numerical value representable with identical utag contents.
 def big(u):
     assert unumQ(u)
-    return u2f(bigu(u))
+    result = u2f(bigu(u))
+    return result
 
 # Some synonyms.
 # noinspection PyShadowingBuiltins
@@ -452,13 +530,14 @@ open, closed = True, False
 # Test if x is representable as a float. (Including exception values.)
 def floatQ(x):
     if NumericQ(x):
-        return not isinstance(x, complex)
+        result = not isinstance(x, complex)
     else:
         # These return False from NumericQ non-numeric, but are representable:
         if x == Infinity or x == NegInfinity or x is NaN:
-            return True
+            result = True
         else:
-            return False
+            result = False
+    return result
 
 def gQ(x):
     """Test for a value being in the form of a general bound.
@@ -488,7 +567,8 @@ def gQ(x):
     def lower_higher_endpoints(x):
         return x[0, 0] < x[0, 1]
 
-    return is_2_float_bool_pairs(x) and (contains_NaN(x) or equal_endpoints(x) or lower_higher_endpoints(x))
+    result = is_2_float_bool_pairs(x) and (contains_NaN(x) or equal_endpoints(x) or lower_higher_endpoints(x))
+    return result
 
 def uboundQ(x):
     """ Test for a value being in the form of a ubound, with one or two unums. 
@@ -502,12 +582,13 @@ def uboundQ(x):
         if unumQ(xL) and unumQ(xR):
             gL = unum2g(xL)
             gR = unum2g(xR)
-            return ((len(x) == 1 or xL == qNaNu or xL == sNaNu or xR == qNaNu or xR == sNaNu) or
+            result = ((len(x) == 1 or xL == qNaNu or xL == sNaNu or xR == qNaNu or xR == sNaNu) or
                 (gL[0][0] < gR[0][1] or (gL[0][0] == gR[0][1] and exQ(xL) and exQ(xR))))
         else:
-            return False
+            result = False
     else:
-        return False
+        result = False
+    return result
 
 def uboundpairQ(x):
     """ Test for a value being in the form of a ubound with two unums.
@@ -524,38 +605,40 @@ def f2g(x):
     """
     assert floatQ(x)
     if x is NaN:
-        return [[NaN, NaN],
+        result = [[NaN, NaN],
                 [open, open]]
     else:
-        return [[x, x],
+        result = [[x, x],
                 [closed, closed]]
+    return result
 
 def unum2g(u):
     """ Conversion of a unum to a general interval.
     """
     assert unumQ(u)
     if u == qNaNu or u == sNaNu:
-        return [[NaN, NaN],
+        result = [[NaN, NaN],
                 [open, open]]
     else:
         x = u2f(exact(u))
         y = u2f(exact(u) + ulpu)
         if exQ(u):
-            return [[x, x],
+            result = [[x, x],
                     [closed, closed]]
         elif u == bigu(u) + ubitmask:
-            return [[big(u), Infinity],
+            result = [[big(u), Infinity],
                     [open, open]]
         elif u == signmask(u) + bigu(u) + ubitmask:
-            return [[NegInfinity, -big(u)],
+            result = [[NegInfinity, -big(u)],
                     [open, open]]
         elif sign(u) == 1:
-            return [[y, x],
+            result = [[y, x],
                     [open, open]]
         else:
             # If negative, the left endpoint is the one farther from zero.
-            return [[x, y],
+            result = [[x, y],
                     [open, open]]
+    return result
 
 def ubound2g(ub):
     """ Conversion of a ubound to a general interval.
@@ -564,12 +647,13 @@ def ubound2g(ub):
     uL = ub[0]
     uR = ub[-1]
     if uL == qNaNu or uL == sNaNu or uR == qNaNu or uR == sNaNu:
-        return [[NaN, NaN],
+        result = [[NaN, NaN],
                 [open, open]]
     else:
         gL, gR = (unum2g(uL), unum2g(uR))
-        return [[gL[0][0], gR[0][1]],
+        result = [[gL[0][0], gR[0][1]],
                 [gL[1][0], gR[1][1]]]
+    return result
 
 def u2g(u):
     """ Conversion of a unum or ubound to a general interval.
@@ -580,43 +664,129 @@ def u2g(u):
     else:
         return ubound2g(u)
 
+# def x2u_orig(x):
+#     """ Conversion of a floatable real to a unum. Same as the "^"
+#     annotation. Most of the complexity stems from seeking the shortest
+#     possible bit string.
+#     """
+#     assert floatQ(x)
+#     # Exceptional nonnumeric values:
+#     if x is NaN:
+#         result = qNaNu
+#     elif x == Infinity:
+#         result = posinfu
+#     elif x == NegInfinity:
+#         result = neginfu
+#     # Magnitudes too large to represent:
+#     elif Abs(x) > maxreal:
+#         result = maxrealu + ubitmask + (signbigu if x < 0 else 0)
+#     # Zero is a special case. The smallest unum for it is just 0:
+#     elif x == 0:
+#         result = 0
+#     # Magnitudes too small to represent become
+#     # "inexact zero" with the maximum exponent and fraction field sizes:
+#     elif Abs(x) < smallsubnormal:
+#         result = utagmask + (signbigu if x < 0 else 0)
+#     # For subnormal numbers, divide by the ULP value to get the fractional part.
+#     # The While loop strips off trailing bits.
+#     elif Abs(x) < u2f(smallnormalu):
+#         y = Abs(x)/float(smallsubnormal)
+#         y = ((signbigu if x < 0 else 0) + efsizemask +
+#              (ubitmask if y != Floor(y) else 0) +
+#              BitShiftLeft (Floor(y), utagsize))
+#         while BitAnd(BitShiftLeft(3, utagsize - 1), y) == 0:
+#             y = (y - BitAnd(efsizemask, y)) / float(2) + BitAnd(efsizemask, y) - 1
+#         result = y
+#     # All remaining cases are in the normalized range.
+#     else:
+#         y = Abs(x)/float(2)**scale(x)
+#         n = 0
+#         while Floor(y) != y and n < fsizemax:
+#             n += 1
+#             y *= 2
+#         if y == Floor(y): # then the value is representable
+#             # exactly. Fill in fields from right to left:
+#             # Size of fraction field,
+#             # fits in the rightmost fsizesize bits...
+#             y = (n - Boole(n > 0)
+#                 # Size of exponent field minus 1,
+#                 # fits in the esizesize bits...
+#                 + BitShiftLeft(ne(x) - 1, fsizesize)
+#                 # Significant bits after hidden bit,
+#                 # fits left of the unum tag bits...
+#                 + (0 if n == 0 else BitShiftLeft(Floor(y) - 2**scale(y), utagsize))
+#                 # Value of exponent bits, adjusted for bias...
+#                 + BitShiftLeft(scale(x) + 2**(ne(x) - 1) - 1,
+#                                utagsize + n + Boole(n == 0))
+#                 # If negative, add the sign bit
+#                 + (BitShiftLeft(1, utagsize + n + Boole(n == 0) + ne(x)) if x < 0 else 0))
+#             # If a number is more concise as a subnormal, make it one.
+#             z1 =  Log(2, Abs(x))
+#             z = Log(2, 1 - z1)
+#             if IntegerQ(z) and z >= 0:
+#                 result = (BitShiftLeft(z, fsizesize) + ulpu +
+#                         Boole(x < 0) * signmask(BitShiftLeft(z, fsizesize)))
+#             else:
+#                 result = y
+#         else:
+#             # else inexact. Use all available fraction bits.
+#             z = (Ceiling(Abs(x)/float(2)**(scale(x) - fsizemax)) *
+#                  2**(scale(x) - fsizemax))
+#             n = Max(ne(x), ne(z))
+#             # All bits on for the fraction size, since we're using the maximum
+#             y = (fsizemask
+#                 # Store the exponent size minus 1 in the exponent size field
+#                 + BitShiftLeft(n - 1, fsizesize)
+#                 # Back off by one ULP and make it inexact
+#                 + ubitmask - ulpu
+#                 # Fraction bits are the ones to the left of the binary point
+#                 # after removing hidden bit and scaling
+#                 + BitShiftLeft(Floor(z/float(2)**scale(z) - 1) * 2**fsizemax, utagsize)
+#                 # Exponent value goes in the exponent field
+#                 + BitShiftLeft(scale(z) + 2**(n - 1) - 1, utagsize + fsizemax))
+#             # If x is negative, set the sign bit in the unum.
+#             if x < 0:
+#                 y += signmask(y)
+#             result = y
+#     return result
+
 def x2u(x):
-    """ Conversion of a floatable real to a unum. Same as the "^" 
-    annotation. Most of the complexity stems from seeking the shortest 
-    possible bit string. 
+    """ Conversion of a floatable real to a unum. Same as the "^"
+    annotation. Most of the complexity stems from seeking the shortest
+    possible bit string.
     """
-    print ('x2u(%s)' % x)
     assert floatQ(x)
     # Exceptional nonnumeric values:
     if x is NaN:
-        return qNaNu
+        result = qNaNu
     elif x == Infinity:
-        return posinfu
+        result = posinfu
     elif x == NegInfinity:
-        return neginfu
+        result = neginfu
     # Magnitudes too large to represent:
     elif Abs(x) > maxreal:
-        return maxrealu + ubitmask + (signbigu if x < 0 else 0)
+        result = maxrealu + ubitmask + (signbigu if x < 0 else 0)
     # Zero is a special case. The smallest unum for it is just 0:
-    elif x == 0:
-        return 0
+    elif  x == 0:
+        result = 0
     # Magnitudes too small to represent become
     # "inexact zero" with the maximum exponent and fraction field sizes:
     elif Abs(x) < smallsubnormal:
-        return utagmask + (signbigu if x < 0 else 0)
+        result = utagmask + (signbigu if x < 0 else 0)
     # For subnormal numbers, divide by the ULP value to get the fractional part.
     # The While loop strips off trailing bits.
     elif Abs(x) < u2f(smallnormalu):
-        y = Abs(x)/smallsubnormal
+        y = Abs(x)/float(smallsubnormal)
         y = ((signbigu if x < 0 else 0) + efsizemask +
              (ubitmask if y != Floor(y) else 0) +
              BitShiftLeft (Floor(y), utagsize))
         while BitAnd(BitShiftLeft(3, utagsize - 1), y) == 0:
+            # /float(2) not needed below:
             y = (y - BitAnd(efsizemask, y)) / 2 + BitAnd(efsizemask, y) - 1
-        return y
+        result = y
     # All remaining cases are in the normalized range.
     else:
-        y = Abs(x)/2**scale(x)
+        y = Abs(x)/float(2)**scale(x)
         n = 0
         while Floor(y) != y and n < fsizemax:
             n += 1
@@ -625,29 +795,33 @@ def x2u(x):
             # exactly. Fill in fields from right to left:
             # Size of fraction field,
             # fits in the rightmost fsizesize bits...
-            y = (n - Boole(n > 0)
-                # Size of exponent field minus 1,
-                # fits in the esizesize bits...
-                + BitShiftLeft(ne(x) - 1, fsizesize)
-                # Significant bits after hidden bit,
-                # fits left of the unum tag bits...
-                + (0 if n == 0 else BitShiftLeft(Floor(y) - 2**scale(y), utagsize))
-                # Value of exponent bits, adjusted for bias...
-                + BitShiftLeft(scale(x) + 2**(ne(x) - 1) - 1,
-                               utagsize + n + Boole(n == 0))
-                # If negative, add the sign bit
-                + (BitShiftLeft(1, utagsize + n + Boole(n == 0) + ne(x)) if x < 0 else 0))
+            fraction_size = n - Boole(n > 0)
+            # Size of exponent field minus 1,
+            # fits in the esizesize bits...
+            exponent_size = BitShiftLeft(ne(x) - 1, fsizesize)
+            # Significant bits after hidden bit,
+            # fits left of the unum tag bits...
+            fraction = (0 if n == 0 else BitShiftLeft(Floor(y) - 2**scale(y), utagsize))
+            # Value of exponent bits, adjusted for bias...
+            exponent = BitShiftLeft(scale(x) + 2**(ne(x) - 1) - 1,
+                                    utagsize + n + Boole(n == 0))
+            # If negative, add the sign bit
+            sign_bit = (BitShiftLeft(1, utagsize + n + Boole(n == 0) + ne(x)) if x < 0 else 0)
+            y = sign_bit + exponent + fraction + exponent_size + fraction_size
             # If a number is more concise as a subnormal, make it one.
             z1 =  Log(2, Abs(x))
-            z = Log(2, 1 - z1)
-            if IntegerQ(z) and z >= 0:
-                return (BitShiftLeft(z, fsizesize) + ulpu +
-                        Boole(x < 0) * signmask(BitShiftLeft(z, fsizesize)))
+            if IntegerQ(z1) and z1 >= 1:
+                z = Log(2, 1 - z1)
+                if IntegerQ(z) and z >= 0:
+                    result = (BitShiftLeft(z, fsizesize) + ulpu +
+                            Boole(x < 0) * signmask(BitShiftLeft(z, fsizesize)))
+                else:
+                    result = y
             else:
-                return y
+                result = y
         else:
             # else inexact. Use all available fraction bits.
-            z = (Ceiling(Abs(x)/2**(scale(x) - fsizemax)) *
+            z = (Ceiling(Abs(x)/float(2)**(scale(x) - fsizemax)) *
                  2**(scale(x) - fsizemax))
             n = Max(ne(x), ne(z))
             # All bits on for the fraction size, since we're using the maximum
@@ -658,13 +832,14 @@ def x2u(x):
                 + ubitmask - ulpu
                 # Fraction bits are the ones to the left of the binary point
                 # after removing hidden bit and scaling
-                + BitShiftLeft(Floor(z/2**scale(z) - 1) * 2**fsizemax, utagsize)
+                + BitShiftLeft(Floor(z/float(2)**scale(z) - 1) * 2**fsizemax, utagsize)
                 # Exponent value goes in the exponent field
                 + BitShiftLeft(scale(z) + 2**(n - 1) - 1, utagsize + fsizemax))
             # If x is negative, set the sign bit in the unum.
             if x < 0:
                 y += signmask(y)
-            return y
+            result = y
+    return result
 
 # Assign the x2u function to the "^" notation. *)
 OverHat = x2u
@@ -778,16 +953,18 @@ def scale (x):
     """
     assert floatQ(x) and x != Infinity and x is not NaN
     if x == 0:
-        return 0
+        result = 0
     else:
-        return Floor(Log(2, Abs(x)))
+        result = Floor(Log(2, Abs(x)))
+    return result
 
 def ne(x):
     """ Find a concise number of exponent bits, accounting for subnormals.
     """
     assert floatQ(x) and x != Infinity and x is not NaN
     if x == 0 or scale(x) == 1:
-        return 1
+        result = 1
     else:
-        return Ceiling(Log(2, 1 + Abs(scale(x) - 1))) + 1
+        result = Ceiling(Log(2, 1 + Abs(scale(x) - 1))) + 1
+    return result
 
