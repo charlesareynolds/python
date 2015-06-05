@@ -61,7 +61,15 @@ def Ceiling(x):
     return int(math.ceil(x))
 
 def Denominator(x):
-    """ Extract denominator of a rational number
+    """ Extract denominator of a rational number.
+    Note: Mathematica differentiates between e.g. 0.5 and 1/2!  This leads to:
+    Denominator [1/2] => 2
+    Denominator [0.5] => 1 !
+
+    In this implementation,
+    Denominator (0.5) => 2
+
+    Beware: in Python, "1/2" is an integer operation, and returns 0!
     """
     return fractions.Fraction(x).denominator
 
@@ -69,10 +77,38 @@ def Floor(x):
     return int(math.floor(x))
 
 # noinspection PyUnusedLocal
-def Grid(string_style_blocks_2d, Frame):
-    result = ''
-    for block in string_style_blocks_2d:
-        result += Row(block) + '\n'
+def Grid(items_2d, **kwargs):
+    """ Return one or more lines.
+    If called with ((1,2)(3,4)), return '1 2\n3 4'
+    If called with ((1,)(3,)), return '1\n3'
+    If called with ((1,3)), return '1 3'
+    If called with (1,3), return '1\n3'
+    """
+    if isinstance(items_2d, (tuple, list)):
+        result = ''
+        first_line = True
+        for items_1d in items_2d:
+            if first_line:
+                first_line = False
+            else:
+                result += '\n'
+            if isinstance(items_1d, (tuple, list)):
+                first_item = True
+                for item in items_1d:
+                    if first_item:
+                        first_item = False
+                    else:
+                        result += ' '
+                    result += str(item)
+            else:
+                result += str(items_1d)
+        return result
+    else:
+        return str(items_2d)
+
+    # TODO: implement options
+    # if len(kwargs) > 0:
+    #     result += 'kwargs : "%s"' % kwargs
 
 def IntegerQ(x):
     return isinstance(x, (int, long))
@@ -101,13 +137,20 @@ def Row(string_style_blocks_1d):
     return result
 
 def Style(expr, *args, **kwargs):
-    # TODO: implement
-    result =  'expr: "%s"' % expr
-    if len(args) > 0:
-        result += 'args : "%s"' % args
-    if len(kwargs) > 0:
-        result += 'kwargs : "%s"' % kwargs
-    return result
+    """ Returns expr as a displayable object (string for now) formatted with the
+    options named or specified in args or kwargs (ignored for now)
+    """
+    if expr is str:
+        return expr
+    else:
+        return str (expr)
+    # TODO: implement options
+    # result =  'expr: "%s"' % expr
+    # if len(args) > 0:
+    #     result += 'args : "%s"' % args
+    # if len(kwargs) > 0:
+    #     result += 'kwargs : "%s"' % kwargs
+    # return result
 
 # noinspection PyUnusedLocal
 # noinspection PyShadowingBuiltins

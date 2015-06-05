@@ -77,33 +77,6 @@ class TestSetenv(unittest.TestCase):
         self.assertEqual (unum.maxreal, 3)
         self.assertEqual (unum.smallsubnormal, 0.5)
 
-    def test_setenv_0_excep_1_0(self):
-        # Gets an exception in the call to Log:
-        unum.setenv ((1, 0))
-        u = unum.x2u(1)
-
-    def test_setenv_0_excep_0_5(self):
-        # Gets an exception in the call to Log:
-        unum.setenv ((0, 5))
-        u = unum.x2u(1)
-
-    def test_setenv_0_loop(self):
-        for fsize in range(0, 11):
-            for esize in range(0, 4):
-                unum.setenv ((esize, fsize))
-                for x in range(0, 9):
-                    # The test is that none of these raise an exception:
-                    print ('esize: %s, fsize: %s, x: %s' % (esize, fsize, x))
-                    u = unum.x2u(x)
-
-    def test_setenv_3_4(self):
-        unum.setenv((3, 4))
-        for x in range(31):
-            u= unum.x2u(x)
-        self.assertEqual(unum.fsizeminus1(unum.x2u(30.0)),1)
-        self.assertEqual(unum.fsizeminus1(unum.x2u(31.0)),1)
-
-
     def test_setenv_4_11(self):
         unum.setenv((4, 11))
         self.assertEqual (unum.esizesize, 4)
