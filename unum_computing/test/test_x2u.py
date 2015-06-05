@@ -22,6 +22,16 @@ class TestX2u(unittest.TestCase):
             with self.assertRaises(AssertionError):
                 _x = unum.u2f(u)
 
+    def do_x2u_list(self, xu_list):
+        for x, u in xu_list:
+           # print ('Calling x2u(%s)' % x)
+            xu = unum.x2u(x)
+            # print ('x2u returned:\n%s\n' % unum.utagview(xu))
+            self.assertEqual(xu, u,
+                'In environment (%s, %s), unum.x2u(%s) should return:\n%s\n(%s), not:\n%s\n(%s)' %
+                             (unum.esizesize,unum.fsizesize, x,
+                              unum.utagview(u),u, unum.utagview(xu), xu))
+
     def test_05_u2f_0_0(self):
         unum.setenv ((0, 0))
         self.do_u2f_equal([
@@ -105,18 +115,9 @@ class TestX2u(unittest.TestCase):
 
 
     def test_10_x2u(self):
-        def test_list(xu_list):
-            for x, u in xu_list:
-               # print ('Calling x2u(%s)' % x)
-                xu = unum.x2u(x)
-                # print ('x2u returned:\n%s\n' % unum.utagview(xu))
-                self.assertEqual(xu, u,
-                    'In environment (%s, %s), unum.x2u(%s) should return:\n%s\n(%s), not:\n%s\n(%s)' %
-                                 (unum.esizesize,unum.fsizesize, x,
-                                  unum.utagview(u),u, unum.utagview(xu), xu))
 
         unum.setenv((0, 0))
-        test_list ([
+        self.do_x2u_list ([
             [0.0, 0],
             [0.5, 1],
             [1.0, 2],
@@ -127,7 +128,7 @@ class TestX2u(unittest.TestCase):
         ])
 
         unum.setenv((0, 1))
-        test_list ([
+        self.do_x2u_list ([
             [0.0, 0],
             [1.0, 4],
             [1.5, 13],
@@ -138,7 +139,7 @@ class TestX2u(unittest.TestCase):
         ])
 
         unum.setenv((0, 2))
-        test_list ([
+        self.do_x2u_list ([
             [0.0, 0],
             [1.0, 8],
             [1.5, 25],
@@ -149,7 +150,7 @@ class TestX2u(unittest.TestCase):
         ])
 
         unum.setenv((0, 3))
-        test_list ([
+        self.do_x2u_list ([
             [0.0, 0],
             [1.0, 16],
             [1.5, 49],
@@ -160,7 +161,7 @@ class TestX2u(unittest.TestCase):
         ])
 
         unum.setenv((1, 0))
-        test_list ([
+        self.do_x2u_list ([
             [0.0, 0],
             [1.0, 9],
             [1.5, 13],
@@ -171,7 +172,7 @@ class TestX2u(unittest.TestCase):
         ])
 
         unum.setenv((1, 1))
-        test_list ([
+        self.do_x2u_list ([
             [0.0, 0],
             [1.0, 18],
             [1.5, 26],
@@ -182,7 +183,7 @@ class TestX2u(unittest.TestCase):
         ])
 
         unum.setenv((1, 2))
-        test_list ([
+        self.do_x2u_list ([
             [0.0, 0],
             [1.0, 36],
             [1.5, 52],
@@ -193,7 +194,7 @@ class TestX2u(unittest.TestCase):
         ])
 
         unum.setenv((1, 3))
-        test_list ([
+        self.do_x2u_list ([
             [0.0, 0],
             [1.0, 72],
             [1.5, 104],
@@ -204,32 +205,32 @@ class TestX2u(unittest.TestCase):
         ])
 
         unum.setenv((2, 0))
-        test_list ([
+        self.do_x2u_list ([
             [0.0, 0],
             [1.0, 17],
             [1.5, 25],
             [2.0, 16],
             [3.0, 24],
-            # [10.0, 102],
-            # [100.0, 223],
+            [10.0, 102],
+            [100.0, 223],
             [1000.0, 247],
             [10000.0, 247]
         ])
-        test_list ([
+        self.do_x2u_list ([
             [3, 24],
             [4, 49],
-            # [5, 53], # got 45??
+            [5, 53],
             [6, 57],
             [7, 94],
             [8, 98],
-            # [9, 102], # got 94??
-            # [10.0, 102], # got 94??
-            # [11.0, 102], # got 94??
+            [9, 102],
+            [10.0, 102],
+            [11.0, 102],
             [12.0, 106],
         ])
 
         unum.setenv((2, 1))
-        test_list ([
+        self.do_x2u_list ([
             [0.0, 0],
             [1.0, 34],
             [1.5, 50],
@@ -242,7 +243,7 @@ class TestX2u(unittest.TestCase):
         ])
 
         unum.setenv((2, 2))
-        test_list ([
+        self.do_x2u_list ([
             [0.0, 0],
             [1.0, 68],
             [1.5, 100],
@@ -255,7 +256,7 @@ class TestX2u(unittest.TestCase):
         ])
 
         unum.setenv((2, 3))
-        test_list ([
+        self.do_x2u_list ([
             [0.0, 0],
             [1.0, 136],
             [1.5, 200],
@@ -267,31 +268,15 @@ class TestX2u(unittest.TestCase):
             [10000.0, 262079]
         ])
 
-    def test_11_setenv_0_excep_1_0(self):
-        # Gets an exception in the call to Log:
-        unum.setenv ((1, 0))
-        u = unum.x2u(1)
-
-    def test_12_setenv_0_excep_0_0(self):
-        unum.setenv ((0, 0))
-        u = unum.x2u(2)
-
     def test_13_setenv_0_loop(self):
         for fsize in range(0, 9):
         # for fsize in range(0, 11):
             for esize in range(0, 4):
                 unum.setenv ((esize, fsize))
-                for x in range(0, 9):
+                for x in (0.0, 1.0, 1.5, 2.0, 3.0, 10.0, 100.0, 1000.0, 10000.0):
                     # The test is that none of these raise an exception:
-                    print ('esize: %s, fsize: %s, x: %s' % (esize, fsize, x))
+                    # print ('esize: %s, fsize: %s, x: %s' % (esize, fsize, x))
                     u = unum.x2u(x)
-
-    def test_14_setenv_3_4(self):
-        unum.setenv((3, 4))
-        for x in range(31):
-            u= unum.x2u(x)
-        self.assertEqual(unum.fsizeminus1(unum.x2u(30.0)),2)
-        self.assertEqual(unum.fsizeminus1(unum.x2u(31.0)),3)
 
     def test_20_autoN(self):
         self.assertEqual(str(unum.autoN(unum.NaN)), 'nan')
@@ -339,13 +324,6 @@ class TestX2u(unittest.TestCase):
         self.assertFalse(unum.unumQ(unum.Infinity))
         self.assertFalse(unum.unumQ(unum.NegInfinity))
         self.assertFalse(unum.unumQ('foo'))
-
-    def test_50_fsizeminus1(self):
-        unum.setenv((3, 4))
-        for x in range(31):
-            u= unum.x2u(x)
-        self.assertEqual (unum.fsizeminus1(unum.x2u(30.0)),2)
-        self.assertEqual (unum.fsizeminus1(unum.x2u(31.0)),3)
 
 
 suite = unittest.TestLoader().loadTestsFromTestCase(TestX2u)

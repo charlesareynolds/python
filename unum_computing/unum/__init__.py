@@ -832,7 +832,7 @@ def x2u(x):
                 + ubitmask - ulpu
                 # Fraction bits are the ones to the left of the binary point
                 # after removing hidden bit and scaling
-                + BitShiftLeft(Floor(z/float(2)**scale(z) - 1) * 2**fsizemax, utagsize)
+                + BitShiftLeft(Floor((z/float(2)**scale(z) - 1) * 2**fsizemax), utagsize)
                 # Exponent value goes in the exponent field
                 + BitShiftLeft(scale(z) + 2**(n - 1) - 1, utagsize + fsizemax))
             # If x is negative, set the sign bit in the unum.
