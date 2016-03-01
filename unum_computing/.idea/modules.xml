@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/unum.iml" filepath="$PROJECT_DIR$/.idea/unum.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/unum_computing.iml" filepath="$PROJECT_DIR$/.idea/unum_computing.iml" />
     </modules>
   </component>
 </project>

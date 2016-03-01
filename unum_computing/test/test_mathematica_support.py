@@ -1,5 +1,22 @@
-__author__ = 'Charles'
-
+""" This module tests:
+Abs
+BitAnd
+BitOr
+BitShiftLeft
+BitShiftRight
+BitXor
+Boole
+Ceiling
+Denominator
+Floor
+Grid
+integerQ
+Log
+Max
+Row
+Style
+IntegerString
+"""
 import unittest
 import unum
 

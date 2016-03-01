@@ -32,6 +32,7 @@ Red = RGBColor((1, 0, 0))
 NegInfinity = float("-inf")
 NaN = float("nan")
 
+Plain = None # Mathematicaa: "represents a font that is not bold, italic, or underlined."
 # END Constants
 
 def Abs(x):
@@ -118,6 +119,17 @@ def Grid(items_2d, **kwargs):
 def IntegerQ(x):
     return isinstance(x, (int, long))
     #    if x == Infinity or x == NegInfinity or x is NaN, Mathematica returns False
+
+# noinspection PyUnusedLocal
+def Item(expr, **options):
+    """ from Mathematica:
+    "represents an item within constructs such as Grid, Overlay, and Manipulate
+    that displays with expr as the content, and with the specified options
+    applied to the region containing expr."
+
+    For now, returns expr as a displayable object and ignores the options.
+    """
+    return str(expr)
 
 def Log(b, x):
     """ Mathematica Log handles 0 and negative values for x
@@ -864,88 +876,129 @@ def autoN(x):
     #         print ('type(x): %s; y: %s; Floor(y): %s' % (type(x), y, Floor(y)))
     #         return "?"
 
-# def unumview(u):
-#     """ Display a unum with color-coding and annotation. Warning: there are some negative spaces in the StringForm
-#     expressions.
-#     """
-#     e = expo(u)
-#     es = esizeminus1(u)
-#     f = frac(u)
-#     fs = fsizeminus1(u)
-#     g = u2g(u)
-#     i = inexQ(u)
-#     NaNQ = (u == sNaNu || u == qNaNu)
-#     s = sign(u)
-#     specQ = (u == sNaNu || u == qNaNu || u == posinfu || u == neginfu)
-#
-#     return Grid(
-#         (
-#             (
-#                 Item(Style(s, Red, "Input"), Frame -> True, Alignment -> "Left"),
-#                 Item(Style(IntegerString(e, 2, esize(u), brightblue, "Input"), Frame -> True),
-#                 " ",
-#                 Item(Style(IntegerString(f, 2, fsize(u), "Input"), Frame -> "True"),
-#                 Item(Style(Boole(i), Magenta, "Input", Plain), Frame -> "True"),
-#                 Item(Style(IntegerString(es, 2, esizesize), sanegreen, "Input", Plain), Frame -> True),
-#                 Item(Style(IntegerString(fs, 2, fsizesize), FontColor -> Gray, "Input", Plain), Frame -> True),
-#                 " ",
-#                 if(not NaNQ and not i and u2f(u) != Floor(u2f(u),
-#                     u2f(u),
-#                     Row((
-#                         Item(
-#                             Which(
-#                                 specQ,
-#                                     Style("special case string", Italic),
-#                                 (g[1, 1] == Floor(g[1, 1]) and g[1, 2] == Floor(g[1, 2])),
-#                                     " ",
-#                                 True,
-#                                     StringForm(If(g[2, 1], "(``,", "[``,"), g[1, 1])
-#                             )
-#                         ),
-#                         Item(
-#                             If(NaNQ ||  (g[1, 1] == Floor(g[1, 1]) and g[1, 2] == Floor(g[1, 2])),
-#                                 " ",
-#                                 StringForm(If(g[2, 2], "``)", "``]"), g[1, 2])
-#                             )
-#                         )
-#                     )
-#                     )
-#                 )
-#             ),
-#             (
-#                 Style(If(s == 0, "+", "-"), Red),
-#                 Style(StringForm("``\[Times]", Superscript(2, expovalue(u))), brightblue),
-#                 Style(StringForm("\[NegativeThickSpace]``+\[NegativeThickSpace]\\[NegativeThickSpace]", hidden(u))),
-#                 DisplayForm(FractionBox(f, 2^(fs + 1))),
-#                 Style(If(i, "\[CenterEllipsis]", "\[DownArrow]"), Magenta),
-#                 Style(es + 1, sanegreen),
-#                 Style(fs + 1, Gray),
-#                 " ",
-#                 If(not NaNQ and  not i,
-#                     Row((If(not specQ, "= "),
-#                     autoN(g[1, 1])),
-#                 Row((
-#                     Item(If(NaNQ,
-#                         " ",
-#                         StringForm(If(g[2, 1],
-#                             "= (``,", "= [``,"),
-#                             autoN(g[1, 1]))),
-#                     Item(If(NaNQ,
-#                         "NaN",
-#                         StringForm(If(g[2, 2],
-#                             "``)",
-#                             "``]"),
-#                         autoN(g[1, 2])),
-#                         Alignment -> Left))))
-#             )
-#         ),
-#         ItemStyle -> (Automatic,
-#                       2 -> ("Text", 12),
-#                       (1, 9) -> "Text"))
+def unumview(u):
+    """ Display a unum with color-coding and annotation. Warning: there are some negative spaces in the StringForm
+    expressions.
+    """
+    e = expo(u)
+    es = esizeminus1(u)
+    f = frac(u)
+    fs = fsizeminus1(u)
+    g = u2g(u)
+    i = inexQ(u)
+    NaNQ = (u == sNaNu or u == qNaNu)
+    s = sign(u)
+    specQ = (u == sNaNu or u == qNaNu or u == posinfu or u == neginfu)
 
-
-
-
+    return Grid(
+        (
+            (
+                Item(
+                    Style(s, Red, "Input"),
+                    Frame=True,
+                    Alignment="Left"),
+                Item(
+                    Style(IntegerString(e, 2, esize(u)), brightblue, "Input"),
+                    Frame=True),
+                " ",
+                Item(
+                    Style(IntegerString(f, 2, fsize(u)), "Input"),
+                    Frame="True"),
+                Item(
+                    Style(Boole(i), Magenta, "Input", Plain),
+                    Frame="True"),
+                Item(
+                    Style(IntegerString(es, 2, esizesize), sanegreen, "Input", Plain),
+                    Frame=True),
+                Item(
+                    Style(IntegerString(fs, 2, fsizesize), Gray, "Input", Plain),
+                    Frame=True),
+                " ",
+                u2f(u)
+                if not NaNQ and not i and u2f(u) != Floor(u2f(u)) else
+                Row(
+                    (
+                        Item(
+                            Style("special case string", Italic)
+                            if specQ else
+                            " "
+                            if g[0][0] == Floor(g[0][0]) and g[0][1] == Floor(g[0][1]) else
+                                StringForm(
+                                    "(``,"
+                                    if g[1][0] else
+                                    "[``,",
+                                    g[0][0])
+                            )
+                        ),
+                        Item(
+                            " "
+                            if NaNQ or (g[0][0] == Floor(g[0][0]) and g[0][1] == Floor(g[0][1])) else
+                            StringForm(
+                                "``)"
+                                if g[1][1] else
+                                "``]",
+                                g[0][1])
+                        )
+                    )
+                )
+            ),
+            (
+                Style(
+                    "+"
+                    if s == 0 else
+                    "-",
+                    Red),
+                Style(StringForm("``\[Times]", Superscript(2, expovalue(u))), brightblue),
+                Style(StringForm("\[NegativeThickSpace]``+\[NegativeThickSpace]\\[NegativeThickSpace]", hidden(u))),
+                DisplayForm(FractionBox(f, 2^(fs + 1))),
+                Style(
+                    "\[CenterEllipsis]"
+                    if i else
+                    "\[DownArrow]",
+                    Magenta),
+                Style(es + 1, sanegreen),
+                Style(fs + 1, Gray),
+                " ",
+                Row(
+                    "= "
+                    if not specQ else
+                    None,
+                    autoN(g[0][0])
+                )
+                if not NaNQ and  not i else
+                Row(
+                    (
+                        Item(
+                            " "
+                            if NaNQ else
+                            StringForm(
+                                "= (``,"
+                                if g[1][0] else
+                                "= [``,"),
+                                autoN(g[0][0])
+                        )
+                        *
+                        Item(
+                            "NaN"
+                            if NaNQ else
+                            StringForm(
+                                "``)"
+                                if g[1][1] else
+                                "``]",
+                                autoN(g[0][1])
+                            ),
+                            Alignment=Left
+                        ),
+                    )
+                )
+            )
+        ),
+        ItemStyle=(
+            Automatic,
+            (2, ("Text", 12)),
+            ((1, 9), "Text")
+        )
+    )
 
 
 def scale (x):

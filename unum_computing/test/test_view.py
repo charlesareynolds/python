@@ -1,4 +1,7 @@
-__author__ = 'charles'
+""" This module tests:
+utagview
+"""
+
 import unittest
 import unum
 
@@ -15,4 +18,9 @@ class Test_utagview(unittest.TestCase):
         unum.setenv ((0, 0))
 
         self.assertEqual(unum.utagview(unum.x2u(0)), '|0|| || |\n .  1  1 ')
+
+    def test_20_unumview_0_0(self):
+        unum.setenv ((0, 0))
+
+        self.assertEqual(unum.unumview(unum.x2u(0)), '|0|| || |\n .  1  1 ')
 

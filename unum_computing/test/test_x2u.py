@@ -1,3 +1,8 @@
+""" This module tests:
+u2f
+x2u
+"""
+
 import unittest
 import unum
 

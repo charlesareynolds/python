@@ -1,6 +1,9 @@
+""" This module tests:
+setenv
+"""
+
 import unittest
 import unum
-__author__ = 'reynolds12'
 
 
 class TestSetenv(unittest.TestCase):
