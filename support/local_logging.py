@@ -1,11 +1,12 @@
 """ Provides logging behavior.  Declare a Logger object, then make calls.
 """
+import functools
 import logging
 from string_utils import su
 import sys
 
 
-class Logger():
+class Logger(object):
     # Define local levels and corresponding prefix strings:
     ERROR = logging.ERROR  # 40
     logging.addLevelName(ERROR, "***")
@@ -36,7 +37,8 @@ class Logger():
 
     DEFAULT_LEVEL = NONDEBUG
 
-    def _make_format(self, name, show_name, show_date, show_time, show_func, show_line):
+    @staticmethod
+    def _make_format(name, show_name, show_date, show_time, show_func, show_line):
         """ Set up output line parts:
         # [date] [time] <level> [(logger name)] [function name] [module:source line] <message>
         """
@@ -45,7 +47,7 @@ class Logger():
             format_string = su.cws(format_string, '%(asctime)s')
             date_format_string = ''
             if show_date:
-                date_format_string = su.cws(date_format_string, '%Y/%m/%d')
+                date_format_string = su.cws(date_format_string, '%Y-%m-%d')
             if show_time:
                 date_format_string = su.cws(date_format_string, '%H:%M:%S')
         else:
@@ -72,19 +74,23 @@ class Logger():
                  show_time=True,
                  show_func=False,
                  show_line=False):
-        self.logger = logging.getLogger(name)
+        self._logger = logging.getLogger(name)
         # Clear out any old handlers if we get an already-initialized logger:
         self.disable()
-        self.handler = logging.StreamHandler(stream)
-        self.handler.setFormatter(self._make_format(name, show_name, show_date, show_time, show_func, show_line))
-        self.logger.setLevel(level)
+        self._stream = stream
+        self._handler = logging.StreamHandler(self._stream)
+        self._handler.setFormatter(self._make_format(name, show_name, show_date, show_time, show_func, show_line))
+        self._logger.setLevel(level)
         self.enable()
 
+    def get_stream(self):
+        return self._stream
+
     def set_debug_on(self):
-        self.logger.setLevel(Logger.DEBUG)
+        self._logger.setLevel(Logger.DEBUG)
 
     def set_debug_off(self):
-        self.logger.setLevel(Logger.NONDEBUG)
+        self._logger.setLevel(Logger.NONDEBUG)
 
     def set_debug(self, on):
         if on:
@@ -95,41 +101,50 @@ class Logger():
     def disable(self):
         # Clear out any old handlers if we get an already-initialized logger:
         # This is NOT thread-safe:
-        for handler in self.logger.handlers:
-            self.logger.removeHandler(handler)
+        for handler in self._logger.handlers:
+            self._logger.removeHandler(handler)
 
     def enable(self):
-        self.logger.addHandler(self.handler)
+        self._logger.addHandler(self._handler)
+
+    def log_at_level(self, level,  message):
+        self._logger.log(level, message)
 
     """ operations below are listed in order of precedence - debug is lowest.
     """
 
     def error(self, message):
-        self.logger.log(Logger.ERROR, message)
+        self._logger.log(Logger.ERROR, message)
 
     def problem(self, message):
-        self.logger.log(Logger.PROBLEM, message)
+        self._logger.log(Logger.PROBLEM, message)
 
     def warning(self, message):
-        self.logger.log(Logger.WARNING, message)
+        self._logger.log(Logger.WARNING, message)
 
     def success(self, message):
-        self.logger.log(Logger.SUCCESS, message)
+        self._logger.log(Logger.SUCCESS, message)
 
     def progress(self, message):
-        self.logger.log(Logger.PROGRESS, message)
+        self._logger.log(Logger.PROGRESS, message)
 
     def log(self, message):
-        self.logger.log(Logger.LOG, message)
+        self._logger.log(Logger.LOG, message)
 
     def info(self, message):
-        self.logger.log(Logger.INFO, message)
+        self._logger.log(Logger.INFO, message)
 
     def more(self, message):
-        self.logger.log(Logger.MORE, message)
+        self._logger.log(Logger.MORE, message)
 
     def debug(self, message):
-        self.logger.log(Logger.DEBUG, message)
+        self._logger.log(Logger.DEBUG, message)
+
+    def exception(self, message):
+        """
+        Convenience method for logging an ERROR with exception information.
+        """
+        self._logger.exception(message)
 
 
 class LineLogger(Logger):
@@ -190,3 +205,60 @@ class FunctionLineLogger(Logger):
             show_time=False,
             show_func=True,
             show_line=True)
+
+
+class GeneralAutoLog (object):
+    """
+    Decorator class.  Decorated functions log ENTRY_MESSAGE before the function
+    executes, and log EXIT_MESSAGE afterwards,
+
+    Usage:
+
+    class AutoLog (GeneralAutoLog):
+    def __init__(self, func_name=None):
+        super(AutoLog, self).__init__(
+            logger_name='Regression_Tester',
+            func_name=func_name)
+
+    @Auto_Log (or @Auto_Log(<logger name>))
+    def My_Func():
+        whatever...
+    """
+    ENTRY_MESSAGE = 'BEGIN {}'
+    EXIT_MESSAGE  = 'END   {}'
+
+    def __init__(self, logger=None, func_name=None, level=Logger.INFO):
+        """ If logger is supplied, uses that logger.  Otherwise, creates a
+        private one at the first invocation of the wrapped function.
+        """
+        self.logger = logger
+        self.func_name = func_name
+        self.level = level
+
+    def __call__(self, func):
+        """
+        :param func:
+        :return: wrapper function that calls func
+        """
+        # functools.wraps makes the returned wrapper function have the name,
+        # etc. of the original function:
+        @functools.wraps(func)
+        def wrapper(*args, **kwds):
+            """ If logger is not set, uses the logger named <func.__module__>.
+            Logs the function entry and exit.
+
+            :return: func result
+            """
+            if self.logger is None:
+                self.logger = Logger(func.__module__)
+            if self.func_name is None:
+                self.func_name = func.__name__
+            self.logger.log_at_level(
+                    self.level, self.ENTRY_MESSAGE.format(self.func_name))
+            f_result = func(*args, **kwds)
+            self.logger.log_at_level(
+                    self.level, self.EXIT_MESSAGE.format(self.func_name))
+            return f_result
+
+        return wrapper
+

@@ -5,42 +5,45 @@
 
 class StringUtils:
     def stripSuffixes(self, files):
-        "Removes the suffix from a list of file names, so that foo.omf and foo.out match"
+        """Removes the suffix from a list of file names, so that foo.omf and foo.out match"""
         return [self.stripSuffix(file) for file in files]
 
-    def stripSuffix(self, name):
-        "Removes the suffix from a file name, so that foo.omf and foo.out match"
+    @staticmethod
+    def stripSuffix(name):
+        """Removes the suffix from a file name, so that foo.omf and foo.out match"""
         return name.split('.')[0]
 
     def countIsOrAre(self, count):
-        "Returns 'is' if Count is 1, otherwise returns 'are'"
+        """Returns 'is' if Count is 1, otherwise returns 'are'"""
         return self.countSingularOrPlural(count, "is", "are")
 
     def countWasOrWere(self, count):
-        "Returns 'was' if Count is 1, otherwise returns 'were'"
+        """Returns 'was' if Count is 1, otherwise returns 'were'"""
         return self.countSingularOrPlural(count, "was", "were")
 
-    def countSingularOrPlural(self, count, singularString, pluralString):
-        "Returns singularString if Count is 1, otherwise returns pluralString"
+    @staticmethod
+    def countSingularOrPlural(count, singularString, pluralString):
+        """Returns singularString if Count is 1, otherwise returns pluralString"""
         if count == 1:
             return str(count) + " " + singularString
         else:
             return str(count) + " " + pluralString
 
     def concatWSpace(self, left, right):
-        """ Concatenates two strings.  Puts a space between if neither is None or empty.
+        """ Concatenates two strings.  Puts a space between if neither is None nor empty.
         """
         return self.concatWString(left, ' ', right)
 
     def concatWString(self, left, separator, right):
-        """ Concatenates two strings.  Puts separator between if neither is None or empty.
+        """ Concatenates two strings.  Puts separator between if neither is None nor empty.
         """
         if left and right:
-            return left + separator + right
+            return separator.join((left, right))
         else:
             return self.noneToEmpty(left) + self.noneToEmpty(right)
 
-    def noneToEmpty(self, stringIn):
+    @staticmethod
+    def noneToEmpty(stringIn):
         """ Given None, returns "", otherwise returns what it's given.
         """
         if stringIn is None:
