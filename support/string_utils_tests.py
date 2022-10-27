@@ -1,8 +1,19 @@
 #!/usr/bin/env python
 """Tests string_utilis.py
 """
+
+# Standard library imports
+import os
+import sys
 import unittest
-from string_utils import su
+
+# Add parent dir to path, so we can import from sibling directories:
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+sys.path.append(os.path.dirname(SCRIPT_DIR))
+import unittest
+
+#Local imports
+from support.string_utils import su
 
 
 class TestCase(unittest.TestCase):

@@ -1,10 +1,13 @@
 """Contains the Runner class, which supports effort-only behavior by logging a 
 command instead of running it.
 """
+
+# Standard library imports
 import os
 import subprocess
 
-from local_logging import Logger
+#Local imports
+from .local_logging import Logger
 
 
 def _exec_info(command, globals, locals):
@@ -74,7 +77,7 @@ class Runner:
             self._logger.exception(message)
             if doReraise:
                 self._logger.error("Raising Runner.Failed")
-                raise self.Failed(message)
+                raise self.Failed(message) from e
             else:
                 self._logger.info("Continuing...")
 
@@ -95,10 +98,12 @@ class Runner:
         try:
             return eval(expression, globals, locals)
         except Exception as e:
-            message = _exception_message(e, _eval_info(expression, globals, locals))
-            self._logger.exception(message)
-            self._logger.error("Raising Runner.Failed")
-            raise self.Failed(message)
+            # message = _exception_message(e, _eval_info(expression, globals, locals))
+            # self._logger.exception(message)
+            # self._logger.error("tryEval: Raising Runner.Failed")
+            # raise self.Failed(message) from e
+            # Raise without the message, since we already logged it:
+            raise self.Failed() from e
 
     # Popen --------------------------------------------------------------------
 
@@ -131,10 +136,12 @@ class Runner:
                 stderr=subprocess.PIPE)
             (output, errors) = p1.communicate()
         except OSError as e:
-            message = _exception_message(e, _popen_info(callArgs, directory))
-            self._logger.exception(message)
-            self._logger.error("Raising Runner.Failed")
-            raise self.Failed(message)
+            # message = _exception_message(e, _popen_info(callArgs, directory))
+            # self._logger.exception(message)
+            # self._logger.error("tryPopen: Raising Runner.Failed")
+            # raise self.Failed(message) from e
+            # Raise without the message, since we already logged it:
+            raise self.Failed() from e
         return output, errors
 
     # check_call ---------------------------------------------------------------
@@ -150,7 +157,7 @@ class Runner:
     def tryCall(self, callArgs, directory=None):
         """Issues the command in callArgs. Pipes the output to the logger's
         stream.  Returns when command does.  Raises Runner.Failed if check_call
-        raises OSError.
+        raises subprocess.CalledProcessError or OSError.
         """
         try:
             # Output goes to stdout and stderr:
@@ -162,10 +169,13 @@ class Runner:
                 stderr=subprocess.STDOUT
             )
         except (subprocess.CalledProcessError, OSError) as e:
-            message = _exception_message(e, _check_call_info(callArgs, directory))
-            self._logger.exception(message)
-            self._logger.error("Raising Runner.Failed")
-            raise self.Failed(message)
+            # Putting the exception info into the next exception and not logging it here:
+            # message = _exception_message(e, _check_call_info(callArgs, directory))
+            # self._logger.exception(message)
+            # self._logger.error("tryCall: Raising Runner.Failed")
+            # raise self.Failed(message)
+            # Raise without the message, since we already logged it:
+            raise self.Failed() from e
 
     # Synonyms
     runOrLog = execOrLog

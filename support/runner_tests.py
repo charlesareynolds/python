@@ -1,9 +1,19 @@
 #!/usr/bin/env python
 """Runs unit tests on support.runner.
 """
+
+# Standard library imports
+import os
+import sys
 import unittest
-from local_logging import Logger
-from runner import Runner
+
+# Add parent dir to path, so we can import from sibling directories:
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+sys.path.append(os.path.dirname(SCRIPT_DIR))
+
+#Local imports
+from support.local_logging import Logger
+from support.runner import Runner
 
 
 class TestCase1ExecOrLog(unittest.TestCase):

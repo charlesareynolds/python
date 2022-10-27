@@ -1,9 +1,12 @@
 """ Provides logging behavior.  Declare a Logger object, then make calls.
 """
+# Standard library imports
 import functools
 import logging
-from string_utils import su
 import sys
+
+#Local imports
+from .string_utils import su
 
 
 class Logger(object):
@@ -144,7 +147,7 @@ class Logger(object):
         """
         Convenience method for logging an ERROR with exception information.
         """
-        self._logger.exception(message)
+        self._logger.exception('EXCEPTION: ' + message)
 
 
 class LineLogger(Logger):
@@ -215,17 +218,18 @@ class GeneralAutoLog (object):
     Usage:
 
     class AutoLog (GeneralAutoLog):
-    def __init__(self, func_name=None):
-        super(AutoLog, self).__init__(
-            logger_name='Regression_Tester',
-            func_name=func_name)
+        def __init__(self, func_name=None):
+          super(GeneralAutoLog, self).__init__(
+              logger_name='Regression_Tester',
+              func_name=func_name)
 
-    @Auto_Log (or @Auto_Log(<logger name>))
+    @AutoLog (or @AutoLog(<logger name>))
     def My_Func():
         whatever...
     """
-    ENTRY_MESSAGE = 'BEGIN {}'
-    EXIT_MESSAGE  = 'END   {}'
+    ENTRY_MESSAGE      = 'BEGIN {}'
+    EXIT_MESSAGE       = 'END   {}'
+    EXCEPTION_MESSAGE  = 'EXCEPTION {}'
 
     def __init__(self, logger=None, func_name=None, level=Logger.INFO):
         """ If logger is supplied, uses that logger.  Otherwise, creates a
@@ -255,7 +259,12 @@ class GeneralAutoLog (object):
                 self.func_name = func.__name__
             self.logger.log_at_level(
                     self.level, self.ENTRY_MESSAGE.format(self.func_name))
-            f_result = func(*args, **kwds)
+            try:
+                f_result = func(*args, **kwds)
+            except Exception as e:
+                self.logger.log_at_level(
+                    self.level, self.EXIT_MESSAGE.format(self.func_name))
+                raise e
             self.logger.log_at_level(
                     self.level, self.EXIT_MESSAGE.format(self.func_name))
             return f_result

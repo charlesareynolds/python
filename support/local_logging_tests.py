@@ -1,10 +1,19 @@
 #!/usr/bin/env python
 """Runs unit tests on local_logging.
 """
+
+# Standard library imports
+import os
 import sys
 import unittest
-from local_logging import Logger, FunctionLogger, LineLogger, FunctionLineLogger
-from local_logging import GeneralAutoLog
+
+# Add parent dir to path, so we can import from sibling directories:
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+sys.path.append(os.path.dirname(SCRIPT_DIR))
+
+# Local imports
+from support.local_logging import Logger, FunctionLogger, LineLogger, FunctionLineLogger
+from support.local_logging import GeneralAutoLog
 
 
 def test_a_logger(logger):
@@ -341,6 +350,28 @@ class TestCase03AutoLoggerMember(unittest.TestCase):
         print('')
         test_decorator('foo')
         print('')
+
+class TestCase04Exceptions(unittest.TestCase):
+
+    def setUp(self):
+        unittest.TestCase.setUp(self)
+
+    def tearDown(self):
+        unittest.TestCase.tearDown(self)
+
+    def test01_raise(self):
+        print(sys._getframe().f_code.co_name)
+        print("Exercising exception logging:")
+
+        logger = Logger()
+        try:
+            try:
+                raise Exception ('intentionally raised')
+            except Exception as e:
+                logger.exception('%s message:%s' % (type(e), str(e)))
+                raise Exception ('raised in inner handler') from e
+        except Exception as e:
+            logger.exception('%s message:%s' % (type(e), str(e)))
 
 
 if __name__ == '__main__':
